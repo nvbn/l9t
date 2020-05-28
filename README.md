@@ -1,6 +1,6 @@
 # L9T
 
-Resuable typesafe kubernetes configurations with fast development cycle and no yaml.
+Reusable typesafe kubernetes configurations with fast development cycle and no yaml.
 
 *One step ahead from K8S*
 
