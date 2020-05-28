@@ -16,9 +16,93 @@ Because working with kuberentes configs and helm is painful:
 
 TypeScript + Deno + just kubectl.
 
+## Usage
+
+You can create a configuration
+
+```typescript
+import l9t, {
+  io$k8s$api$apps$v1$Deployment,
+  io$k8s$api$core$v1$Service,
+} from "https://raw.githubusercontent.com/nvbn/l9t/master/l9t.ts";
+
+const deployment: io$k8s$api$apps$v1$Deployment = { // types for variables aren't required but useful for ides
+  apiVersion: "apps/v1",
+  kind: "Deployment",
+  metadata: {
+    name: "hello-world",
+  },
+  spec: {
+    selector: {
+      matchLabels: {
+        app: "hello-world",
+      },
+    },
+    replicas: 2,
+    template: {
+      metadata: {
+        labels: {
+          app: "hello-world",
+        },
+      },
+      spec: {
+        containers: [
+          {
+            name: "hello-world",
+            image: "nginx:latest",
+            ports: [
+              {
+                containerPort: 80,
+              },
+            ],
+          },
+        ],
+      },
+    },
+  },
+};
+
+const service: io$k8s$api$core$v1$Service = {
+  apiVersion: "v1",
+  kind: "Service",
+  metadata: {
+    name: "hello-world",
+  },
+  spec: {
+    selector: {
+      app: "hello-world",
+    },
+    ports: [
+      {
+        protocol: "TCP",
+        port: 80,
+        targetPort: 80,
+      },
+    ],
+    type: "LoadBalancer",
+  },
+};
+
+l9t([deployment, service])
+```
+
+Apply configuration with:
+
+```bash
+deno run hello_world.ts | kubectl apply -f -
+```
+
+And check that it works with:
+
+```bash
+curl localhost:80
+```
+
+Checks examples folder for more examples.
+
 ## Goals
 
-❌ Types for Kubernetes APIs.
+❓ Types for Kubernetes APIs.
 
 ❌ Hot reloading.
 
@@ -41,6 +125,5 @@ curl -k localhost:8080/openapi/v2 > spec.json
 deno run --unstable --allow-read scripts/make_types.ts > types/k8s.ts
 deno fmt
 ```
-
 
 ## License MIT

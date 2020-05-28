@@ -7,4 +7,4 @@ export const compile = <T extends object>(cfgs: T[]): string =>
 
 export default <T extends object = KubernetesConfig>(cfgs: T[]) => {
   console.log(compile(cfgs));
-}
+};
