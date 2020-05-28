@@ -10,7 +10,7 @@ Because working with kuberentes configs and helm is painful:
 
 * YAML/JSON without proper valdiation is error prone.
 * Go templates are ugly and too limited.
-* Subcharts are paing to manage.
+* Subcharts are pain to manage.
 
 ## How?
 
