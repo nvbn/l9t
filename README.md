@@ -2,7 +2,7 @@
 
 Reusable typesafe kubernetes configurations with fast development cycle and no yaml.
 
-*One step ahead from K8S*
+*One symbol ahead from K8S*
 
 ## Why?
 
@@ -23,5 +23,24 @@ TypeScript + Deno + just kubectl.
 ❌ Hot reloading.
 
 ❌ Helm charts-like reusable configration packages.
+
+## Development
+
+### Prerequisites
+
+* kubectl
+* [deno](https://deno.land/manual/getting_started/installation)
+
+### Generate types
+
+To generate new version of the default types run:
+
+```bash
+kubectl proxy --port=8080
+curl -k localhost:8080/openapi/v2 > spec.json
+deno run --unstable --allow-read scripts/make_types.ts > types/k8s.ts
+deno fmt
+```
+
 
 ## License MIT
