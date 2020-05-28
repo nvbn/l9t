@@ -110,7 +110,7 @@ Look at `examples` folder for more examples.
 
 ❌ Hot reloading.
 
-❌ Helm charts-like reusable configration packages.
+❌ Helm charts-like reusable configuration packages.
 
 ## Development
 
