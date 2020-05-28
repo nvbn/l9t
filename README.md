@@ -1,5 +1,7 @@
 # L9T
 
+![screenshot](https://raw.githubusercontent.com/nvbn/l9t/master/screenshot.png)
+
 Reusable typesafe kubernetes configurations with fast development cycle and no yaml.
 
 *One symbol ahead from K8S*
@@ -18,7 +20,9 @@ TypeScript + Deno + just kubectl.
 
 ## Usage
 
-You can create a configuration
+To use l9t you need to install [deno](https://deno.land/manual/getting_started/installation).
+
+Then you can create a configuration
 
 ```typescript
 import l9t, {
