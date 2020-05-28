@@ -21,6 +21,7 @@ TypeScript + Deno + just kubectl.
 ## Usage
 
 To use l9t you need to install [deno](https://deno.land/manual/getting_started/installation).
+To enable hot reloading you need to install [denon](https://github.com/denosaurs/denon).
 
 Then you can create a configuration:
 
@@ -102,13 +103,19 @@ And check that it works with:
 curl localhost:80
 ```
 
+For interactive development you can use denon:
+
+```bash
+denon run hello_world.ts | kubectl apply -f -
+```
+
 Look at `examples` folder for more examples.
 
 ## Goals
 
 ❓ Types for Kubernetes APIs.
 
-❌ Hot reloading.
+❓ Hot reloading.
 
 ❌ Helm charts-like reusable configuration packages.
 
