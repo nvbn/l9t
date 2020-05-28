@@ -8,7 +8,7 @@ Reusable typesafe kubernetes configurations with fast development cycle and no y
 
 ## Why?
 
-Because working with kuberentes configs and helm is painful:
+Because working with kubernetes configs and helm is painful:
 
 * YAML/JSON without proper valdiation is error prone.
 * Go templates are ugly and too limited.
@@ -22,7 +22,7 @@ TypeScript + Deno + just kubectl.
 
 To use l9t you need to install [deno](https://deno.land/manual/getting_started/installation).
 
-Then you can create a configuration
+Then you can create a configuration:
 
 ```typescript
 import l9t, {
@@ -87,10 +87,10 @@ const service: io$k8s$api$core$v1$Service = {
   },
 };
 
-l9t([deployment, service])
+l9t([deployment, service]);
 ```
 
-Apply configuration with:
+Apply the configuration with:
 
 ```bash
 deno run hello_world.ts | kubectl apply -f -
@@ -102,7 +102,7 @@ And check that it works with:
 curl localhost:80
 ```
 
-Checks examples folder for more examples.
+Look at `examples` folder for more examples.
 
 ## Goals
 
