@@ -107,14 +107,14 @@ curl localhost:80
 For interactive development you can use watch mode:
 
 ```bash
-deno run hello_world.ts watch | kubectl apply -f -
+deno run hello_world.ts --allow-env --allow-run watch | kubectl apply -f -
 ```
 
 As the configuration has `Deno.env.get("BUILD") === "prod" ? 10 : 2`, it's possible
 to make a prod configurationwith more replicas with:
 
 ```bash
-BUILD=prod deno run --allow-env --allow-run index.ts
+BUILD=prod deno run --allow-env index.ts
 ```
 
 Look at `examples` folder for more examples.
