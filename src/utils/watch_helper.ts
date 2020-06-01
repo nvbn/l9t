@@ -23,7 +23,7 @@ const config = {
 const logHandler = new log.handlers.ConsoleHandler("INFO");
 logHandler.log = (msg: string): void => {
   console.warn(msg);
-}
+};
 
 if (import.meta.main) {
   await log.setup({
@@ -34,8 +34,8 @@ if (import.meta.main) {
       default: {
         level: "INFO",
         handlers: ["console"],
-      }
-    }
+      },
+    },
   });
 
   const denon = new Denon(config);

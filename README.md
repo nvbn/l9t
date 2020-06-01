@@ -88,7 +88,7 @@ const service: io$k8s$api$core$v1$Service = {
   },
 };
 
-l9t([deployment, service]);
+l9t([deployment, service], import.meta);
 ```
 
 Apply the configuration with:
@@ -133,7 +133,7 @@ To generate new version of the default types run:
 ```bash
 kubectl proxy --port=8080
 curl -k localhost:8080/openapi/v2 > spec.json
-deno run --unstable --allow-read scripts/make_types.ts > types/k8s.ts
+deno run --unstable --allow-read src/scripts/make_types.ts > src/types/k8s.ts
 deno fmt
 ```
 
