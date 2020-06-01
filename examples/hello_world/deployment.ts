@@ -12,7 +12,7 @@ export const deployment: io$k8s$api$apps$v1$Deployment = {
         app: "hello-world",
       },
     },
-    replicas: 1,
+    replicas: Deno.env.get("BUILD") === "prod" ? 10 : 2,
     template: {
       metadata: {
         labels: {

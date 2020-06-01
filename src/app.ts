@@ -41,7 +41,7 @@ const watch = (url: string) => {
     cmd: [
       "sh",
       "-c",
-      `fswatch -o . | xargs -n1 -I{} deno run ${url}`,
+      `fswatch -o . | xargs -n1 -I{} deno run --allow-env --allow-read ${url}`,
     ],
   });
 
