@@ -21,7 +21,7 @@ TypeScript + Deno + just kubectl.
 ## Usage
 
 To use l9t you need to install [deno](https://deno.land/manual/getting_started/installation).
-To enable hot reloading you need to install [denon](https://github.com/denosaurs/denon).
+To enable hot reloading/watch mode you need to install [fswatch](https://github.com/emcrisostomo/fswatch).
 
 Then you can create a configuration:
 
@@ -103,10 +103,10 @@ And check that it works with:
 curl localhost:80
 ```
 
-For interactive development you can use denon:
+For interactive development you can use watch mode:
 
 ```bash
-denon run hello_world.ts | kubectl apply -f -
+deno run hello_world.ts watch | kubectl apply -f -
 ```
 
 Look at `examples` folder for more examples.

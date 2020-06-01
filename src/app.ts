@@ -22,6 +22,7 @@ export default <T extends object = KubernetesConfig>(
   }
 
   if (shouldWatch(flags)) {
+    compileMain(cfgs);
     watch(url);
     return;
   }
@@ -38,15 +39,9 @@ const shouldWatch = (flags: Args) =>
 const watch = (url: string) => {
   const proc = Deno.run({
     cmd: [
-      "deno",
-      "run",
-      "--unstable",
-      "--allow-read",
-      "--allow-run",
-      "--allow-write",
-      "https://raw.githubusercontent.com/nvbn/l9t/master/src/utils/watch_helper.ts",
-      "run",
-      url,
+      "sh",
+      "-c",
+      `fswatch -o . | xargs -n1 -I{} deno run ${url}`,
     ],
   });
 
