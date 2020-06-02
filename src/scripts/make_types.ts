@@ -6,6 +6,14 @@ type ApiTypeDefinition = {
   properties?: {
     [key: string]: ApiTypeDefinitionProperty;
   };
+  "x-kubernetes-group-version-kind"?:
+    ApiTypeDefinitionXKubernetesGroupVersionKind[];
+};
+
+type ApiTypeDefinitionXKubernetesGroupVersionKind = {
+  group: string;
+  kind: string;
+  version: string;
 };
 
 type ApiTypeDefinitionProperty =
@@ -45,9 +53,6 @@ type Spec = {
 
 const spec = readJsonSync("./spec.json") as Spec;
 
-const getApi = (name: string): string =>
-  name.replace(/\.[^.]+$/, "").replace("io.k8s.api.core.", "");
-
 const getFQDN = (name: string): string =>
   name.replace(/\./g, "$").replace(/-/g, "_");
 
@@ -81,8 +86,6 @@ const escapeComment = (comment: string): string => {
   return comment.replace(/\/\*/g, "^*").replace(/\*\//g, "*^");
 };
 
-const getKind = (name: string): string => name.split(".").pop()!!;
-
 const _toTypes = function* (name: string) {
   const definition = spec.definitions[name] as ApiTypeDefinition;
 
@@ -97,13 +100,15 @@ const _toTypes = function* (name: string) {
       definition.properties || {},
     )
   ) {
+    if (prop == "apiVersion" || prop == "kind") {
+      continue;
+    }
+
     if (propDefinition.description) {
       yield `  /** ${escapeComment(propDefinition.description)} */`;
     }
 
-    const propType = prop === "kind"
-      ? `"${getKind(name)}"`
-      : getPropType(propDefinition);
+    const propType = getPropType(propDefinition);
 
     if (required.has(prop)) {
       yield `  readonly "${prop}": ${propType};`;
@@ -111,7 +116,27 @@ const _toTypes = function* (name: string) {
       yield `  readonly "${prop}"?: ${propType};`;
     }
   }
-  yield `};`;
+  if (definition["x-kubernetes-group-version-kind"]) {
+    yield "} & ({";
+    for (
+      const [{ group, kind, version }, i]
+        of definition["x-kubernetes-group-version-kind"].map((
+          v,
+          i,
+        ): [ApiTypeDefinitionXKubernetesGroupVersionKind, number] => [v, i])
+    ) {
+      const apiVersion = group ? `${group}/${version}` : version;
+      yield `  readonly apiVersion: "${apiVersion}";`;
+      yield `  readonly kind: "${kind}";`;
+
+      if (i !== definition["x-kubernetes-group-version-kind"].length - 1) {
+        yield '} | {';
+      }
+    }
+    yield "});";
+  } else {
+    yield `};`;
+  }
 };
 
 const toTypes = (name: string) => Array.from(_toTypes(name)).join("\n");
