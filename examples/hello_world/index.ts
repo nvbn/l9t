@@ -1,5 +1,10 @@
 import l9t from "https://raw.githubusercontent.com/nvbn/l9t/master/l9t.ts";
-import { deployment } from "./deployment.ts";
-import { service } from "./service.ts";
+// import l9t from "../../l9t.ts";
+import deployment from "./deployment.ts";
+import service from "./service.ts";
 
-l9t([service, deployment], import.meta);
+const params = {
+  build: Deno.env.get("BUILD") || "dev",
+};
+
+l9t([service(params), deployment(params)], import.meta);

@@ -1,6 +1,6 @@
 import { io$k8s$api$core$v1$Service } from "https://raw.githubusercontent.com/nvbn/l9t/master/l9t.ts";
 
-export const service: io$k8s$api$core$v1$Service = {
+export default ({}): io$k8s$api$core$v1$Service => ({
   apiVersion: "v1",
   kind: "Service",
   metadata: {
@@ -19,4 +19,4 @@ export const service: io$k8s$api$core$v1$Service = {
     ],
     type: "LoadBalancer",
   },
-};
+});

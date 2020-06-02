@@ -31,7 +31,10 @@ import l9t, {
   io$k8s$api$core$v1$Service,
 } from "https://raw.githubusercontent.com/nvbn/l9t/master/l9t.ts";
 
-const deployment: io$k8s$api$apps$v1$Deployment = { // types for variables aren't required but useful for ides
+// types for variables aren't required but useful for ides
+const deployment = (
+  { build }: { build: string },
+): io$k8s$api$apps$v1$Deployment => ({
   apiVersion: "apps/v1",
   kind: "Deployment",
   metadata: {
@@ -43,8 +46,7 @@ const deployment: io$k8s$api$apps$v1$Deployment = { // types for variables aren'
         app: "hello-world",
       },
     },
-    // allows to change configuration depending on environment variables
-    replicas: Deno.env.get("BUILD") === "prod" ? 10 : 2,
+    replicas: build === "prod" ? 10 : 2,
     template: {
       metadata: {
         labels: {
@@ -66,9 +68,9 @@ const deployment: io$k8s$api$apps$v1$Deployment = { // types for variables aren'
       },
     },
   },
-};
+});
 
-const service: io$k8s$api$core$v1$Service = {
+const service =({}): io$k8s$api$core$v1$Service => ({
   apiVersion: "v1",
   kind: "Service",
   metadata: {
@@ -87,9 +89,13 @@ const service: io$k8s$api$core$v1$Service = {
     ],
     type: "LoadBalancer",
   },
+});
+
+const params = {
+  build: Deno.env.get("BUILD") || "dev",
 };
 
-l9t([deployment, service], import.meta);
+l9t([deployment(params), service(params)], import.meta);
 ```
 
 Apply the configuration with:

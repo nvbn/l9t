@@ -1,6 +1,8 @@
 import { io$k8s$api$apps$v1$Deployment } from "https://raw.githubusercontent.com/nvbn/l9t/master/l9t.ts";
 
-export const deployment: io$k8s$api$apps$v1$Deployment = {
+export default (
+  { build }: { build: string },
+): io$k8s$api$apps$v1$Deployment => ({
   apiVersion: "apps/v1",
   kind: "Deployment",
   metadata: {
@@ -12,7 +14,7 @@ export const deployment: io$k8s$api$apps$v1$Deployment = {
         app: "hello-world",
       },
     },
-    replicas: Deno.env.get("BUILD") === "prod" ? 10 : 2,
+    replicas: build === "prod" ? 10 : 2,
     template: {
       metadata: {
         labels: {
@@ -34,4 +36,4 @@ export const deployment: io$k8s$api$apps$v1$Deployment = {
       },
     },
   },
-};
+});
