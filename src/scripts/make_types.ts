@@ -89,7 +89,7 @@ const escapeComment = (comment: string): string => {
   return comment.replace(/\/\*/g, "^*").replace(/\*\//g, "*^");
 };
 
-const _toTypes = function* (name: string) {
+const toType = function* (name: string) {
   const definition = spec.definitions[name] as ApiTypeDefinition;
 
   const required = new Set<string>(definition.required || []);
@@ -108,15 +108,15 @@ const _toTypes = function* (name: string) {
     }
 
     if (propDefinition.description) {
-      yield `  /** ${escapeComment(propDefinition.description)} */`;
+      yield `/** ${escapeComment(propDefinition.description)} */`;
     }
 
     const propType = getPropType(propDefinition);
 
     if (required.has(prop)) {
-      yield `  readonly "${prop}": ${propType};`;
+      yield `readonly "${prop}": ${propType};`;
     } else {
-      yield `  readonly "${prop}"?: ${propType};`;
+      yield `readonly "${prop}"?: ${propType};`;
     }
   }
   if (definition["x-kubernetes-group-version-kind"]) {
@@ -129,8 +129,8 @@ const _toTypes = function* (name: string) {
         ): [ApiTypeDefinitionXKubernetesGroupVersionKind, number] => [v, i])
     ) {
       const apiVersion = group ? `${group}/${version}` : version;
-      yield `  readonly apiVersion: "${apiVersion}";`;
-      yield `  readonly kind: "${kind}";`;
+      yield `readonly apiVersion: "${apiVersion}";`;
+      yield `readonly kind: "${kind}";`;
 
       if (i !== definition["x-kubernetes-group-version-kind"].length - 1) {
         yield "} | {";
@@ -142,9 +142,17 @@ const _toTypes = function* (name: string) {
   }
 };
 
-const toTypes = (name: string) => Array.from(_toTypes(name)).join("\n");
+const makeTypes = function* () {
+  for (const name of Object.keys(spec.definitions)) {
+    if (!name.startsWith(allowedNamespace)) {
+      continue;
+    }
 
-const _makeResources = function* () {
+    yield* toType(name);
+  }
+};
+
+const makeResources = function* () {
   let kindToTypes: { [k: string]: Set<string> } = {};
   for (const [name, definition] of Object.entries(spec.definitions)) {
     if (
@@ -170,18 +178,14 @@ const _makeResources = function* () {
 
   yield `export type ${resourcesType} =`;
   for (const kind of Object.keys(kindToTypes)) {
-    yield `  | ${kind}`;
+    yield `| ${kind}`;
   }
   yield ";";
 };
 
-const makeResources = (): string => Array.from(_makeResources()).join("\n");
+const code = [
+  ...makeTypes(),
+  ...makeResources(),
+].join("\n");
 
-for (const typeName of Object.keys(spec.definitions)) {
-  if (typeName && typeName.startsWith(allowedNamespace)) {
-    console.log(toTypes(typeName));
-    console.log("");
-  }
-}
-
-console.log(makeResources());
+console.log(code);

@@ -151,4 +151,21 @@ deno run --unstable --allow-read src/scripts/make_types.ts io.k8s KubernetesReso
 deno fmt
 ```
 
+It's possible to generate types for your kuernetes extensions, like:
+
+```bash
+deno run --unstable --allow-read src/scripts/make_types.ts EXTENSION_NS MyExtensionResources > ext.ts
+```
+
+And use it like:
+
+```typescript
+import l9t, { KubernetesResources } from "https://raw.githubusercontent.com/nvbn/l9t/master/l9t.ts";
+import { MyExtensionResources } from "./ext.ts";
+
+...
+
+l9t<KubernetesResources | MyExtensionResources>([...], import.meta);
+```
+
 ## License MIT
