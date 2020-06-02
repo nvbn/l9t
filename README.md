@@ -27,14 +27,14 @@ Then you can create a configuration:
 
 ```typescript
 import l9t, {
-  io$k8s$api$apps$v1$Deployment,
-  io$k8s$api$core$v1$Service,
+  Deployment,
+  Service,
 } from "https://raw.githubusercontent.com/nvbn/l9t/master/l9t.ts";
 
 // types for variables aren't required but useful for ides
 const deployment = (
   { build }: { build: string },
-): io$k8s$api$apps$v1$Deployment => ({
+): Deployment => ({
   apiVersion: "apps/v1",
   kind: "Deployment",
   metadata: {
@@ -70,7 +70,7 @@ const deployment = (
   },
 });
 
-const service =({}): io$k8s$api$core$v1$Service => ({
+const service =({}): Service => ({
   apiVersion: "v1",
   kind: "Service",
   metadata: {
@@ -147,7 +147,7 @@ To generate new version of the default types run:
 ```bash
 kubectl proxy --port=8080
 curl -k localhost:8080/openapi/v2 > spec.json
-deno run --unstable --allow-read src/scripts/make_types.ts > src/types/k8s.ts
+deno run --unstable --allow-read src/scripts/make_types.ts io.k8s KubernetesResources > src/types/k8s.ts
 deno fmt
 ```
 

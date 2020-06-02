@@ -1,6 +1,6 @@
-import { io$k8s$api$core$v1$Service } from "https://raw.githubusercontent.com/nvbn/l9t/master/l9t.ts";
+import { Service } from "https://raw.githubusercontent.com/nvbn/l9t/master/l9t.ts";
 
-export default ({}): io$k8s$api$core$v1$Service => ({
+export default ({}): Service => ({
   apiVersion: "v1",
   kind: "Service",
   metadata: {
