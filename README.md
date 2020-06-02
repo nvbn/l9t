@@ -16,7 +16,7 @@ Because working with kubernetes configs and helm is painful:
 
 ## How?
 
-TypeScript + Deno + just kubectl.
+TypeScript + Deno + kubectl + optional fswatch.
 
 ## Usage
 
@@ -70,7 +70,7 @@ const deployment = (
   },
 });
 
-const service =({}): Service => ({
+const service = ({}): Service => ({
   apiVersion: "v1",
   kind: "Service",
   metadata: {
