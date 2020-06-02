@@ -1,9 +1,9 @@
 import { parse, Args } from "https://deno.land/std/flags/mod.ts";
 export * from "./types/k8s.ts";
-import { KubernetesConfig } from "./types/k8s.ts";
+import { KubernetesResources } from "./types/k8s.ts";
 import compiler from "./compiler.ts";
 
-export default <T extends object = KubernetesConfig>(
+export default <T extends object = KubernetesResources>(
   cfgs: T[],
   { url, main }: ImportMeta,
 ) => {

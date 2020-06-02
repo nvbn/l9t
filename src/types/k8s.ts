@@ -3,7 +3,8 @@ export type io$k8s$api$admissionregistration$v1beta1$MutatingWebhook = {
   /** AdmissionReviewVersions is an ordered list of preferred `AdmissionReview` versions the Webhook expects. API server will try to use first version in the list which it supports. If none of the versions specified in this list supported by API server, validation will fail for this object. If a persisted webhook configuration specifies allowed versions and does not include any versions known to the API Server, calls to the webhook will fail and be subject to the failure policy. Default to `['v1beta1']`. */
   readonly "admissionReviewVersions"?: readonly string[];
   /** ClientConfig defines how to communicate with the hook. Required */
-  readonly "clientConfig": io$k8s$api$admissionregistration$v1beta1$WebhookClientConfig;
+  readonly "clientConfig":
+    io$k8s$api$admissionregistration$v1beta1$WebhookClientConfig;
   /** FailurePolicy defines how unrecognized errors from the admission endpoint are handled - allowed values are Ignore or Fail. Defaults to Ignore. */
   readonly "failurePolicy"?: string;
   /** matchPolicy defines how the "rules" list is used to match incoming requests. Allowed values are "Exact" or "Equivalent".
@@ -47,9 +48,11 @@ If instead you want to only run the webhook on any objects whose namespace is as
 See https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/ for more examples of label selectors.
 
 Default to the empty LabelSelector, which matches everything. */
-  readonly "namespaceSelector"?: io$k8s$apimachinery$pkg$apis$meta$v1$LabelSelector;
+  readonly "namespaceSelector"?:
+    io$k8s$apimachinery$pkg$apis$meta$v1$LabelSelector;
   /** ObjectSelector decides whether to run the webhook based on if the object has matching labels. objectSelector is evaluated against both the oldObject and newObject that would be sent to the webhook, and is considered to match if either object matches the selector. A null object (oldObject in the case of create, or newObject in the case of delete) or an object that cannot have labels (like a DeploymentRollback or a PodProxyOptions object) is not considered to match. Use the object selector only if the webhook is opt-in, because end users may skip the admission webhook by setting the labels. Default to the empty LabelSelector, which matches everything. */
-  readonly "objectSelector"?: io$k8s$apimachinery$pkg$apis$meta$v1$LabelSelector;
+  readonly "objectSelector"?:
+    io$k8s$apimachinery$pkg$apis$meta$v1$LabelSelector;
   /** reinvocationPolicy indicates whether this webhook should be called multiple times as part of a single admission evaluation. Allowed values are "Never" and "IfNeeded".
 
 Never: the webhook will not be called more than once in a single admission evaluation.
@@ -59,7 +62,8 @@ IfNeeded: the webhook will be called at least one additional time as part of the
 Defaults to "Never". */
   readonly "reinvocationPolicy"?: string;
   /** Rules describes what operations on what resources/subresources the webhook cares about. The webhook cares about an operation if it matches _any_ Rule. However, in order to prevent ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks from putting the cluster in a state which cannot be recovered from without completely disabling the plugin, ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects. */
-  readonly "rules"?: readonly io$k8s$api$admissionregistration$v1beta1$RuleWithOperations[];
+  readonly "rules"?:
+    readonly io$k8s$api$admissionregistration$v1beta1$RuleWithOperations[];
   /** SideEffects states whether this webhookk has side effects. Acceptable values are: Unknown, None, Some, NoneOnDryRun Webhooks with side effects MUST implement a reconciliation system, since a request may be rejected by a future step in the admission change and the side effects therefore need to be undone. Requests with the dryRun attribute will be auto-rejected if they match a webhook with sideEffects == Unknown or Some. Defaults to Unknown. */
   readonly "sideEffects"?: string;
   /** TimeoutSeconds specifies the timeout for this webhook. After the timeout passes, the webhook call will be ignored or the API call will fail based on the failure policy. The timeout value must be between 1 and 30 seconds. Default to 30 seconds. */
@@ -67,26 +71,32 @@ Defaults to "Never". */
 };
 
 /** MutatingWebhookConfiguration describes the configuration of and admission webhook that accept or reject and may change the object. */
-export type io$k8s$api$admissionregistration$v1beta1$MutatingWebhookConfiguration = {
-  /** Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Webhooks is a list of webhooks and the affected resources and operations. */
-  readonly "webhooks"?: readonly io$k8s$api$admissionregistration$v1beta1$MutatingWebhook[];
-} & ({
-  readonly apiVersion: "admissionregistration.k8s.io/v1beta1";
-  readonly kind: "MutatingWebhookConfiguration";
-});
+export type io$k8s$api$admissionregistration$v1beta1$MutatingWebhookConfiguration =
+  & {
+    /** Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Webhooks is a list of webhooks and the affected resources and operations. */
+    readonly "webhooks"?:
+      readonly io$k8s$api$admissionregistration$v1beta1$MutatingWebhook[];
+  }
+  & ({
+    readonly apiVersion: "admissionregistration.k8s.io/v1beta1";
+    readonly kind: "MutatingWebhookConfiguration";
+  });
 
 /** MutatingWebhookConfigurationList is a list of MutatingWebhookConfiguration. */
-export type io$k8s$api$admissionregistration$v1beta1$MutatingWebhookConfigurationList = {
-  /** List of MutatingWebhookConfiguration. */
-  readonly "items": readonly io$k8s$api$admissionregistration$v1beta1$MutatingWebhookConfiguration[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "admissionregistration.k8s.io/v1beta1";
-  readonly kind: "MutatingWebhookConfigurationList";
-});
+export type io$k8s$api$admissionregistration$v1beta1$MutatingWebhookConfigurationList =
+  & {
+    /** List of MutatingWebhookConfiguration. */
+    readonly "items":
+      readonly io$k8s$api$admissionregistration$v1beta1$MutatingWebhookConfiguration[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "admissionregistration.k8s.io/v1beta1";
+    readonly kind: "MutatingWebhookConfigurationList";
+  });
 
 /** RuleWithOperations is a tuple of Operations and Resources. It is recommended to make sure that all the tuple expansions are valid. */
 export type io$k8s$api$admissionregistration$v1beta1$RuleWithOperations = {
@@ -125,7 +135,8 @@ export type io$k8s$api$admissionregistration$v1beta1$ValidatingWebhook = {
   /** AdmissionReviewVersions is an ordered list of preferred `AdmissionReview` versions the Webhook expects. API server will try to use first version in the list which it supports. If none of the versions specified in this list supported by API server, validation will fail for this object. If a persisted webhook configuration specifies allowed versions and does not include any versions known to the API Server, calls to the webhook will fail and be subject to the failure policy. Default to `['v1beta1']`. */
   readonly "admissionReviewVersions"?: readonly string[];
   /** ClientConfig defines how to communicate with the hook. Required */
-  readonly "clientConfig": io$k8s$api$admissionregistration$v1beta1$WebhookClientConfig;
+  readonly "clientConfig":
+    io$k8s$api$admissionregistration$v1beta1$WebhookClientConfig;
   /** FailurePolicy defines how unrecognized errors from the admission endpoint are handled - allowed values are Ignore or Fail. Defaults to Ignore. */
   readonly "failurePolicy"?: string;
   /** matchPolicy defines how the "rules" list is used to match incoming requests. Allowed values are "Exact" or "Equivalent".
@@ -169,11 +180,14 @@ If instead you want to only run the webhook on any objects whose namespace is as
 See https://kubernetes.io/docs/concepts/overview/working-with-objects/labels for more examples of label selectors.
 
 Default to the empty LabelSelector, which matches everything. */
-  readonly "namespaceSelector"?: io$k8s$apimachinery$pkg$apis$meta$v1$LabelSelector;
+  readonly "namespaceSelector"?:
+    io$k8s$apimachinery$pkg$apis$meta$v1$LabelSelector;
   /** ObjectSelector decides whether to run the webhook based on if the object has matching labels. objectSelector is evaluated against both the oldObject and newObject that would be sent to the webhook, and is considered to match if either object matches the selector. A null object (oldObject in the case of create, or newObject in the case of delete) or an object that cannot have labels (like a DeploymentRollback or a PodProxyOptions object) is not considered to match. Use the object selector only if the webhook is opt-in, because end users may skip the admission webhook by setting the labels. Default to the empty LabelSelector, which matches everything. */
-  readonly "objectSelector"?: io$k8s$apimachinery$pkg$apis$meta$v1$LabelSelector;
+  readonly "objectSelector"?:
+    io$k8s$apimachinery$pkg$apis$meta$v1$LabelSelector;
   /** Rules describes what operations on what resources/subresources the webhook cares about. The webhook cares about an operation if it matches _any_ Rule. However, in order to prevent ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks from putting the cluster in a state which cannot be recovered from without completely disabling the plugin, ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects. */
-  readonly "rules"?: readonly io$k8s$api$admissionregistration$v1beta1$RuleWithOperations[];
+  readonly "rules"?:
+    readonly io$k8s$api$admissionregistration$v1beta1$RuleWithOperations[];
   /** SideEffects states whether this webhookk has side effects. Acceptable values are: Unknown, None, Some, NoneOnDryRun Webhooks with side effects MUST implement a reconciliation system, since a request may be rejected by a future step in the admission change and the side effects therefore need to be undone. Requests with the dryRun attribute will be auto-rejected if they match a webhook with sideEffects == Unknown or Some. Defaults to Unknown. */
   readonly "sideEffects"?: string;
   /** TimeoutSeconds specifies the timeout for this webhook. After the timeout passes, the webhook call will be ignored or the API call will fail based on the failure policy. The timeout value must be between 1 and 30 seconds. Default to 30 seconds. */
@@ -181,26 +195,32 @@ Default to the empty LabelSelector, which matches everything. */
 };
 
 /** ValidatingWebhookConfiguration describes the configuration of and admission webhook that accept or reject and object without changing it. */
-export type io$k8s$api$admissionregistration$v1beta1$ValidatingWebhookConfiguration = {
-  /** Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Webhooks is a list of webhooks and the affected resources and operations. */
-  readonly "webhooks"?: readonly io$k8s$api$admissionregistration$v1beta1$ValidatingWebhook[];
-} & ({
-  readonly apiVersion: "admissionregistration.k8s.io/v1beta1";
-  readonly kind: "ValidatingWebhookConfiguration";
-});
+export type io$k8s$api$admissionregistration$v1beta1$ValidatingWebhookConfiguration =
+  & {
+    /** Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Webhooks is a list of webhooks and the affected resources and operations. */
+    readonly "webhooks"?:
+      readonly io$k8s$api$admissionregistration$v1beta1$ValidatingWebhook[];
+  }
+  & ({
+    readonly apiVersion: "admissionregistration.k8s.io/v1beta1";
+    readonly kind: "ValidatingWebhookConfiguration";
+  });
 
 /** ValidatingWebhookConfigurationList is a list of ValidatingWebhookConfiguration. */
-export type io$k8s$api$admissionregistration$v1beta1$ValidatingWebhookConfigurationList = {
-  /** List of ValidatingWebhookConfiguration. */
-  readonly "items": readonly io$k8s$api$admissionregistration$v1beta1$ValidatingWebhookConfiguration[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "admissionregistration.k8s.io/v1beta1";
-  readonly kind: "ValidatingWebhookConfigurationList";
-});
+export type io$k8s$api$admissionregistration$v1beta1$ValidatingWebhookConfigurationList =
+  & {
+    /** List of ValidatingWebhookConfiguration. */
+    readonly "items":
+      readonly io$k8s$api$admissionregistration$v1beta1$ValidatingWebhookConfiguration[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "admissionregistration.k8s.io/v1beta1";
+    readonly kind: "ValidatingWebhookConfigurationList";
+  });
 
 /** WebhookClientConfig contains the information to make a TLS connection with the webhook */
 export type io$k8s$api$admissionregistration$v1beta1$WebhookClientConfig = {
@@ -209,7 +229,8 @@ export type io$k8s$api$admissionregistration$v1beta1$WebhookClientConfig = {
   /** `service` is a reference to the service for this webhook. Either `service` or `url` must be specified.
 
 If the webhook is running within the cluster, then you should use `service`. */
-  readonly "service"?: io$k8s$api$admissionregistration$v1beta1$ServiceReference;
+  readonly "service"?:
+    io$k8s$api$admissionregistration$v1beta1$ServiceReference;
   /** `url` gives the location of the webhook, in standard URL form (`scheme://host:port/path`). Exactly one of `url` or `service` must be specified.
 
 The `host` should not refer to a service running in the cluster; use the `service` field instead. The host might be resolved via external DNS in some apiservers (e.g., `kube-apiserver` cannot resolve in-cluster DNS as that would be a layering violation). `host` may also be an IP address.
@@ -225,41 +246,47 @@ Attempting to use a user or basic auth e.g. "user:password@" is not allowed. Fra
 };
 
 /** ControllerRevision implements an immutable snapshot of state data. Clients are responsible for serializing and deserializing the objects that contain their internal state. Once a ControllerRevision has been successfully created, it can not be updated. The API Server will fail validation of all requests that attempt to mutate the Data field. ControllerRevisions may, however, be deleted. Note that, due to its use by both the DaemonSet and StatefulSet controllers for update and rollback, this object is beta. However, it may be subject to name and representation changes in future releases, and clients should not depend on its stability. It is primarily for internal use by controllers. */
-export type io$k8s$api$apps$v1$ControllerRevision = {
-  /** Data is the serialized representation of the state. */
-  readonly "data"?: io$k8s$apimachinery$pkg$runtime$RawExtension;
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Revision indicates the revision of the state represented by Data. */
-  readonly "revision": number;
-} & ({
-  readonly apiVersion: "apps/v1";
-  readonly kind: "ControllerRevision";
-});
+export type io$k8s$api$apps$v1$ControllerRevision =
+  & {
+    /** Data is the serialized representation of the state. */
+    readonly "data"?: io$k8s$apimachinery$pkg$runtime$RawExtension;
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Revision indicates the revision of the state represented by Data. */
+    readonly "revision": number;
+  }
+  & ({
+    readonly apiVersion: "apps/v1";
+    readonly kind: "ControllerRevision";
+  });
 
 /** ControllerRevisionList is a resource containing a list of ControllerRevision objects. */
-export type io$k8s$api$apps$v1$ControllerRevisionList = {
-  /** Items is the list of ControllerRevisions */
-  readonly "items": readonly io$k8s$api$apps$v1$ControllerRevision[];
-  /** More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "apps/v1";
-  readonly kind: "ControllerRevisionList";
-});
+export type io$k8s$api$apps$v1$ControllerRevisionList =
+  & {
+    /** Items is the list of ControllerRevisions */
+    readonly "items": readonly io$k8s$api$apps$v1$ControllerRevision[];
+    /** More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "apps/v1";
+    readonly kind: "ControllerRevisionList";
+  });
 
 /** DaemonSet represents the configuration of a daemon set. */
-export type io$k8s$api$apps$v1$DaemonSet = {
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** The desired behavior of this daemon set. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
-  readonly "spec"?: io$k8s$api$apps$v1$DaemonSetSpec;
-  /** The current status of this daemon set. This data may be out of date by some window of time. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
-  readonly "status"?: io$k8s$api$apps$v1$DaemonSetStatus;
-} & ({
-  readonly apiVersion: "apps/v1";
-  readonly kind: "DaemonSet";
-});
+export type io$k8s$api$apps$v1$DaemonSet =
+  & {
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** The desired behavior of this daemon set. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
+    readonly "spec"?: io$k8s$api$apps$v1$DaemonSetSpec;
+    /** The current status of this daemon set. This data may be out of date by some window of time. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
+    readonly "status"?: io$k8s$api$apps$v1$DaemonSetStatus;
+  }
+  & ({
+    readonly apiVersion: "apps/v1";
+    readonly kind: "DaemonSet";
+  });
 
 /** DaemonSetCondition describes the state of a DaemonSet at a certain point. */
 export type io$k8s$api$apps$v1$DaemonSetCondition = {
@@ -276,15 +303,17 @@ export type io$k8s$api$apps$v1$DaemonSetCondition = {
 };
 
 /** DaemonSetList is a collection of daemon sets. */
-export type io$k8s$api$apps$v1$DaemonSetList = {
-  /** A list of daemon sets. */
-  readonly "items": readonly io$k8s$api$apps$v1$DaemonSet[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "apps/v1";
-  readonly kind: "DaemonSetList";
-});
+export type io$k8s$api$apps$v1$DaemonSetList =
+  & {
+    /** A list of daemon sets. */
+    readonly "items": readonly io$k8s$api$apps$v1$DaemonSet[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "apps/v1";
+    readonly kind: "DaemonSetList";
+  });
 
 /** DaemonSetSpec is the specification of a daemon set. */
 export type io$k8s$api$apps$v1$DaemonSetSpec = {
@@ -333,17 +362,19 @@ export type io$k8s$api$apps$v1$DaemonSetUpdateStrategy = {
 };
 
 /** Deployment enables declarative updates for Pods and ReplicaSets. */
-export type io$k8s$api$apps$v1$Deployment = {
-  /** Standard object metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Specification of the desired behavior of the Deployment. */
-  readonly "spec"?: io$k8s$api$apps$v1$DeploymentSpec;
-  /** Most recently observed status of the Deployment. */
-  readonly "status"?: io$k8s$api$apps$v1$DeploymentStatus;
-} & ({
-  readonly apiVersion: "apps/v1";
-  readonly kind: "Deployment";
-});
+export type io$k8s$api$apps$v1$Deployment =
+  & {
+    /** Standard object metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Specification of the desired behavior of the Deployment. */
+    readonly "spec"?: io$k8s$api$apps$v1$DeploymentSpec;
+    /** Most recently observed status of the Deployment. */
+    readonly "status"?: io$k8s$api$apps$v1$DeploymentStatus;
+  }
+  & ({
+    readonly apiVersion: "apps/v1";
+    readonly kind: "Deployment";
+  });
 
 /** DeploymentCondition describes the state of a deployment at a certain point. */
 export type io$k8s$api$apps$v1$DeploymentCondition = {
@@ -362,15 +393,17 @@ export type io$k8s$api$apps$v1$DeploymentCondition = {
 };
 
 /** DeploymentList is a list of Deployments. */
-export type io$k8s$api$apps$v1$DeploymentList = {
-  /** Items is the list of Deployments. */
-  readonly "items": readonly io$k8s$api$apps$v1$Deployment[];
-  /** Standard list metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "apps/v1";
-  readonly kind: "DeploymentList";
-});
+export type io$k8s$api$apps$v1$DeploymentList =
+  & {
+    /** Items is the list of Deployments. */
+    readonly "items": readonly io$k8s$api$apps$v1$Deployment[];
+    /** Standard list metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "apps/v1";
+    readonly kind: "DeploymentList";
+  });
 
 /** DeploymentSpec is the specification of the desired behavior of the Deployment. */
 export type io$k8s$api$apps$v1$DeploymentSpec = {
@@ -421,17 +454,19 @@ export type io$k8s$api$apps$v1$DeploymentStrategy = {
 };
 
 /** ReplicaSet ensures that a specified number of pod replicas are running at any given time. */
-export type io$k8s$api$apps$v1$ReplicaSet = {
-  /** If the Labels of a ReplicaSet are empty, they are defaulted to be the same as the Pod(s) that the ReplicaSet manages. Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Spec defines the specification of the desired behavior of the ReplicaSet. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
-  readonly "spec"?: io$k8s$api$apps$v1$ReplicaSetSpec;
-  /** Status is the most recently observed status of the ReplicaSet. This data may be out of date by some window of time. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
-  readonly "status"?: io$k8s$api$apps$v1$ReplicaSetStatus;
-} & ({
-  readonly apiVersion: "apps/v1";
-  readonly kind: "ReplicaSet";
-});
+export type io$k8s$api$apps$v1$ReplicaSet =
+  & {
+    /** If the Labels of a ReplicaSet are empty, they are defaulted to be the same as the Pod(s) that the ReplicaSet manages. Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Spec defines the specification of the desired behavior of the ReplicaSet. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
+    readonly "spec"?: io$k8s$api$apps$v1$ReplicaSetSpec;
+    /** Status is the most recently observed status of the ReplicaSet. This data may be out of date by some window of time. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
+    readonly "status"?: io$k8s$api$apps$v1$ReplicaSetStatus;
+  }
+  & ({
+    readonly apiVersion: "apps/v1";
+    readonly kind: "ReplicaSet";
+  });
 
 /** ReplicaSetCondition describes the state of a replica set at a certain point. */
 export type io$k8s$api$apps$v1$ReplicaSetCondition = {
@@ -448,15 +483,17 @@ export type io$k8s$api$apps$v1$ReplicaSetCondition = {
 };
 
 /** ReplicaSetList is a collection of ReplicaSets. */
-export type io$k8s$api$apps$v1$ReplicaSetList = {
-  /** List of ReplicaSets. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller */
-  readonly "items": readonly io$k8s$api$apps$v1$ReplicaSet[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "apps/v1";
-  readonly kind: "ReplicaSetList";
-});
+export type io$k8s$api$apps$v1$ReplicaSetList =
+  & {
+    /** List of ReplicaSets. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller */
+    readonly "items": readonly io$k8s$api$apps$v1$ReplicaSet[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "apps/v1";
+    readonly kind: "ReplicaSetList";
+  });
 
 /** ReplicaSetSpec is the specification of a ReplicaSet. */
 export type io$k8s$api$apps$v1$ReplicaSetSpec = {
@@ -510,16 +547,18 @@ export type io$k8s$api$apps$v1$RollingUpdateStatefulSetStrategy = {
  - Network: A single stable DNS and hostname.
  - Storage: As many VolumeClaims as requested.
 The StatefulSet guarantees that a given network identity will always map to the same storage identity. */
-export type io$k8s$api$apps$v1$StatefulSet = {
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Spec defines the desired identities of pods in this set. */
-  readonly "spec"?: io$k8s$api$apps$v1$StatefulSetSpec;
-  /** Status is the current status of Pods in this StatefulSet. This data may be out of date by some window of time. */
-  readonly "status"?: io$k8s$api$apps$v1$StatefulSetStatus;
-} & ({
-  readonly apiVersion: "apps/v1";
-  readonly kind: "StatefulSet";
-});
+export type io$k8s$api$apps$v1$StatefulSet =
+  & {
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Spec defines the desired identities of pods in this set. */
+    readonly "spec"?: io$k8s$api$apps$v1$StatefulSetSpec;
+    /** Status is the current status of Pods in this StatefulSet. This data may be out of date by some window of time. */
+    readonly "status"?: io$k8s$api$apps$v1$StatefulSetStatus;
+  }
+  & ({
+    readonly apiVersion: "apps/v1";
+    readonly kind: "StatefulSet";
+  });
 
 /** StatefulSetCondition describes the state of a statefulset at a certain point. */
 export type io$k8s$api$apps$v1$StatefulSetCondition = {
@@ -536,13 +575,15 @@ export type io$k8s$api$apps$v1$StatefulSetCondition = {
 };
 
 /** StatefulSetList is a collection of StatefulSets. */
-export type io$k8s$api$apps$v1$StatefulSetList = {
-  readonly "items": readonly io$k8s$api$apps$v1$StatefulSet[];
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "apps/v1";
-  readonly kind: "StatefulSetList";
-});
+export type io$k8s$api$apps$v1$StatefulSetList =
+  & {
+    readonly "items": readonly io$k8s$api$apps$v1$StatefulSet[];
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "apps/v1";
+    readonly kind: "StatefulSetList";
+  });
 
 /** A StatefulSetSpec is the specification of a StatefulSet. */
 export type io$k8s$api$apps$v1$StatefulSetSpec = {
@@ -561,7 +602,8 @@ export type io$k8s$api$apps$v1$StatefulSetSpec = {
   /** updateStrategy indicates the StatefulSetUpdateStrategy that will be employed to update Pods in the StatefulSet when a revision is made to Template. */
   readonly "updateStrategy"?: io$k8s$api$apps$v1$StatefulSetUpdateStrategy;
   /** volumeClaimTemplates is a list of claims that pods are allowed to reference. The StatefulSet controller is responsible for mapping network identities to claims in a way that maintains the identity of a pod. Every claim in this list must have at least one matching (by name) volumeMount in one container in the template. A claim in this list takes precedence over any volumes in the template, with the same name. */
-  readonly "volumeClaimTemplates"?: readonly io$k8s$api$core$v1$PersistentVolumeClaim[];
+  readonly "volumeClaimTemplates"?:
+    readonly io$k8s$api$core$v1$PersistentVolumeClaim[];
 };
 
 /** StatefulSetStatus represents the current state of a StatefulSet. */
@@ -589,47 +631,54 @@ export type io$k8s$api$apps$v1$StatefulSetStatus = {
 /** StatefulSetUpdateStrategy indicates the strategy that the StatefulSet controller will use to perform updates. It includes any additional parameters necessary to perform the update for the indicated strategy. */
 export type io$k8s$api$apps$v1$StatefulSetUpdateStrategy = {
   /** RollingUpdate is used to communicate parameters when Type is RollingUpdateStatefulSetStrategyType. */
-  readonly "rollingUpdate"?: io$k8s$api$apps$v1$RollingUpdateStatefulSetStrategy;
+  readonly "rollingUpdate"?:
+    io$k8s$api$apps$v1$RollingUpdateStatefulSetStrategy;
   /** Type indicates the type of the StatefulSetUpdateStrategy. Default is RollingUpdate. */
   readonly "type"?: string;
 };
 
 /** DEPRECATED - This group version of ControllerRevision is deprecated by apps/v1beta2/ControllerRevision. See the release notes for more information. ControllerRevision implements an immutable snapshot of state data. Clients are responsible for serializing and deserializing the objects that contain their internal state. Once a ControllerRevision has been successfully created, it can not be updated. The API Server will fail validation of all requests that attempt to mutate the Data field. ControllerRevisions may, however, be deleted. Note that, due to its use by both the DaemonSet and StatefulSet controllers for update and rollback, this object is beta. However, it may be subject to name and representation changes in future releases, and clients should not depend on its stability. It is primarily for internal use by controllers. */
-export type io$k8s$api$apps$v1beta1$ControllerRevision = {
-  /** Data is the serialized representation of the state. */
-  readonly "data"?: io$k8s$apimachinery$pkg$runtime$RawExtension;
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Revision indicates the revision of the state represented by Data. */
-  readonly "revision": number;
-} & ({
-  readonly apiVersion: "apps/v1beta1";
-  readonly kind: "ControllerRevision";
-});
+export type io$k8s$api$apps$v1beta1$ControllerRevision =
+  & {
+    /** Data is the serialized representation of the state. */
+    readonly "data"?: io$k8s$apimachinery$pkg$runtime$RawExtension;
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Revision indicates the revision of the state represented by Data. */
+    readonly "revision": number;
+  }
+  & ({
+    readonly apiVersion: "apps/v1beta1";
+    readonly kind: "ControllerRevision";
+  });
 
 /** ControllerRevisionList is a resource containing a list of ControllerRevision objects. */
-export type io$k8s$api$apps$v1beta1$ControllerRevisionList = {
-  /** Items is the list of ControllerRevisions */
-  readonly "items": readonly io$k8s$api$apps$v1beta1$ControllerRevision[];
-  /** More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "apps/v1beta1";
-  readonly kind: "ControllerRevisionList";
-});
+export type io$k8s$api$apps$v1beta1$ControllerRevisionList =
+  & {
+    /** Items is the list of ControllerRevisions */
+    readonly "items": readonly io$k8s$api$apps$v1beta1$ControllerRevision[];
+    /** More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "apps/v1beta1";
+    readonly kind: "ControllerRevisionList";
+  });
 
 /** DEPRECATED - This group version of Deployment is deprecated by apps/v1beta2/Deployment. See the release notes for more information. Deployment enables declarative updates for Pods and ReplicaSets. */
-export type io$k8s$api$apps$v1beta1$Deployment = {
-  /** Standard object metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Specification of the desired behavior of the Deployment. */
-  readonly "spec"?: io$k8s$api$apps$v1beta1$DeploymentSpec;
-  /** Most recently observed status of the Deployment. */
-  readonly "status"?: io$k8s$api$apps$v1beta1$DeploymentStatus;
-} & ({
-  readonly apiVersion: "apps/v1beta1";
-  readonly kind: "Deployment";
-});
+export type io$k8s$api$apps$v1beta1$Deployment =
+  & {
+    /** Standard object metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Specification of the desired behavior of the Deployment. */
+    readonly "spec"?: io$k8s$api$apps$v1beta1$DeploymentSpec;
+    /** Most recently observed status of the Deployment. */
+    readonly "status"?: io$k8s$api$apps$v1beta1$DeploymentStatus;
+  }
+  & ({
+    readonly apiVersion: "apps/v1beta1";
+    readonly kind: "Deployment";
+  });
 
 /** DeploymentCondition describes the state of a deployment at a certain point. */
 export type io$k8s$api$apps$v1beta1$DeploymentCondition = {
@@ -648,28 +697,32 @@ export type io$k8s$api$apps$v1beta1$DeploymentCondition = {
 };
 
 /** DeploymentList is a list of Deployments. */
-export type io$k8s$api$apps$v1beta1$DeploymentList = {
-  /** Items is the list of Deployments. */
-  readonly "items": readonly io$k8s$api$apps$v1beta1$Deployment[];
-  /** Standard list metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "apps/v1beta1";
-  readonly kind: "DeploymentList";
-});
+export type io$k8s$api$apps$v1beta1$DeploymentList =
+  & {
+    /** Items is the list of Deployments. */
+    readonly "items": readonly io$k8s$api$apps$v1beta1$Deployment[];
+    /** Standard list metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "apps/v1beta1";
+    readonly kind: "DeploymentList";
+  });
 
 /** DEPRECATED. DeploymentRollback stores the information required to rollback a deployment. */
-export type io$k8s$api$apps$v1beta1$DeploymentRollback = {
-  /** Required: This must match the Name of a deployment. */
-  readonly "name": string;
-  /** The config of this deployment rollback. */
-  readonly "rollbackTo": io$k8s$api$apps$v1beta1$RollbackConfig;
-  /** The annotations to be updated to a deployment */
-  readonly "updatedAnnotations"?: object;
-} & ({
-  readonly apiVersion: "apps/v1beta1";
-  readonly kind: "DeploymentRollback";
-});
+export type io$k8s$api$apps$v1beta1$DeploymentRollback =
+  & {
+    /** Required: This must match the Name of a deployment. */
+    readonly "name": string;
+    /** The config of this deployment rollback. */
+    readonly "rollbackTo": io$k8s$api$apps$v1beta1$RollbackConfig;
+    /** The annotations to be updated to a deployment */
+    readonly "updatedAnnotations"?: object;
+  }
+  & ({
+    readonly apiVersion: "apps/v1beta1";
+    readonly kind: "DeploymentRollback";
+  });
 
 /** DeploymentSpec is the specification of the desired behavior of the Deployment. */
 export type io$k8s$api$apps$v1beta1$DeploymentSpec = {
@@ -700,7 +753,8 @@ export type io$k8s$api$apps$v1beta1$DeploymentStatus = {
   /** Count of hash collisions for the Deployment. The Deployment controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ReplicaSet. */
   readonly "collisionCount"?: number;
   /** Represents the latest available observations of a deployment's current state. */
-  readonly "conditions"?: readonly io$k8s$api$apps$v1beta1$DeploymentCondition[];
+  readonly "conditions"?:
+    readonly io$k8s$api$apps$v1beta1$DeploymentCondition[];
   /** The generation observed by the deployment controller. */
   readonly "observedGeneration"?: number;
   /** Total number of ready pods targeted by this deployment. */
@@ -742,17 +796,19 @@ export type io$k8s$api$apps$v1beta1$RollingUpdateStatefulSetStrategy = {
 };
 
 /** Scale represents a scaling request for a resource. */
-export type io$k8s$api$apps$v1beta1$Scale = {
-  /** Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** defines the behavior of the scale. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status. */
-  readonly "spec"?: io$k8s$api$apps$v1beta1$ScaleSpec;
-  /** current status of the scale. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status. Read-only. */
-  readonly "status"?: io$k8s$api$apps$v1beta1$ScaleStatus;
-} & ({
-  readonly apiVersion: "apps/v1beta1";
-  readonly kind: "Scale";
-});
+export type io$k8s$api$apps$v1beta1$Scale =
+  & {
+    /** Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** defines the behavior of the scale. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status. */
+    readonly "spec"?: io$k8s$api$apps$v1beta1$ScaleSpec;
+    /** current status of the scale. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status. Read-only. */
+    readonly "status"?: io$k8s$api$apps$v1beta1$ScaleStatus;
+  }
+  & ({
+    readonly apiVersion: "apps/v1beta1";
+    readonly kind: "Scale";
+  });
 
 /** ScaleSpec describes the attributes of a scale subresource */
 export type io$k8s$api$apps$v1beta1$ScaleSpec = {
@@ -774,16 +830,18 @@ export type io$k8s$api$apps$v1beta1$ScaleStatus = {
  - Network: A single stable DNS and hostname.
  - Storage: As many VolumeClaims as requested.
 The StatefulSet guarantees that a given network identity will always map to the same storage identity. */
-export type io$k8s$api$apps$v1beta1$StatefulSet = {
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Spec defines the desired identities of pods in this set. */
-  readonly "spec"?: io$k8s$api$apps$v1beta1$StatefulSetSpec;
-  /** Status is the current status of Pods in this StatefulSet. This data may be out of date by some window of time. */
-  readonly "status"?: io$k8s$api$apps$v1beta1$StatefulSetStatus;
-} & ({
-  readonly apiVersion: "apps/v1beta1";
-  readonly kind: "StatefulSet";
-});
+export type io$k8s$api$apps$v1beta1$StatefulSet =
+  & {
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Spec defines the desired identities of pods in this set. */
+    readonly "spec"?: io$k8s$api$apps$v1beta1$StatefulSetSpec;
+    /** Status is the current status of Pods in this StatefulSet. This data may be out of date by some window of time. */
+    readonly "status"?: io$k8s$api$apps$v1beta1$StatefulSetStatus;
+  }
+  & ({
+    readonly apiVersion: "apps/v1beta1";
+    readonly kind: "StatefulSet";
+  });
 
 /** StatefulSetCondition describes the state of a statefulset at a certain point. */
 export type io$k8s$api$apps$v1beta1$StatefulSetCondition = {
@@ -800,13 +858,15 @@ export type io$k8s$api$apps$v1beta1$StatefulSetCondition = {
 };
 
 /** StatefulSetList is a collection of StatefulSets. */
-export type io$k8s$api$apps$v1beta1$StatefulSetList = {
-  readonly "items": readonly io$k8s$api$apps$v1beta1$StatefulSet[];
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "apps/v1beta1";
-  readonly kind: "StatefulSetList";
-});
+export type io$k8s$api$apps$v1beta1$StatefulSetList =
+  & {
+    readonly "items": readonly io$k8s$api$apps$v1beta1$StatefulSet[];
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "apps/v1beta1";
+    readonly kind: "StatefulSetList";
+  });
 
 /** A StatefulSetSpec is the specification of a StatefulSet. */
 export type io$k8s$api$apps$v1beta1$StatefulSetSpec = {
@@ -825,7 +885,8 @@ export type io$k8s$api$apps$v1beta1$StatefulSetSpec = {
   /** updateStrategy indicates the StatefulSetUpdateStrategy that will be employed to update Pods in the StatefulSet when a revision is made to Template. */
   readonly "updateStrategy"?: io$k8s$api$apps$v1beta1$StatefulSetUpdateStrategy;
   /** volumeClaimTemplates is a list of claims that pods are allowed to reference. The StatefulSet controller is responsible for mapping network identities to claims in a way that maintains the identity of a pod. Every claim in this list must have at least one matching (by name) volumeMount in one container in the template. A claim in this list takes precedence over any volumes in the template, with the same name. */
-  readonly "volumeClaimTemplates"?: readonly io$k8s$api$core$v1$PersistentVolumeClaim[];
+  readonly "volumeClaimTemplates"?:
+    readonly io$k8s$api$core$v1$PersistentVolumeClaim[];
 };
 
 /** StatefulSetStatus represents the current state of a StatefulSet. */
@@ -833,7 +894,8 @@ export type io$k8s$api$apps$v1beta1$StatefulSetStatus = {
   /** collisionCount is the count of hash collisions for the StatefulSet. The StatefulSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision. */
   readonly "collisionCount"?: number;
   /** Represents the latest available observations of a statefulset's current state. */
-  readonly "conditions"?: readonly io$k8s$api$apps$v1beta1$StatefulSetCondition[];
+  readonly "conditions"?:
+    readonly io$k8s$api$apps$v1beta1$StatefulSetCondition[];
   /** currentReplicas is the number of Pods created by the StatefulSet controller from the StatefulSet version indicated by currentRevision. */
   readonly "currentReplicas"?: number;
   /** currentRevision, if not empty, indicates the version of the StatefulSet used to generate Pods in the sequence [0,currentReplicas). */
@@ -853,47 +915,54 @@ export type io$k8s$api$apps$v1beta1$StatefulSetStatus = {
 /** StatefulSetUpdateStrategy indicates the strategy that the StatefulSet controller will use to perform updates. It includes any additional parameters necessary to perform the update for the indicated strategy. */
 export type io$k8s$api$apps$v1beta1$StatefulSetUpdateStrategy = {
   /** RollingUpdate is used to communicate parameters when Type is RollingUpdateStatefulSetStrategyType. */
-  readonly "rollingUpdate"?: io$k8s$api$apps$v1beta1$RollingUpdateStatefulSetStrategy;
+  readonly "rollingUpdate"?:
+    io$k8s$api$apps$v1beta1$RollingUpdateStatefulSetStrategy;
   /** Type indicates the type of the StatefulSetUpdateStrategy. */
   readonly "type"?: string;
 };
 
 /** DEPRECATED - This group version of ControllerRevision is deprecated by apps/v1/ControllerRevision. See the release notes for more information. ControllerRevision implements an immutable snapshot of state data. Clients are responsible for serializing and deserializing the objects that contain their internal state. Once a ControllerRevision has been successfully created, it can not be updated. The API Server will fail validation of all requests that attempt to mutate the Data field. ControllerRevisions may, however, be deleted. Note that, due to its use by both the DaemonSet and StatefulSet controllers for update and rollback, this object is beta. However, it may be subject to name and representation changes in future releases, and clients should not depend on its stability. It is primarily for internal use by controllers. */
-export type io$k8s$api$apps$v1beta2$ControllerRevision = {
-  /** Data is the serialized representation of the state. */
-  readonly "data"?: io$k8s$apimachinery$pkg$runtime$RawExtension;
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Revision indicates the revision of the state represented by Data. */
-  readonly "revision": number;
-} & ({
-  readonly apiVersion: "apps/v1beta2";
-  readonly kind: "ControllerRevision";
-});
+export type io$k8s$api$apps$v1beta2$ControllerRevision =
+  & {
+    /** Data is the serialized representation of the state. */
+    readonly "data"?: io$k8s$apimachinery$pkg$runtime$RawExtension;
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Revision indicates the revision of the state represented by Data. */
+    readonly "revision": number;
+  }
+  & ({
+    readonly apiVersion: "apps/v1beta2";
+    readonly kind: "ControllerRevision";
+  });
 
 /** ControllerRevisionList is a resource containing a list of ControllerRevision objects. */
-export type io$k8s$api$apps$v1beta2$ControllerRevisionList = {
-  /** Items is the list of ControllerRevisions */
-  readonly "items": readonly io$k8s$api$apps$v1beta2$ControllerRevision[];
-  /** More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "apps/v1beta2";
-  readonly kind: "ControllerRevisionList";
-});
+export type io$k8s$api$apps$v1beta2$ControllerRevisionList =
+  & {
+    /** Items is the list of ControllerRevisions */
+    readonly "items": readonly io$k8s$api$apps$v1beta2$ControllerRevision[];
+    /** More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "apps/v1beta2";
+    readonly kind: "ControllerRevisionList";
+  });
 
 /** DEPRECATED - This group version of DaemonSet is deprecated by apps/v1/DaemonSet. See the release notes for more information. DaemonSet represents the configuration of a daemon set. */
-export type io$k8s$api$apps$v1beta2$DaemonSet = {
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** The desired behavior of this daemon set. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status */
-  readonly "spec"?: io$k8s$api$apps$v1beta2$DaemonSetSpec;
-  /** The current status of this daemon set. This data may be out of date by some window of time. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status */
-  readonly "status"?: io$k8s$api$apps$v1beta2$DaemonSetStatus;
-} & ({
-  readonly apiVersion: "apps/v1beta2";
-  readonly kind: "DaemonSet";
-});
+export type io$k8s$api$apps$v1beta2$DaemonSet =
+  & {
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** The desired behavior of this daemon set. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status */
+    readonly "spec"?: io$k8s$api$apps$v1beta2$DaemonSetSpec;
+    /** The current status of this daemon set. This data may be out of date by some window of time. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status */
+    readonly "status"?: io$k8s$api$apps$v1beta2$DaemonSetStatus;
+  }
+  & ({
+    readonly apiVersion: "apps/v1beta2";
+    readonly kind: "DaemonSet";
+  });
 
 /** DaemonSetCondition describes the state of a DaemonSet at a certain point. */
 export type io$k8s$api$apps$v1beta2$DaemonSetCondition = {
@@ -910,15 +979,17 @@ export type io$k8s$api$apps$v1beta2$DaemonSetCondition = {
 };
 
 /** DaemonSetList is a collection of daemon sets. */
-export type io$k8s$api$apps$v1beta2$DaemonSetList = {
-  /** A list of daemon sets. */
-  readonly "items": readonly io$k8s$api$apps$v1beta2$DaemonSet[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "apps/v1beta2";
-  readonly kind: "DaemonSetList";
-});
+export type io$k8s$api$apps$v1beta2$DaemonSetList =
+  & {
+    /** A list of daemon sets. */
+    readonly "items": readonly io$k8s$api$apps$v1beta2$DaemonSet[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "apps/v1beta2";
+    readonly kind: "DaemonSetList";
+  });
 
 /** DaemonSetSpec is the specification of a daemon set. */
 export type io$k8s$api$apps$v1beta2$DaemonSetSpec = {
@@ -967,17 +1038,19 @@ export type io$k8s$api$apps$v1beta2$DaemonSetUpdateStrategy = {
 };
 
 /** DEPRECATED - This group version of Deployment is deprecated by apps/v1/Deployment. See the release notes for more information. Deployment enables declarative updates for Pods and ReplicaSets. */
-export type io$k8s$api$apps$v1beta2$Deployment = {
-  /** Standard object metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Specification of the desired behavior of the Deployment. */
-  readonly "spec"?: io$k8s$api$apps$v1beta2$DeploymentSpec;
-  /** Most recently observed status of the Deployment. */
-  readonly "status"?: io$k8s$api$apps$v1beta2$DeploymentStatus;
-} & ({
-  readonly apiVersion: "apps/v1beta2";
-  readonly kind: "Deployment";
-});
+export type io$k8s$api$apps$v1beta2$Deployment =
+  & {
+    /** Standard object metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Specification of the desired behavior of the Deployment. */
+    readonly "spec"?: io$k8s$api$apps$v1beta2$DeploymentSpec;
+    /** Most recently observed status of the Deployment. */
+    readonly "status"?: io$k8s$api$apps$v1beta2$DeploymentStatus;
+  }
+  & ({
+    readonly apiVersion: "apps/v1beta2";
+    readonly kind: "Deployment";
+  });
 
 /** DeploymentCondition describes the state of a deployment at a certain point. */
 export type io$k8s$api$apps$v1beta2$DeploymentCondition = {
@@ -996,15 +1069,17 @@ export type io$k8s$api$apps$v1beta2$DeploymentCondition = {
 };
 
 /** DeploymentList is a list of Deployments. */
-export type io$k8s$api$apps$v1beta2$DeploymentList = {
-  /** Items is the list of Deployments. */
-  readonly "items": readonly io$k8s$api$apps$v1beta2$Deployment[];
-  /** Standard list metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "apps/v1beta2";
-  readonly kind: "DeploymentList";
-});
+export type io$k8s$api$apps$v1beta2$DeploymentList =
+  & {
+    /** Items is the list of Deployments. */
+    readonly "items": readonly io$k8s$api$apps$v1beta2$Deployment[];
+    /** Standard list metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "apps/v1beta2";
+    readonly kind: "DeploymentList";
+  });
 
 /** DeploymentSpec is the specification of the desired behavior of the Deployment. */
 export type io$k8s$api$apps$v1beta2$DeploymentSpec = {
@@ -1033,7 +1108,8 @@ export type io$k8s$api$apps$v1beta2$DeploymentStatus = {
   /** Count of hash collisions for the Deployment. The Deployment controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ReplicaSet. */
   readonly "collisionCount"?: number;
   /** Represents the latest available observations of a deployment's current state. */
-  readonly "conditions"?: readonly io$k8s$api$apps$v1beta2$DeploymentCondition[];
+  readonly "conditions"?:
+    readonly io$k8s$api$apps$v1beta2$DeploymentCondition[];
   /** The generation observed by the deployment controller. */
   readonly "observedGeneration"?: number;
   /** Total number of ready pods targeted by this deployment. */
@@ -1055,17 +1131,19 @@ export type io$k8s$api$apps$v1beta2$DeploymentStrategy = {
 };
 
 /** DEPRECATED - This group version of ReplicaSet is deprecated by apps/v1/ReplicaSet. See the release notes for more information. ReplicaSet ensures that a specified number of pod replicas are running at any given time. */
-export type io$k8s$api$apps$v1beta2$ReplicaSet = {
-  /** If the Labels of a ReplicaSet are empty, they are defaulted to be the same as the Pod(s) that the ReplicaSet manages. Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Spec defines the specification of the desired behavior of the ReplicaSet. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status */
-  readonly "spec"?: io$k8s$api$apps$v1beta2$ReplicaSetSpec;
-  /** Status is the most recently observed status of the ReplicaSet. This data may be out of date by some window of time. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status */
-  readonly "status"?: io$k8s$api$apps$v1beta2$ReplicaSetStatus;
-} & ({
-  readonly apiVersion: "apps/v1beta2";
-  readonly kind: "ReplicaSet";
-});
+export type io$k8s$api$apps$v1beta2$ReplicaSet =
+  & {
+    /** If the Labels of a ReplicaSet are empty, they are defaulted to be the same as the Pod(s) that the ReplicaSet manages. Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Spec defines the specification of the desired behavior of the ReplicaSet. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status */
+    readonly "spec"?: io$k8s$api$apps$v1beta2$ReplicaSetSpec;
+    /** Status is the most recently observed status of the ReplicaSet. This data may be out of date by some window of time. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status */
+    readonly "status"?: io$k8s$api$apps$v1beta2$ReplicaSetStatus;
+  }
+  & ({
+    readonly apiVersion: "apps/v1beta2";
+    readonly kind: "ReplicaSet";
+  });
 
 /** ReplicaSetCondition describes the state of a replica set at a certain point. */
 export type io$k8s$api$apps$v1beta2$ReplicaSetCondition = {
@@ -1082,15 +1160,17 @@ export type io$k8s$api$apps$v1beta2$ReplicaSetCondition = {
 };
 
 /** ReplicaSetList is a collection of ReplicaSets. */
-export type io$k8s$api$apps$v1beta2$ReplicaSetList = {
-  /** List of ReplicaSets. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller */
-  readonly "items": readonly io$k8s$api$apps$v1beta2$ReplicaSet[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "apps/v1beta2";
-  readonly kind: "ReplicaSetList";
-});
+export type io$k8s$api$apps$v1beta2$ReplicaSetList =
+  & {
+    /** List of ReplicaSets. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller */
+    readonly "items": readonly io$k8s$api$apps$v1beta2$ReplicaSet[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "apps/v1beta2";
+    readonly kind: "ReplicaSetList";
+  });
 
 /** ReplicaSetSpec is the specification of a ReplicaSet. */
 export type io$k8s$api$apps$v1beta2$ReplicaSetSpec = {
@@ -1109,7 +1189,8 @@ export type io$k8s$api$apps$v1beta2$ReplicaSetStatus = {
   /** The number of available replicas (ready for at least minReadySeconds) for this replica set. */
   readonly "availableReplicas"?: number;
   /** Represents the latest available observations of a replica set's current state. */
-  readonly "conditions"?: readonly io$k8s$api$apps$v1beta2$ReplicaSetCondition[];
+  readonly "conditions"?:
+    readonly io$k8s$api$apps$v1beta2$ReplicaSetCondition[];
   /** The number of pods that have labels matching the labels of the pod template of the replicaset. */
   readonly "fullyLabeledReplicas"?: number;
   /** ObservedGeneration reflects the generation of the most recently observed ReplicaSet. */
@@ -1141,17 +1222,19 @@ export type io$k8s$api$apps$v1beta2$RollingUpdateStatefulSetStrategy = {
 };
 
 /** Scale represents a scaling request for a resource. */
-export type io$k8s$api$apps$v1beta2$Scale = {
-  /** Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** defines the behavior of the scale. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status. */
-  readonly "spec"?: io$k8s$api$apps$v1beta2$ScaleSpec;
-  /** current status of the scale. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status. Read-only. */
-  readonly "status"?: io$k8s$api$apps$v1beta2$ScaleStatus;
-} & ({
-  readonly apiVersion: "apps/v1beta2";
-  readonly kind: "Scale";
-});
+export type io$k8s$api$apps$v1beta2$Scale =
+  & {
+    /** Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** defines the behavior of the scale. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status. */
+    readonly "spec"?: io$k8s$api$apps$v1beta2$ScaleSpec;
+    /** current status of the scale. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status. Read-only. */
+    readonly "status"?: io$k8s$api$apps$v1beta2$ScaleStatus;
+  }
+  & ({
+    readonly apiVersion: "apps/v1beta2";
+    readonly kind: "Scale";
+  });
 
 /** ScaleSpec describes the attributes of a scale subresource */
 export type io$k8s$api$apps$v1beta2$ScaleSpec = {
@@ -1173,16 +1256,18 @@ export type io$k8s$api$apps$v1beta2$ScaleStatus = {
  - Network: A single stable DNS and hostname.
  - Storage: As many VolumeClaims as requested.
 The StatefulSet guarantees that a given network identity will always map to the same storage identity. */
-export type io$k8s$api$apps$v1beta2$StatefulSet = {
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Spec defines the desired identities of pods in this set. */
-  readonly "spec"?: io$k8s$api$apps$v1beta2$StatefulSetSpec;
-  /** Status is the current status of Pods in this StatefulSet. This data may be out of date by some window of time. */
-  readonly "status"?: io$k8s$api$apps$v1beta2$StatefulSetStatus;
-} & ({
-  readonly apiVersion: "apps/v1beta2";
-  readonly kind: "StatefulSet";
-});
+export type io$k8s$api$apps$v1beta2$StatefulSet =
+  & {
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Spec defines the desired identities of pods in this set. */
+    readonly "spec"?: io$k8s$api$apps$v1beta2$StatefulSetSpec;
+    /** Status is the current status of Pods in this StatefulSet. This data may be out of date by some window of time. */
+    readonly "status"?: io$k8s$api$apps$v1beta2$StatefulSetStatus;
+  }
+  & ({
+    readonly apiVersion: "apps/v1beta2";
+    readonly kind: "StatefulSet";
+  });
 
 /** StatefulSetCondition describes the state of a statefulset at a certain point. */
 export type io$k8s$api$apps$v1beta2$StatefulSetCondition = {
@@ -1199,13 +1284,15 @@ export type io$k8s$api$apps$v1beta2$StatefulSetCondition = {
 };
 
 /** StatefulSetList is a collection of StatefulSets. */
-export type io$k8s$api$apps$v1beta2$StatefulSetList = {
-  readonly "items": readonly io$k8s$api$apps$v1beta2$StatefulSet[];
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "apps/v1beta2";
-  readonly kind: "StatefulSetList";
-});
+export type io$k8s$api$apps$v1beta2$StatefulSetList =
+  & {
+    readonly "items": readonly io$k8s$api$apps$v1beta2$StatefulSet[];
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "apps/v1beta2";
+    readonly kind: "StatefulSetList";
+  });
 
 /** A StatefulSetSpec is the specification of a StatefulSet. */
 export type io$k8s$api$apps$v1beta2$StatefulSetSpec = {
@@ -1224,7 +1311,8 @@ export type io$k8s$api$apps$v1beta2$StatefulSetSpec = {
   /** updateStrategy indicates the StatefulSetUpdateStrategy that will be employed to update Pods in the StatefulSet when a revision is made to Template. */
   readonly "updateStrategy"?: io$k8s$api$apps$v1beta2$StatefulSetUpdateStrategy;
   /** volumeClaimTemplates is a list of claims that pods are allowed to reference. The StatefulSet controller is responsible for mapping network identities to claims in a way that maintains the identity of a pod. Every claim in this list must have at least one matching (by name) volumeMount in one container in the template. A claim in this list takes precedence over any volumes in the template, with the same name. */
-  readonly "volumeClaimTemplates"?: readonly io$k8s$api$core$v1$PersistentVolumeClaim[];
+  readonly "volumeClaimTemplates"?:
+    readonly io$k8s$api$core$v1$PersistentVolumeClaim[];
 };
 
 /** StatefulSetStatus represents the current state of a StatefulSet. */
@@ -1232,7 +1320,8 @@ export type io$k8s$api$apps$v1beta2$StatefulSetStatus = {
   /** collisionCount is the count of hash collisions for the StatefulSet. The StatefulSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision. */
   readonly "collisionCount"?: number;
   /** Represents the latest available observations of a statefulset's current state. */
-  readonly "conditions"?: readonly io$k8s$api$apps$v1beta2$StatefulSetCondition[];
+  readonly "conditions"?:
+    readonly io$k8s$api$apps$v1beta2$StatefulSetCondition[];
   /** currentReplicas is the number of Pods created by the StatefulSet controller from the StatefulSet version indicated by currentRevision. */
   readonly "currentReplicas"?: number;
   /** currentRevision, if not empty, indicates the version of the StatefulSet used to generate Pods in the sequence [0,currentReplicas). */
@@ -1252,22 +1341,25 @@ export type io$k8s$api$apps$v1beta2$StatefulSetStatus = {
 /** StatefulSetUpdateStrategy indicates the strategy that the StatefulSet controller will use to perform updates. It includes any additional parameters necessary to perform the update for the indicated strategy. */
 export type io$k8s$api$apps$v1beta2$StatefulSetUpdateStrategy = {
   /** RollingUpdate is used to communicate parameters when Type is RollingUpdateStatefulSetStrategyType. */
-  readonly "rollingUpdate"?: io$k8s$api$apps$v1beta2$RollingUpdateStatefulSetStrategy;
+  readonly "rollingUpdate"?:
+    io$k8s$api$apps$v1beta2$RollingUpdateStatefulSetStrategy;
   /** Type indicates the type of the StatefulSetUpdateStrategy. Default is RollingUpdate. */
   readonly "type"?: string;
 };
 
 /** TokenReview attempts to authenticate a token to a known user. Note: TokenReview requests may be cached by the webhook token authenticator plugin in the kube-apiserver. */
-export type io$k8s$api$authentication$v1$TokenReview = {
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Spec holds information about the request being evaluated */
-  readonly "spec": io$k8s$api$authentication$v1$TokenReviewSpec;
-  /** Status is filled in by the server and indicates whether the request can be authenticated. */
-  readonly "status"?: io$k8s$api$authentication$v1$TokenReviewStatus;
-} & ({
-  readonly apiVersion: "authentication.k8s.io/v1";
-  readonly kind: "TokenReview";
-});
+export type io$k8s$api$authentication$v1$TokenReview =
+  & {
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Spec holds information about the request being evaluated */
+    readonly "spec": io$k8s$api$authentication$v1$TokenReviewSpec;
+    /** Status is filled in by the server and indicates whether the request can be authenticated. */
+    readonly "status"?: io$k8s$api$authentication$v1$TokenReviewStatus;
+  }
+  & ({
+    readonly apiVersion: "authentication.k8s.io/v1";
+    readonly kind: "TokenReview";
+  });
 
 /** TokenReviewSpec is a description of the token authentication request. */
 export type io$k8s$api$authentication$v1$TokenReviewSpec = {
@@ -1302,16 +1394,18 @@ export type io$k8s$api$authentication$v1$UserInfo = {
 };
 
 /** TokenReview attempts to authenticate a token to a known user. Note: TokenReview requests may be cached by the webhook token authenticator plugin in the kube-apiserver. */
-export type io$k8s$api$authentication$v1beta1$TokenReview = {
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Spec holds information about the request being evaluated */
-  readonly "spec": io$k8s$api$authentication$v1beta1$TokenReviewSpec;
-  /** Status is filled in by the server and indicates whether the request can be authenticated. */
-  readonly "status"?: io$k8s$api$authentication$v1beta1$TokenReviewStatus;
-} & ({
-  readonly apiVersion: "authentication.k8s.io/v1beta1";
-  readonly kind: "TokenReview";
-});
+export type io$k8s$api$authentication$v1beta1$TokenReview =
+  & {
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Spec holds information about the request being evaluated */
+    readonly "spec": io$k8s$api$authentication$v1beta1$TokenReviewSpec;
+    /** Status is filled in by the server and indicates whether the request can be authenticated. */
+    readonly "status"?: io$k8s$api$authentication$v1beta1$TokenReviewStatus;
+  }
+  & ({
+    readonly apiVersion: "authentication.k8s.io/v1beta1";
+    readonly kind: "TokenReview";
+  });
 
 /** TokenReviewSpec is a description of the token authentication request. */
 export type io$k8s$api$authentication$v1beta1$TokenReviewSpec = {
@@ -1346,16 +1440,18 @@ export type io$k8s$api$authentication$v1beta1$UserInfo = {
 };
 
 /** LocalSubjectAccessReview checks whether or not a user or group can perform an action in a given namespace. Having a namespace scoped resource makes it much easier to grant namespace scoped policy that includes permissions checking. */
-export type io$k8s$api$authorization$v1$LocalSubjectAccessReview = {
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Spec holds information about the request being evaluated.  spec.namespace must be equal to the namespace you made the request against.  If empty, it is defaulted. */
-  readonly "spec": io$k8s$api$authorization$v1$SubjectAccessReviewSpec;
-  /** Status is filled in by the server and indicates whether the request is allowed or not */
-  readonly "status"?: io$k8s$api$authorization$v1$SubjectAccessReviewStatus;
-} & ({
-  readonly apiVersion: "authorization.k8s.io/v1";
-  readonly kind: "LocalSubjectAccessReview";
-});
+export type io$k8s$api$authorization$v1$LocalSubjectAccessReview =
+  & {
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Spec holds information about the request being evaluated.  spec.namespace must be equal to the namespace you made the request against.  If empty, it is defaulted. */
+    readonly "spec": io$k8s$api$authorization$v1$SubjectAccessReviewSpec;
+    /** Status is filled in by the server and indicates whether the request is allowed or not */
+    readonly "status"?: io$k8s$api$authorization$v1$SubjectAccessReviewStatus;
+  }
+  & ({
+    readonly apiVersion: "authorization.k8s.io/v1";
+    readonly kind: "LocalSubjectAccessReview";
+  });
 
 /** NonResourceAttributes includes the authorization attributes available for non-resource requests to the Authorizer interface */
 export type io$k8s$api$authorization$v1$NonResourceAttributes = {
@@ -1405,36 +1501,42 @@ export type io$k8s$api$authorization$v1$ResourceRule = {
 };
 
 /** SelfSubjectAccessReview checks whether or the current user can perform an action.  Not filling in a spec.namespace means "in all namespaces".  Self is a special case, because users should always be able to check whether they can perform an action */
-export type io$k8s$api$authorization$v1$SelfSubjectAccessReview = {
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Spec holds information about the request being evaluated.  user and groups must be empty */
-  readonly "spec": io$k8s$api$authorization$v1$SelfSubjectAccessReviewSpec;
-  /** Status is filled in by the server and indicates whether the request is allowed or not */
-  readonly "status"?: io$k8s$api$authorization$v1$SubjectAccessReviewStatus;
-} & ({
-  readonly apiVersion: "authorization.k8s.io/v1";
-  readonly kind: "SelfSubjectAccessReview";
-});
+export type io$k8s$api$authorization$v1$SelfSubjectAccessReview =
+  & {
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Spec holds information about the request being evaluated.  user and groups must be empty */
+    readonly "spec": io$k8s$api$authorization$v1$SelfSubjectAccessReviewSpec;
+    /** Status is filled in by the server and indicates whether the request is allowed or not */
+    readonly "status"?: io$k8s$api$authorization$v1$SubjectAccessReviewStatus;
+  }
+  & ({
+    readonly apiVersion: "authorization.k8s.io/v1";
+    readonly kind: "SelfSubjectAccessReview";
+  });
 
 /** SelfSubjectAccessReviewSpec is a description of the access request.  Exactly one of ResourceAuthorizationAttributes and NonResourceAuthorizationAttributes must be set */
 export type io$k8s$api$authorization$v1$SelfSubjectAccessReviewSpec = {
   /** NonResourceAttributes describes information for a non-resource access request */
-  readonly "nonResourceAttributes"?: io$k8s$api$authorization$v1$NonResourceAttributes;
+  readonly "nonResourceAttributes"?:
+    io$k8s$api$authorization$v1$NonResourceAttributes;
   /** ResourceAuthorizationAttributes describes information for a resource access request */
-  readonly "resourceAttributes"?: io$k8s$api$authorization$v1$ResourceAttributes;
+  readonly "resourceAttributes"?:
+    io$k8s$api$authorization$v1$ResourceAttributes;
 };
 
 /** SelfSubjectRulesReview enumerates the set of actions the current user can perform within a namespace. The returned list of actions may be incomplete depending on the server's authorization mode, and any errors experienced during the evaluation. SelfSubjectRulesReview should be used by UIs to show/hide actions, or to quickly let an end user reason about their permissions. It should NOT Be used by external systems to drive authorization decisions as this raises confused deputy, cache lifetime/revocation, and correctness concerns. SubjectAccessReview, and LocalAccessReview are the correct way to defer authorization decisions to the API server. */
-export type io$k8s$api$authorization$v1$SelfSubjectRulesReview = {
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Spec holds information about the request being evaluated. */
-  readonly "spec": io$k8s$api$authorization$v1$SelfSubjectRulesReviewSpec;
-  /** Status is filled in by the server and indicates the set of actions a user can perform. */
-  readonly "status"?: io$k8s$api$authorization$v1$SubjectRulesReviewStatus;
-} & ({
-  readonly apiVersion: "authorization.k8s.io/v1";
-  readonly kind: "SelfSubjectRulesReview";
-});
+export type io$k8s$api$authorization$v1$SelfSubjectRulesReview =
+  & {
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Spec holds information about the request being evaluated. */
+    readonly "spec": io$k8s$api$authorization$v1$SelfSubjectRulesReviewSpec;
+    /** Status is filled in by the server and indicates the set of actions a user can perform. */
+    readonly "status"?: io$k8s$api$authorization$v1$SubjectRulesReviewStatus;
+  }
+  & ({
+    readonly apiVersion: "authorization.k8s.io/v1";
+    readonly kind: "SelfSubjectRulesReview";
+  });
 
 export type io$k8s$api$authorization$v1$SelfSubjectRulesReviewSpec = {
   /** Namespace to evaluate rules for. Required. */
@@ -1442,16 +1544,18 @@ export type io$k8s$api$authorization$v1$SelfSubjectRulesReviewSpec = {
 };
 
 /** SubjectAccessReview checks whether or not a user or group can perform an action. */
-export type io$k8s$api$authorization$v1$SubjectAccessReview = {
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Spec holds information about the request being evaluated */
-  readonly "spec": io$k8s$api$authorization$v1$SubjectAccessReviewSpec;
-  /** Status is filled in by the server and indicates whether the request is allowed or not */
-  readonly "status"?: io$k8s$api$authorization$v1$SubjectAccessReviewStatus;
-} & ({
-  readonly apiVersion: "authorization.k8s.io/v1";
-  readonly kind: "SubjectAccessReview";
-});
+export type io$k8s$api$authorization$v1$SubjectAccessReview =
+  & {
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Spec holds information about the request being evaluated */
+    readonly "spec": io$k8s$api$authorization$v1$SubjectAccessReviewSpec;
+    /** Status is filled in by the server and indicates whether the request is allowed or not */
+    readonly "status"?: io$k8s$api$authorization$v1$SubjectAccessReviewStatus;
+  }
+  & ({
+    readonly apiVersion: "authorization.k8s.io/v1";
+    readonly kind: "SubjectAccessReview";
+  });
 
 /** SubjectAccessReviewSpec is a description of the access request.  Exactly one of ResourceAuthorizationAttributes and NonResourceAuthorizationAttributes must be set */
 export type io$k8s$api$authorization$v1$SubjectAccessReviewSpec = {
@@ -1460,9 +1564,11 @@ export type io$k8s$api$authorization$v1$SubjectAccessReviewSpec = {
   /** Groups is the groups you're testing for. */
   readonly "groups"?: readonly string[];
   /** NonResourceAttributes describes information for a non-resource access request */
-  readonly "nonResourceAttributes"?: io$k8s$api$authorization$v1$NonResourceAttributes;
+  readonly "nonResourceAttributes"?:
+    io$k8s$api$authorization$v1$NonResourceAttributes;
   /** ResourceAuthorizationAttributes describes information for a resource access request */
-  readonly "resourceAttributes"?: io$k8s$api$authorization$v1$ResourceAttributes;
+  readonly "resourceAttributes"?:
+    io$k8s$api$authorization$v1$ResourceAttributes;
   /** UID information about the requesting user. */
   readonly "uid"?: string;
   /** User is the user you're testing for. If you specify "User" but not "Groups", then is it interpreted as "What if User were not a member of any groups */
@@ -1488,22 +1594,26 @@ export type io$k8s$api$authorization$v1$SubjectRulesReviewStatus = {
   /** Incomplete is true when the rules returned by this call are incomplete. This is most commonly encountered when an authorizer, such as an external authorizer, doesn't support rules evaluation. */
   readonly "incomplete": boolean;
   /** NonResourceRules is the list of actions the subject is allowed to perform on non-resources. The list ordering isn't significant, may contain duplicates, and possibly be incomplete. */
-  readonly "nonResourceRules": readonly io$k8s$api$authorization$v1$NonResourceRule[];
+  readonly "nonResourceRules":
+    readonly io$k8s$api$authorization$v1$NonResourceRule[];
   /** ResourceRules is the list of actions the subject is allowed to perform on resources. The list ordering isn't significant, may contain duplicates, and possibly be incomplete. */
   readonly "resourceRules": readonly io$k8s$api$authorization$v1$ResourceRule[];
 };
 
 /** LocalSubjectAccessReview checks whether or not a user or group can perform an action in a given namespace. Having a namespace scoped resource makes it much easier to grant namespace scoped policy that includes permissions checking. */
-export type io$k8s$api$authorization$v1beta1$LocalSubjectAccessReview = {
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Spec holds information about the request being evaluated.  spec.namespace must be equal to the namespace you made the request against.  If empty, it is defaulted. */
-  readonly "spec": io$k8s$api$authorization$v1beta1$SubjectAccessReviewSpec;
-  /** Status is filled in by the server and indicates whether the request is allowed or not */
-  readonly "status"?: io$k8s$api$authorization$v1beta1$SubjectAccessReviewStatus;
-} & ({
-  readonly apiVersion: "authorization.k8s.io/v1beta1";
-  readonly kind: "LocalSubjectAccessReview";
-});
+export type io$k8s$api$authorization$v1beta1$LocalSubjectAccessReview =
+  & {
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Spec holds information about the request being evaluated.  spec.namespace must be equal to the namespace you made the request against.  If empty, it is defaulted. */
+    readonly "spec": io$k8s$api$authorization$v1beta1$SubjectAccessReviewSpec;
+    /** Status is filled in by the server and indicates whether the request is allowed or not */
+    readonly "status"?:
+      io$k8s$api$authorization$v1beta1$SubjectAccessReviewStatus;
+  }
+  & ({
+    readonly apiVersion: "authorization.k8s.io/v1beta1";
+    readonly kind: "LocalSubjectAccessReview";
+  });
 
 /** NonResourceAttributes includes the authorization attributes available for non-resource requests to the Authorizer interface */
 export type io$k8s$api$authorization$v1beta1$NonResourceAttributes = {
@@ -1553,36 +1663,46 @@ export type io$k8s$api$authorization$v1beta1$ResourceRule = {
 };
 
 /** SelfSubjectAccessReview checks whether or the current user can perform an action.  Not filling in a spec.namespace means "in all namespaces".  Self is a special case, because users should always be able to check whether they can perform an action */
-export type io$k8s$api$authorization$v1beta1$SelfSubjectAccessReview = {
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Spec holds information about the request being evaluated.  user and groups must be empty */
-  readonly "spec": io$k8s$api$authorization$v1beta1$SelfSubjectAccessReviewSpec;
-  /** Status is filled in by the server and indicates whether the request is allowed or not */
-  readonly "status"?: io$k8s$api$authorization$v1beta1$SubjectAccessReviewStatus;
-} & ({
-  readonly apiVersion: "authorization.k8s.io/v1beta1";
-  readonly kind: "SelfSubjectAccessReview";
-});
+export type io$k8s$api$authorization$v1beta1$SelfSubjectAccessReview =
+  & {
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Spec holds information about the request being evaluated.  user and groups must be empty */
+    readonly "spec":
+      io$k8s$api$authorization$v1beta1$SelfSubjectAccessReviewSpec;
+    /** Status is filled in by the server and indicates whether the request is allowed or not */
+    readonly "status"?:
+      io$k8s$api$authorization$v1beta1$SubjectAccessReviewStatus;
+  }
+  & ({
+    readonly apiVersion: "authorization.k8s.io/v1beta1";
+    readonly kind: "SelfSubjectAccessReview";
+  });
 
 /** SelfSubjectAccessReviewSpec is a description of the access request.  Exactly one of ResourceAuthorizationAttributes and NonResourceAuthorizationAttributes must be set */
 export type io$k8s$api$authorization$v1beta1$SelfSubjectAccessReviewSpec = {
   /** NonResourceAttributes describes information for a non-resource access request */
-  readonly "nonResourceAttributes"?: io$k8s$api$authorization$v1beta1$NonResourceAttributes;
+  readonly "nonResourceAttributes"?:
+    io$k8s$api$authorization$v1beta1$NonResourceAttributes;
   /** ResourceAuthorizationAttributes describes information for a resource access request */
-  readonly "resourceAttributes"?: io$k8s$api$authorization$v1beta1$ResourceAttributes;
+  readonly "resourceAttributes"?:
+    io$k8s$api$authorization$v1beta1$ResourceAttributes;
 };
 
 /** SelfSubjectRulesReview enumerates the set of actions the current user can perform within a namespace. The returned list of actions may be incomplete depending on the server's authorization mode, and any errors experienced during the evaluation. SelfSubjectRulesReview should be used by UIs to show/hide actions, or to quickly let an end user reason about their permissions. It should NOT Be used by external systems to drive authorization decisions as this raises confused deputy, cache lifetime/revocation, and correctness concerns. SubjectAccessReview, and LocalAccessReview are the correct way to defer authorization decisions to the API server. */
-export type io$k8s$api$authorization$v1beta1$SelfSubjectRulesReview = {
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Spec holds information about the request being evaluated. */
-  readonly "spec": io$k8s$api$authorization$v1beta1$SelfSubjectRulesReviewSpec;
-  /** Status is filled in by the server and indicates the set of actions a user can perform. */
-  readonly "status"?: io$k8s$api$authorization$v1beta1$SubjectRulesReviewStatus;
-} & ({
-  readonly apiVersion: "authorization.k8s.io/v1beta1";
-  readonly kind: "SelfSubjectRulesReview";
-});
+export type io$k8s$api$authorization$v1beta1$SelfSubjectRulesReview =
+  & {
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Spec holds information about the request being evaluated. */
+    readonly "spec":
+      io$k8s$api$authorization$v1beta1$SelfSubjectRulesReviewSpec;
+    /** Status is filled in by the server and indicates the set of actions a user can perform. */
+    readonly "status"?:
+      io$k8s$api$authorization$v1beta1$SubjectRulesReviewStatus;
+  }
+  & ({
+    readonly apiVersion: "authorization.k8s.io/v1beta1";
+    readonly kind: "SelfSubjectRulesReview";
+  });
 
 export type io$k8s$api$authorization$v1beta1$SelfSubjectRulesReviewSpec = {
   /** Namespace to evaluate rules for. Required. */
@@ -1590,16 +1710,19 @@ export type io$k8s$api$authorization$v1beta1$SelfSubjectRulesReviewSpec = {
 };
 
 /** SubjectAccessReview checks whether or not a user or group can perform an action. */
-export type io$k8s$api$authorization$v1beta1$SubjectAccessReview = {
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Spec holds information about the request being evaluated */
-  readonly "spec": io$k8s$api$authorization$v1beta1$SubjectAccessReviewSpec;
-  /** Status is filled in by the server and indicates whether the request is allowed or not */
-  readonly "status"?: io$k8s$api$authorization$v1beta1$SubjectAccessReviewStatus;
-} & ({
-  readonly apiVersion: "authorization.k8s.io/v1beta1";
-  readonly kind: "SubjectAccessReview";
-});
+export type io$k8s$api$authorization$v1beta1$SubjectAccessReview =
+  & {
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Spec holds information about the request being evaluated */
+    readonly "spec": io$k8s$api$authorization$v1beta1$SubjectAccessReviewSpec;
+    /** Status is filled in by the server and indicates whether the request is allowed or not */
+    readonly "status"?:
+      io$k8s$api$authorization$v1beta1$SubjectAccessReviewStatus;
+  }
+  & ({
+    readonly apiVersion: "authorization.k8s.io/v1beta1";
+    readonly kind: "SubjectAccessReview";
+  });
 
 /** SubjectAccessReviewSpec is a description of the access request.  Exactly one of ResourceAuthorizationAttributes and NonResourceAuthorizationAttributes must be set */
 export type io$k8s$api$authorization$v1beta1$SubjectAccessReviewSpec = {
@@ -1608,9 +1731,11 @@ export type io$k8s$api$authorization$v1beta1$SubjectAccessReviewSpec = {
   /** Groups is the groups you're testing for. */
   readonly "group"?: readonly string[];
   /** NonResourceAttributes describes information for a non-resource access request */
-  readonly "nonResourceAttributes"?: io$k8s$api$authorization$v1beta1$NonResourceAttributes;
+  readonly "nonResourceAttributes"?:
+    io$k8s$api$authorization$v1beta1$NonResourceAttributes;
   /** ResourceAuthorizationAttributes describes information for a resource access request */
-  readonly "resourceAttributes"?: io$k8s$api$authorization$v1beta1$ResourceAttributes;
+  readonly "resourceAttributes"?:
+    io$k8s$api$authorization$v1beta1$ResourceAttributes;
   /** UID information about the requesting user. */
   readonly "uid"?: string;
   /** User is the user you're testing for. If you specify "User" but not "Group", then is it interpreted as "What if User were not a member of any groups */
@@ -1636,9 +1761,11 @@ export type io$k8s$api$authorization$v1beta1$SubjectRulesReviewStatus = {
   /** Incomplete is true when the rules returned by this call are incomplete. This is most commonly encountered when an authorizer, such as an external authorizer, doesn't support rules evaluation. */
   readonly "incomplete": boolean;
   /** NonResourceRules is the list of actions the subject is allowed to perform on non-resources. The list ordering isn't significant, may contain duplicates, and possibly be incomplete. */
-  readonly "nonResourceRules": readonly io$k8s$api$authorization$v1beta1$NonResourceRule[];
+  readonly "nonResourceRules":
+    readonly io$k8s$api$authorization$v1beta1$NonResourceRule[];
   /** ResourceRules is the list of actions the subject is allowed to perform on resources. The list ordering isn't significant, may contain duplicates, and possibly be incomplete. */
-  readonly "resourceRules": readonly io$k8s$api$authorization$v1beta1$ResourceRule[];
+  readonly "resourceRules":
+    readonly io$k8s$api$authorization$v1beta1$ResourceRule[];
 };
 
 /** CrossVersionObjectReference contains enough information to let you identify the referred resource. */
@@ -1648,28 +1775,33 @@ export type io$k8s$api$autoscaling$v1$CrossVersionObjectReference = {
 };
 
 /** configuration of a horizontal pod autoscaler. */
-export type io$k8s$api$autoscaling$v1$HorizontalPodAutoscaler = {
-  /** Standard object metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** behaviour of autoscaler. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status. */
-  readonly "spec"?: io$k8s$api$autoscaling$v1$HorizontalPodAutoscalerSpec;
-  /** current information about the autoscaler. */
-  readonly "status"?: io$k8s$api$autoscaling$v1$HorizontalPodAutoscalerStatus;
-} & ({
-  readonly apiVersion: "autoscaling/v1";
-  readonly kind: "HorizontalPodAutoscaler";
-});
+export type io$k8s$api$autoscaling$v1$HorizontalPodAutoscaler =
+  & {
+    /** Standard object metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** behaviour of autoscaler. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status. */
+    readonly "spec"?: io$k8s$api$autoscaling$v1$HorizontalPodAutoscalerSpec;
+    /** current information about the autoscaler. */
+    readonly "status"?: io$k8s$api$autoscaling$v1$HorizontalPodAutoscalerStatus;
+  }
+  & ({
+    readonly apiVersion: "autoscaling/v1";
+    readonly kind: "HorizontalPodAutoscaler";
+  });
 
 /** list of horizontal pod autoscaler objects. */
-export type io$k8s$api$autoscaling$v1$HorizontalPodAutoscalerList = {
-  /** list of horizontal pod autoscaler objects. */
-  readonly "items": readonly io$k8s$api$autoscaling$v1$HorizontalPodAutoscaler[];
-  /** Standard list metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "autoscaling/v1";
-  readonly kind: "HorizontalPodAutoscalerList";
-});
+export type io$k8s$api$autoscaling$v1$HorizontalPodAutoscalerList =
+  & {
+    /** list of horizontal pod autoscaler objects. */
+    readonly "items":
+      readonly io$k8s$api$autoscaling$v1$HorizontalPodAutoscaler[];
+    /** Standard list metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "autoscaling/v1";
+    readonly kind: "HorizontalPodAutoscalerList";
+  });
 
 /** specification of a horizontal pod autoscaler. */
 export type io$k8s$api$autoscaling$v1$HorizontalPodAutoscalerSpec = {
@@ -1678,7 +1810,8 @@ export type io$k8s$api$autoscaling$v1$HorizontalPodAutoscalerSpec = {
   /** lower limit for the number of pods that can be set by the autoscaler, default 1. */
   readonly "minReplicas"?: number;
   /** reference to scaled resource; horizontal pod autoscaler will learn the current resource consumption and will set the desired number of pods by using its Scale subresource. */
-  readonly "scaleTargetRef": io$k8s$api$autoscaling$v1$CrossVersionObjectReference;
+  readonly "scaleTargetRef":
+    io$k8s$api$autoscaling$v1$CrossVersionObjectReference;
   /** target average CPU utilization (represented as a percentage of requested CPU) over all the pods; if not specified the default autoscaling policy will be used. */
   readonly "targetCPUUtilizationPercentage"?: number;
 };
@@ -1698,17 +1831,19 @@ export type io$k8s$api$autoscaling$v1$HorizontalPodAutoscalerStatus = {
 };
 
 /** Scale represents a scaling request for a resource. */
-export type io$k8s$api$autoscaling$v1$Scale = {
-  /** Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** defines the behavior of the scale. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status. */
-  readonly "spec"?: io$k8s$api$autoscaling$v1$ScaleSpec;
-  /** current status of the scale. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status. Read-only. */
-  readonly "status"?: io$k8s$api$autoscaling$v1$ScaleStatus;
-} & ({
-  readonly apiVersion: "autoscaling/v1";
-  readonly kind: "Scale";
-});
+export type io$k8s$api$autoscaling$v1$Scale =
+  & {
+    /** Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** defines the behavior of the scale. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status. */
+    readonly "spec"?: io$k8s$api$autoscaling$v1$ScaleSpec;
+    /** current status of the scale. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status. Read-only. */
+    readonly "status"?: io$k8s$api$autoscaling$v1$ScaleStatus;
+  }
+  & ({
+    readonly apiVersion: "autoscaling/v1";
+    readonly kind: "Scale";
+  });
 
 /** ScaleSpec describes the attributes of a scale subresource. */
 export type io$k8s$api$autoscaling$v1$ScaleSpec = {
@@ -1735,7 +1870,8 @@ export type io$k8s$api$autoscaling$v2beta1$ExternalMetricSource = {
   /** metricName is the name of the metric in question. */
   readonly "metricName": string;
   /** metricSelector is used to identify a specific time series within a given metric. */
-  readonly "metricSelector"?: io$k8s$apimachinery$pkg$apis$meta$v1$LabelSelector;
+  readonly "metricSelector"?:
+    io$k8s$apimachinery$pkg$apis$meta$v1$LabelSelector;
   /** targetAverageValue is the target per-pod value of global metric (as a quantity). Mutually exclusive with TargetValue. */
   readonly "targetAverageValue"?: io$k8s$apimachinery$pkg$api$resource$Quantity;
   /** targetValue is the target value of the metric (as a quantity). Mutually exclusive with TargetAverageValue. */
@@ -1745,27 +1881,33 @@ export type io$k8s$api$autoscaling$v2beta1$ExternalMetricSource = {
 /** ExternalMetricStatus indicates the current value of a global metric not associated with any Kubernetes object. */
 export type io$k8s$api$autoscaling$v2beta1$ExternalMetricStatus = {
   /** currentAverageValue is the current value of metric averaged over autoscaled pods. */
-  readonly "currentAverageValue"?: io$k8s$apimachinery$pkg$api$resource$Quantity;
+  readonly "currentAverageValue"?:
+    io$k8s$apimachinery$pkg$api$resource$Quantity;
   /** currentValue is the current value of the metric (as a quantity) */
   readonly "currentValue": io$k8s$apimachinery$pkg$api$resource$Quantity;
   /** metricName is the name of a metric used for autoscaling in metric system. */
   readonly "metricName": string;
   /** metricSelector is used to identify a specific time series within a given metric. */
-  readonly "metricSelector"?: io$k8s$apimachinery$pkg$apis$meta$v1$LabelSelector;
+  readonly "metricSelector"?:
+    io$k8s$apimachinery$pkg$apis$meta$v1$LabelSelector;
 };
 
 /** HorizontalPodAutoscaler is the configuration for a horizontal pod autoscaler, which automatically manages the replica count of any resource implementing the scale subresource based on the metrics specified. */
-export type io$k8s$api$autoscaling$v2beta1$HorizontalPodAutoscaler = {
-  /** metadata is the standard object metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** spec is the specification for the behaviour of the autoscaler. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status. */
-  readonly "spec"?: io$k8s$api$autoscaling$v2beta1$HorizontalPodAutoscalerSpec;
-  /** status is the current information about the autoscaler. */
-  readonly "status"?: io$k8s$api$autoscaling$v2beta1$HorizontalPodAutoscalerStatus;
-} & ({
-  readonly apiVersion: "autoscaling/v2beta1";
-  readonly kind: "HorizontalPodAutoscaler";
-});
+export type io$k8s$api$autoscaling$v2beta1$HorizontalPodAutoscaler =
+  & {
+    /** metadata is the standard object metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** spec is the specification for the behaviour of the autoscaler. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status. */
+    readonly "spec"?:
+      io$k8s$api$autoscaling$v2beta1$HorizontalPodAutoscalerSpec;
+    /** status is the current information about the autoscaler. */
+    readonly "status"?:
+      io$k8s$api$autoscaling$v2beta1$HorizontalPodAutoscalerStatus;
+  }
+  & ({
+    readonly apiVersion: "autoscaling/v2beta1";
+    readonly kind: "HorizontalPodAutoscaler";
+  });
 
 /** HorizontalPodAutoscalerCondition describes the state of a HorizontalPodAutoscaler at a certain point. */
 export type io$k8s$api$autoscaling$v2beta1$HorizontalPodAutoscalerCondition = {
@@ -1782,15 +1924,18 @@ export type io$k8s$api$autoscaling$v2beta1$HorizontalPodAutoscalerCondition = {
 };
 
 /** HorizontalPodAutoscaler is a list of horizontal pod autoscaler objects. */
-export type io$k8s$api$autoscaling$v2beta1$HorizontalPodAutoscalerList = {
-  /** items is the list of horizontal pod autoscaler objects. */
-  readonly "items": readonly io$k8s$api$autoscaling$v2beta1$HorizontalPodAutoscaler[];
-  /** metadata is the standard list metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "autoscaling/v2beta1";
-  readonly kind: "HorizontalPodAutoscalerList";
-});
+export type io$k8s$api$autoscaling$v2beta1$HorizontalPodAutoscalerList =
+  & {
+    /** items is the list of horizontal pod autoscaler objects. */
+    readonly "items":
+      readonly io$k8s$api$autoscaling$v2beta1$HorizontalPodAutoscaler[];
+    /** metadata is the standard list metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "autoscaling/v2beta1";
+    readonly kind: "HorizontalPodAutoscalerList";
+  });
 
 /** HorizontalPodAutoscalerSpec describes the desired functionality of the HorizontalPodAutoscaler. */
 export type io$k8s$api$autoscaling$v2beta1$HorizontalPodAutoscalerSpec = {
@@ -1801,15 +1946,18 @@ export type io$k8s$api$autoscaling$v2beta1$HorizontalPodAutoscalerSpec = {
   /** minReplicas is the lower limit for the number of replicas to which the autoscaler can scale down. It defaults to 1 pod. */
   readonly "minReplicas"?: number;
   /** scaleTargetRef points to the target resource to scale, and is used to the pods for which metrics should be collected, as well as to actually change the replica count. */
-  readonly "scaleTargetRef": io$k8s$api$autoscaling$v2beta1$CrossVersionObjectReference;
+  readonly "scaleTargetRef":
+    io$k8s$api$autoscaling$v2beta1$CrossVersionObjectReference;
 };
 
 /** HorizontalPodAutoscalerStatus describes the current status of a horizontal pod autoscaler. */
 export type io$k8s$api$autoscaling$v2beta1$HorizontalPodAutoscalerStatus = {
   /** conditions is the set of conditions required for this autoscaler to scale its target, and indicates whether or not those conditions are met. */
-  readonly "conditions": readonly io$k8s$api$autoscaling$v2beta1$HorizontalPodAutoscalerCondition[];
+  readonly "conditions":
+    readonly io$k8s$api$autoscaling$v2beta1$HorizontalPodAutoscalerCondition[];
   /** currentMetrics is the last read state of the metrics used by this autoscaler. */
-  readonly "currentMetrics"?: readonly io$k8s$api$autoscaling$v2beta1$MetricStatus[];
+  readonly "currentMetrics"?:
+    readonly io$k8s$api$autoscaling$v2beta1$MetricStatus[];
   /** currentReplicas is current number of replicas of pods managed by this autoscaler, as last seen by the autoscaler. */
   readonly "currentReplicas": number;
   /** desiredReplicas is the desired number of replicas of pods managed by this autoscaler, as last calculated by the autoscaler. */
@@ -1939,17 +2087,21 @@ export type io$k8s$api$autoscaling$v2beta2$ExternalMetricStatus = {
 };
 
 /** HorizontalPodAutoscaler is the configuration for a horizontal pod autoscaler, which automatically manages the replica count of any resource implementing the scale subresource based on the metrics specified. */
-export type io$k8s$api$autoscaling$v2beta2$HorizontalPodAutoscaler = {
-  /** metadata is the standard object metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** spec is the specification for the behaviour of the autoscaler. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status. */
-  readonly "spec"?: io$k8s$api$autoscaling$v2beta2$HorizontalPodAutoscalerSpec;
-  /** status is the current information about the autoscaler. */
-  readonly "status"?: io$k8s$api$autoscaling$v2beta2$HorizontalPodAutoscalerStatus;
-} & ({
-  readonly apiVersion: "autoscaling/v2beta2";
-  readonly kind: "HorizontalPodAutoscaler";
-});
+export type io$k8s$api$autoscaling$v2beta2$HorizontalPodAutoscaler =
+  & {
+    /** metadata is the standard object metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** spec is the specification for the behaviour of the autoscaler. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status. */
+    readonly "spec"?:
+      io$k8s$api$autoscaling$v2beta2$HorizontalPodAutoscalerSpec;
+    /** status is the current information about the autoscaler. */
+    readonly "status"?:
+      io$k8s$api$autoscaling$v2beta2$HorizontalPodAutoscalerStatus;
+  }
+  & ({
+    readonly apiVersion: "autoscaling/v2beta2";
+    readonly kind: "HorizontalPodAutoscaler";
+  });
 
 /** HorizontalPodAutoscalerCondition describes the state of a HorizontalPodAutoscaler at a certain point. */
 export type io$k8s$api$autoscaling$v2beta2$HorizontalPodAutoscalerCondition = {
@@ -1966,15 +2118,18 @@ export type io$k8s$api$autoscaling$v2beta2$HorizontalPodAutoscalerCondition = {
 };
 
 /** HorizontalPodAutoscalerList is a list of horizontal pod autoscaler objects. */
-export type io$k8s$api$autoscaling$v2beta2$HorizontalPodAutoscalerList = {
-  /** items is the list of horizontal pod autoscaler objects. */
-  readonly "items": readonly io$k8s$api$autoscaling$v2beta2$HorizontalPodAutoscaler[];
-  /** metadata is the standard list metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "autoscaling/v2beta2";
-  readonly kind: "HorizontalPodAutoscalerList";
-});
+export type io$k8s$api$autoscaling$v2beta2$HorizontalPodAutoscalerList =
+  & {
+    /** items is the list of horizontal pod autoscaler objects. */
+    readonly "items":
+      readonly io$k8s$api$autoscaling$v2beta2$HorizontalPodAutoscaler[];
+    /** metadata is the standard list metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "autoscaling/v2beta2";
+    readonly kind: "HorizontalPodAutoscalerList";
+  });
 
 /** HorizontalPodAutoscalerSpec describes the desired functionality of the HorizontalPodAutoscaler. */
 export type io$k8s$api$autoscaling$v2beta2$HorizontalPodAutoscalerSpec = {
@@ -1985,15 +2140,18 @@ export type io$k8s$api$autoscaling$v2beta2$HorizontalPodAutoscalerSpec = {
   /** minReplicas is the lower limit for the number of replicas to which the autoscaler can scale down. It defaults to 1 pod. */
   readonly "minReplicas"?: number;
   /** scaleTargetRef points to the target resource to scale, and is used to the pods for which metrics should be collected, as well as to actually change the replica count. */
-  readonly "scaleTargetRef": io$k8s$api$autoscaling$v2beta2$CrossVersionObjectReference;
+  readonly "scaleTargetRef":
+    io$k8s$api$autoscaling$v2beta2$CrossVersionObjectReference;
 };
 
 /** HorizontalPodAutoscalerStatus describes the current status of a horizontal pod autoscaler. */
 export type io$k8s$api$autoscaling$v2beta2$HorizontalPodAutoscalerStatus = {
   /** conditions is the set of conditions required for this autoscaler to scale its target, and indicates whether or not those conditions are met. */
-  readonly "conditions": readonly io$k8s$api$autoscaling$v2beta2$HorizontalPodAutoscalerCondition[];
+  readonly "conditions":
+    readonly io$k8s$api$autoscaling$v2beta2$HorizontalPodAutoscalerCondition[];
   /** currentMetrics is the last read state of the metrics used by this autoscaler. */
-  readonly "currentMetrics"?: readonly io$k8s$api$autoscaling$v2beta2$MetricStatus[];
+  readonly "currentMetrics"?:
+    readonly io$k8s$api$autoscaling$v2beta2$MetricStatus[];
   /** currentReplicas is current number of replicas of pods managed by this autoscaler, as last seen by the autoscaler. */
   readonly "currentReplicas": number;
   /** desiredReplicas is the desired number of replicas of pods managed by this autoscaler, as last calculated by the autoscaler. */
@@ -2064,7 +2222,8 @@ export type io$k8s$api$autoscaling$v2beta2$MetricValueStatus = {
 
 /** ObjectMetricSource indicates how to scale on a metric describing a kubernetes object (for example, hits-per-second on an Ingress object). */
 export type io$k8s$api$autoscaling$v2beta2$ObjectMetricSource = {
-  readonly "describedObject": io$k8s$api$autoscaling$v2beta2$CrossVersionObjectReference;
+  readonly "describedObject":
+    io$k8s$api$autoscaling$v2beta2$CrossVersionObjectReference;
   /** metric identifies the target metric by name and selector */
   readonly "metric": io$k8s$api$autoscaling$v2beta2$MetricIdentifier;
   /** target specifies the target value for the given metric */
@@ -2075,7 +2234,8 @@ export type io$k8s$api$autoscaling$v2beta2$ObjectMetricSource = {
 export type io$k8s$api$autoscaling$v2beta2$ObjectMetricStatus = {
   /** current contains the current value for the given metric */
   readonly "current": io$k8s$api$autoscaling$v2beta2$MetricValueStatus;
-  readonly "describedObject": io$k8s$api$autoscaling$v2beta2$CrossVersionObjectReference;
+  readonly "describedObject":
+    io$k8s$api$autoscaling$v2beta2$CrossVersionObjectReference;
   /** metric identifies the target metric by name and selector */
   readonly "metric": io$k8s$api$autoscaling$v2beta2$MetricIdentifier;
 };
@@ -2113,17 +2273,19 @@ export type io$k8s$api$autoscaling$v2beta2$ResourceMetricStatus = {
 };
 
 /** Job represents the configuration of a single job. */
-export type io$k8s$api$batch$v1$Job = {
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Specification of the desired behavior of a job. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
-  readonly "spec"?: io$k8s$api$batch$v1$JobSpec;
-  /** Current status of a job. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
-  readonly "status"?: io$k8s$api$batch$v1$JobStatus;
-} & ({
-  readonly apiVersion: "batch/v1";
-  readonly kind: "Job";
-});
+export type io$k8s$api$batch$v1$Job =
+  & {
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Specification of the desired behavior of a job. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
+    readonly "spec"?: io$k8s$api$batch$v1$JobSpec;
+    /** Current status of a job. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
+    readonly "status"?: io$k8s$api$batch$v1$JobStatus;
+  }
+  & ({
+    readonly apiVersion: "batch/v1";
+    readonly kind: "Job";
+  });
 
 /** JobCondition describes current state of a job. */
 export type io$k8s$api$batch$v1$JobCondition = {
@@ -2142,15 +2304,17 @@ export type io$k8s$api$batch$v1$JobCondition = {
 };
 
 /** JobList is a collection of jobs. */
-export type io$k8s$api$batch$v1$JobList = {
-  /** items is the list of Jobs. */
-  readonly "items": readonly io$k8s$api$batch$v1$Job[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "batch/v1";
-  readonly kind: "JobList";
-});
+export type io$k8s$api$batch$v1$JobList =
+  & {
+    /** items is the list of Jobs. */
+    readonly "items": readonly io$k8s$api$batch$v1$Job[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "batch/v1";
+    readonly kind: "JobList";
+  });
 
 /** JobSpec describes how the job execution will look like. */
 export type io$k8s$api$batch$v1$JobSpec = {
@@ -2189,28 +2353,32 @@ export type io$k8s$api$batch$v1$JobStatus = {
 };
 
 /** CronJob represents the configuration of a single cron job. */
-export type io$k8s$api$batch$v1beta1$CronJob = {
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Specification of the desired behavior of a cron job, including the schedule. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
-  readonly "spec"?: io$k8s$api$batch$v1beta1$CronJobSpec;
-  /** Current status of a cron job. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
-  readonly "status"?: io$k8s$api$batch$v1beta1$CronJobStatus;
-} & ({
-  readonly apiVersion: "batch/v1beta1";
-  readonly kind: "CronJob";
-});
+export type io$k8s$api$batch$v1beta1$CronJob =
+  & {
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Specification of the desired behavior of a cron job, including the schedule. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
+    readonly "spec"?: io$k8s$api$batch$v1beta1$CronJobSpec;
+    /** Current status of a cron job. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
+    readonly "status"?: io$k8s$api$batch$v1beta1$CronJobStatus;
+  }
+  & ({
+    readonly apiVersion: "batch/v1beta1";
+    readonly kind: "CronJob";
+  });
 
 /** CronJobList is a collection of cron jobs. */
-export type io$k8s$api$batch$v1beta1$CronJobList = {
-  /** items is the list of CronJobs. */
-  readonly "items": readonly io$k8s$api$batch$v1beta1$CronJob[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "batch/v1beta1";
-  readonly kind: "CronJobList";
-});
+export type io$k8s$api$batch$v1beta1$CronJobList =
+  & {
+    /** items is the list of CronJobs. */
+    readonly "items": readonly io$k8s$api$batch$v1beta1$CronJob[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "batch/v1beta1";
+    readonly kind: "CronJobList";
+  });
 
 /** CronJobSpec describes how the job execution will look like and when it will actually run. */
 export type io$k8s$api$batch$v1beta1$CronJobSpec = {
@@ -2247,35 +2415,43 @@ export type io$k8s$api$batch$v1beta1$JobTemplateSpec = {
 };
 
 /** Describes a certificate signing request */
-export type io$k8s$api$certificates$v1beta1$CertificateSigningRequest = {
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** The certificate request itself and any additional information. */
-  readonly "spec"?: io$k8s$api$certificates$v1beta1$CertificateSigningRequestSpec;
-  /** Derived information about the request. */
-  readonly "status"?: io$k8s$api$certificates$v1beta1$CertificateSigningRequestStatus;
-} & ({
-  readonly apiVersion: "certificates.k8s.io/v1beta1";
-  readonly kind: "CertificateSigningRequest";
-});
+export type io$k8s$api$certificates$v1beta1$CertificateSigningRequest =
+  & {
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** The certificate request itself and any additional information. */
+    readonly "spec"?:
+      io$k8s$api$certificates$v1beta1$CertificateSigningRequestSpec;
+    /** Derived information about the request. */
+    readonly "status"?:
+      io$k8s$api$certificates$v1beta1$CertificateSigningRequestStatus;
+  }
+  & ({
+    readonly apiVersion: "certificates.k8s.io/v1beta1";
+    readonly kind: "CertificateSigningRequest";
+  });
 
-export type io$k8s$api$certificates$v1beta1$CertificateSigningRequestCondition = {
-  /** timestamp for the last update to this condition */
-  readonly "lastUpdateTime"?: io$k8s$apimachinery$pkg$apis$meta$v1$Time;
-  /** human readable message with details about the request state */
-  readonly "message"?: string;
-  /** brief reason for the request state */
-  readonly "reason"?: string;
-  /** request approval state, currently Approved or Denied. */
-  readonly "type": string;
-};
+export type io$k8s$api$certificates$v1beta1$CertificateSigningRequestCondition =
+  {
+    /** timestamp for the last update to this condition */
+    readonly "lastUpdateTime"?: io$k8s$apimachinery$pkg$apis$meta$v1$Time;
+    /** human readable message with details about the request state */
+    readonly "message"?: string;
+    /** brief reason for the request state */
+    readonly "reason"?: string;
+    /** request approval state, currently Approved or Denied. */
+    readonly "type": string;
+  };
 
-export type io$k8s$api$certificates$v1beta1$CertificateSigningRequestList = {
-  readonly "items": readonly io$k8s$api$certificates$v1beta1$CertificateSigningRequest[];
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "certificates.k8s.io/v1beta1";
-  readonly kind: "CertificateSigningRequestList";
-});
+export type io$k8s$api$certificates$v1beta1$CertificateSigningRequestList =
+  & {
+    readonly "items":
+      readonly io$k8s$api$certificates$v1beta1$CertificateSigningRequest[];
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "certificates.k8s.io/v1beta1";
+    readonly kind: "CertificateSigningRequestList";
+  });
 
 /** This information is immutable after the request is created. Only the Request and Usages fields can be set on creation, other fields are derived by Kubernetes and cannot be modified by users. */
 export type io$k8s$api$certificates$v1beta1$CertificateSigningRequestSpec = {
@@ -2298,30 +2474,35 @@ export type io$k8s$api$certificates$v1beta1$CertificateSigningRequestStatus = {
   /** If request was approved, the controller will place the issued certificate here. */
   readonly "certificate"?: string;
   /** Conditions applied to the request, such as approval or denial. */
-  readonly "conditions"?: readonly io$k8s$api$certificates$v1beta1$CertificateSigningRequestCondition[];
+  readonly "conditions"?:
+    readonly io$k8s$api$certificates$v1beta1$CertificateSigningRequestCondition[];
 };
 
 /** Lease defines a lease concept. */
-export type io$k8s$api$coordination$v1$Lease = {
-  /** More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Specification of the Lease. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
-  readonly "spec"?: io$k8s$api$coordination$v1$LeaseSpec;
-} & ({
-  readonly apiVersion: "coordination.k8s.io/v1";
-  readonly kind: "Lease";
-});
+export type io$k8s$api$coordination$v1$Lease =
+  & {
+    /** More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Specification of the Lease. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
+    readonly "spec"?: io$k8s$api$coordination$v1$LeaseSpec;
+  }
+  & ({
+    readonly apiVersion: "coordination.k8s.io/v1";
+    readonly kind: "Lease";
+  });
 
 /** LeaseList is a list of Lease objects. */
-export type io$k8s$api$coordination$v1$LeaseList = {
-  /** Items is a list of schema objects. */
-  readonly "items": readonly io$k8s$api$coordination$v1$Lease[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "coordination.k8s.io/v1";
-  readonly kind: "LeaseList";
-});
+export type io$k8s$api$coordination$v1$LeaseList =
+  & {
+    /** Items is a list of schema objects. */
+    readonly "items": readonly io$k8s$api$coordination$v1$Lease[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "coordination.k8s.io/v1";
+    readonly kind: "LeaseList";
+  });
 
 /** LeaseSpec is a specification of a Lease. */
 export type io$k8s$api$coordination$v1$LeaseSpec = {
@@ -2338,26 +2519,30 @@ export type io$k8s$api$coordination$v1$LeaseSpec = {
 };
 
 /** Lease defines a lease concept. */
-export type io$k8s$api$coordination$v1beta1$Lease = {
-  /** More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Specification of the Lease. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
-  readonly "spec"?: io$k8s$api$coordination$v1beta1$LeaseSpec;
-} & ({
-  readonly apiVersion: "coordination.k8s.io/v1beta1";
-  readonly kind: "Lease";
-});
+export type io$k8s$api$coordination$v1beta1$Lease =
+  & {
+    /** More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Specification of the Lease. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
+    readonly "spec"?: io$k8s$api$coordination$v1beta1$LeaseSpec;
+  }
+  & ({
+    readonly apiVersion: "coordination.k8s.io/v1beta1";
+    readonly kind: "Lease";
+  });
 
 /** LeaseList is a list of Lease objects. */
-export type io$k8s$api$coordination$v1beta1$LeaseList = {
-  /** Items is a list of schema objects. */
-  readonly "items": readonly io$k8s$api$coordination$v1beta1$Lease[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "coordination.k8s.io/v1beta1";
-  readonly kind: "LeaseList";
-});
+export type io$k8s$api$coordination$v1beta1$LeaseList =
+  & {
+    /** Items is a list of schema objects. */
+    readonly "items": readonly io$k8s$api$coordination$v1beta1$Lease[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "coordination.k8s.io/v1beta1";
+    readonly kind: "LeaseList";
+  });
 
 /** LeaseSpec is a specification of a Lease. */
 export type io$k8s$api$coordination$v1beta1$LeaseSpec = {
@@ -2442,15 +2627,17 @@ export type io$k8s$api$core$v1$AzureFileVolumeSource = {
 };
 
 /** Binding ties one object to another; for example, a pod is bound to a node by a scheduler. Deprecated in 1.7, please use the bindings subresource of pods instead. */
-export type io$k8s$api$core$v1$Binding = {
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** The target object that you want to bind to the standard object. */
-  readonly "target": io$k8s$api$core$v1$ObjectReference;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "Binding";
-});
+export type io$k8s$api$core$v1$Binding =
+  & {
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** The target object that you want to bind to the standard object. */
+    readonly "target": io$k8s$api$core$v1$ObjectReference;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "Binding";
+  });
 
 /** Represents storage that is managed by an external CSI volume driver (Beta feature) */
 export type io$k8s$api$core$v1$CSIPersistentVolumeSource = {
@@ -2571,39 +2758,45 @@ export type io$k8s$api$core$v1$ComponentCondition = {
 };
 
 /** ComponentStatus (and ComponentStatusList) holds the cluster validation info. */
-export type io$k8s$api$core$v1$ComponentStatus = {
-  /** List of component conditions observed */
-  readonly "conditions"?: readonly io$k8s$api$core$v1$ComponentCondition[];
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "ComponentStatus";
-});
+export type io$k8s$api$core$v1$ComponentStatus =
+  & {
+    /** List of component conditions observed */
+    readonly "conditions"?: readonly io$k8s$api$core$v1$ComponentCondition[];
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "ComponentStatus";
+  });
 
 /** Status of all the conditions for the component as a list of ComponentStatus objects. */
-export type io$k8s$api$core$v1$ComponentStatusList = {
-  /** List of ComponentStatus objects. */
-  readonly "items": readonly io$k8s$api$core$v1$ComponentStatus[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "ComponentStatusList";
-});
+export type io$k8s$api$core$v1$ComponentStatusList =
+  & {
+    /** List of ComponentStatus objects. */
+    readonly "items": readonly io$k8s$api$core$v1$ComponentStatus[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "ComponentStatusList";
+  });
 
 /** ConfigMap holds configuration data for pods to consume. */
-export type io$k8s$api$core$v1$ConfigMap = {
-  /** BinaryData contains the binary data. Each key must consist of alphanumeric characters, '-', '_' or '.'. BinaryData can contain byte sequences that are not in the UTF-8 range. The keys stored in BinaryData must not overlap with the ones in the Data field, this is enforced during validation process. Using this field will require 1.10+ apiserver and kubelet. */
-  readonly "binaryData"?: object;
-  /** Data contains the configuration data. Each key must consist of alphanumeric characters, '-', '_' or '.'. Values with non-UTF-8 byte sequences must use the BinaryData field. The keys stored in Data must not overlap with the keys in the BinaryData field, this is enforced during validation process. */
-  readonly "data"?: object;
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "ConfigMap";
-});
+export type io$k8s$api$core$v1$ConfigMap =
+  & {
+    /** BinaryData contains the binary data. Each key must consist of alphanumeric characters, '-', '_' or '.'. BinaryData can contain byte sequences that are not in the UTF-8 range. The keys stored in BinaryData must not overlap with the ones in the Data field, this is enforced during validation process. Using this field will require 1.10+ apiserver and kubelet. */
+    readonly "binaryData"?: object;
+    /** Data contains the configuration data. Each key must consist of alphanumeric characters, '-', '_' or '.'. Values with non-UTF-8 byte sequences must use the BinaryData field. The keys stored in Data must not overlap with the keys in the BinaryData field, this is enforced during validation process. */
+    readonly "data"?: object;
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "ConfigMap";
+  });
 
 /** ConfigMapEnvSource selects a ConfigMap to populate the environment variables with.
 
@@ -2626,15 +2819,17 @@ export type io$k8s$api$core$v1$ConfigMapKeySelector = {
 };
 
 /** ConfigMapList is a resource containing a list of ConfigMap objects. */
-export type io$k8s$api$core$v1$ConfigMapList = {
-  /** Items is the list of ConfigMaps. */
-  readonly "items": readonly io$k8s$api$core$v1$ConfigMap[];
-  /** More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "ConfigMapList";
-});
+export type io$k8s$api$core$v1$ConfigMapList =
+  & {
+    /** Items is the list of ConfigMaps. */
+    readonly "items": readonly io$k8s$api$core$v1$ConfigMap[];
+    /** More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "ConfigMapList";
+  });
 
 /** ConfigMapNodeConfigSource contains the information to reference a ConfigMap as a config source for the Node. */
 export type io$k8s$api$core$v1$ConfigMapNodeConfigSource = {
@@ -2897,26 +3092,30 @@ export type io$k8s$api$core$v1$EndpointSubset = {
       Ports: [{"name": "a", "port": 93}, {"name": "b", "port": 76}]
     },
  ] */
-export type io$k8s$api$core$v1$Endpoints = {
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** The set of all endpoints is the union of all subsets. Addresses are placed into subsets according to the IPs they share. A single address with multiple ports, some of which are ready and some of which are not (because they come from different containers) will result in the address being displayed in different subsets for the different ports. No address will appear in both Addresses and NotReadyAddresses in the same subset. Sets of addresses and ports that comprise a service. */
-  readonly "subsets"?: readonly io$k8s$api$core$v1$EndpointSubset[];
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "Endpoints";
-});
+export type io$k8s$api$core$v1$Endpoints =
+  & {
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** The set of all endpoints is the union of all subsets. Addresses are placed into subsets according to the IPs they share. A single address with multiple ports, some of which are ready and some of which are not (because they come from different containers) will result in the address being displayed in different subsets for the different ports. No address will appear in both Addresses and NotReadyAddresses in the same subset. Sets of addresses and ports that comprise a service. */
+    readonly "subsets"?: readonly io$k8s$api$core$v1$EndpointSubset[];
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "Endpoints";
+  });
 
 /** EndpointsList is a list of endpoints. */
-export type io$k8s$api$core$v1$EndpointsList = {
-  /** List of endpoints. */
-  readonly "items": readonly io$k8s$api$core$v1$Endpoints[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "EndpointsList";
-});
+export type io$k8s$api$core$v1$EndpointsList =
+  & {
+    /** List of endpoints. */
+    readonly "items": readonly io$k8s$api$core$v1$Endpoints[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "EndpointsList";
+  });
 
 /** EnvFromSource represents the source of a set of ConfigMaps */
 export type io$k8s$api$core$v1$EnvFromSource = {
@@ -2951,52 +3150,56 @@ export type io$k8s$api$core$v1$EnvVarSource = {
 };
 
 /** Event is a report of an event somewhere in the cluster. */
-export type io$k8s$api$core$v1$Event = {
-  /** What action was taken/failed regarding to the Regarding object. */
-  readonly "action"?: string;
-  /** The number of times this event has occurred. */
-  readonly "count"?: number;
-  /** Time when this Event was first observed. */
-  readonly "eventTime"?: io$k8s$apimachinery$pkg$apis$meta$v1$MicroTime;
-  /** The time at which the event was first recorded. (Time of server receipt is in TypeMeta.) */
-  readonly "firstTimestamp"?: io$k8s$apimachinery$pkg$apis$meta$v1$Time;
-  /** The object that this event is about. */
-  readonly "involvedObject": io$k8s$api$core$v1$ObjectReference;
-  /** The time at which the most recent occurrence of this event was recorded. */
-  readonly "lastTimestamp"?: io$k8s$apimachinery$pkg$apis$meta$v1$Time;
-  /** A human-readable description of the status of this operation. */
-  readonly "message"?: string;
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata": io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** This should be a short, machine understandable string that gives the reason for the transition into the object's current status. */
-  readonly "reason"?: string;
-  /** Optional secondary object for more complex actions. */
-  readonly "related"?: io$k8s$api$core$v1$ObjectReference;
-  /** Name of the controller that emitted this Event, e.g. `kubernetes.io/kubelet`. */
-  readonly "reportingComponent"?: string;
-  /** ID of the controller instance, e.g. `kubelet-xyzf`. */
-  readonly "reportingInstance"?: string;
-  /** Data about the Event series this event represents or nil if it's a singleton Event. */
-  readonly "series"?: io$k8s$api$core$v1$EventSeries;
-  /** The component reporting this event. Should be a short machine understandable string. */
-  readonly "source"?: io$k8s$api$core$v1$EventSource;
-  /** Type of this event (Normal, Warning), new types could be added in the future */
-  readonly "type"?: string;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "Event";
-});
+export type io$k8s$api$core$v1$Event =
+  & {
+    /** What action was taken/failed regarding to the Regarding object. */
+    readonly "action"?: string;
+    /** The number of times this event has occurred. */
+    readonly "count"?: number;
+    /** Time when this Event was first observed. */
+    readonly "eventTime"?: io$k8s$apimachinery$pkg$apis$meta$v1$MicroTime;
+    /** The time at which the event was first recorded. (Time of server receipt is in TypeMeta.) */
+    readonly "firstTimestamp"?: io$k8s$apimachinery$pkg$apis$meta$v1$Time;
+    /** The object that this event is about. */
+    readonly "involvedObject": io$k8s$api$core$v1$ObjectReference;
+    /** The time at which the most recent occurrence of this event was recorded. */
+    readonly "lastTimestamp"?: io$k8s$apimachinery$pkg$apis$meta$v1$Time;
+    /** A human-readable description of the status of this operation. */
+    readonly "message"?: string;
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata": io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** This should be a short, machine understandable string that gives the reason for the transition into the object's current status. */
+    readonly "reason"?: string;
+    /** Optional secondary object for more complex actions. */
+    readonly "related"?: io$k8s$api$core$v1$ObjectReference;
+    /** Name of the controller that emitted this Event, e.g. `kubernetes.io/kubelet`. */
+    readonly "reportingComponent"?: string;
+    /** ID of the controller instance, e.g. `kubelet-xyzf`. */
+    readonly "reportingInstance"?: string;
+    /** Data about the Event series this event represents or nil if it's a singleton Event. */
+    readonly "series"?: io$k8s$api$core$v1$EventSeries;
+    /** The component reporting this event. Should be a short machine understandable string. */
+    readonly "source"?: io$k8s$api$core$v1$EventSource;
+    /** Type of this event (Normal, Warning), new types could be added in the future */
+    readonly "type"?: string;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "Event";
+  });
 
 /** EventList is a list of events. */
-export type io$k8s$api$core$v1$EventList = {
-  /** List of events */
-  readonly "items": readonly io$k8s$api$core$v1$Event[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "EventList";
-});
+export type io$k8s$api$core$v1$EventList =
+  & {
+    /** List of events */
+    readonly "items": readonly io$k8s$api$core$v1$Event[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "EventList";
+  });
 
 /** EventSeries contain information on series of events, i.e. thing that was/is happening continuously for some time. */
 export type io$k8s$api$core$v1$EventSeries = {
@@ -3239,15 +3442,17 @@ export type io$k8s$api$core$v1$Lifecycle = {
 };
 
 /** LimitRange sets resource usage limits for each kind of resource in a Namespace. */
-export type io$k8s$api$core$v1$LimitRange = {
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Spec defines the limits enforced. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
-  readonly "spec"?: io$k8s$api$core$v1$LimitRangeSpec;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "LimitRange";
-});
+export type io$k8s$api$core$v1$LimitRange =
+  & {
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Spec defines the limits enforced. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
+    readonly "spec"?: io$k8s$api$core$v1$LimitRangeSpec;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "LimitRange";
+  });
 
 /** LimitRangeItem defines a min/max usage limit for any resource that matches on kind. */
 export type io$k8s$api$core$v1$LimitRangeItem = {
@@ -3266,15 +3471,17 @@ export type io$k8s$api$core$v1$LimitRangeItem = {
 };
 
 /** LimitRangeList is a list of LimitRange items. */
-export type io$k8s$api$core$v1$LimitRangeList = {
-  /** Items is a list of LimitRange objects. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/ */
-  readonly "items": readonly io$k8s$api$core$v1$LimitRange[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "LimitRangeList";
-});
+export type io$k8s$api$core$v1$LimitRangeList =
+  & {
+    /** Items is a list of LimitRange objects. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/ */
+    readonly "items": readonly io$k8s$api$core$v1$LimitRange[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "LimitRangeList";
+  });
 
 /** LimitRangeSpec defines a min/max usage limit for resources that match on kind. */
 export type io$k8s$api$core$v1$LimitRangeSpec = {
@@ -3321,28 +3528,32 @@ export type io$k8s$api$core$v1$NFSVolumeSource = {
 };
 
 /** Namespace provides a scope for Names. Use of multiple namespaces is optional. */
-export type io$k8s$api$core$v1$Namespace = {
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Spec defines the behavior of the Namespace. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
-  readonly "spec"?: io$k8s$api$core$v1$NamespaceSpec;
-  /** Status describes the current status of a Namespace. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
-  readonly "status"?: io$k8s$api$core$v1$NamespaceStatus;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "Namespace";
-});
+export type io$k8s$api$core$v1$Namespace =
+  & {
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Spec defines the behavior of the Namespace. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
+    readonly "spec"?: io$k8s$api$core$v1$NamespaceSpec;
+    /** Status describes the current status of a Namespace. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
+    readonly "status"?: io$k8s$api$core$v1$NamespaceStatus;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "Namespace";
+  });
 
 /** NamespaceList is a list of Namespaces. */
-export type io$k8s$api$core$v1$NamespaceList = {
-  /** Items is the list of Namespace objects in the list. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/ */
-  readonly "items": readonly io$k8s$api$core$v1$Namespace[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "NamespaceList";
-});
+export type io$k8s$api$core$v1$NamespaceList =
+  & {
+    /** Items is the list of Namespace objects in the list. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/ */
+    readonly "items": readonly io$k8s$api$core$v1$Namespace[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "NamespaceList";
+  });
 
 /** NamespaceSpec describes the attributes on a Namespace. */
 export type io$k8s$api$core$v1$NamespaceSpec = {
@@ -3357,17 +3568,19 @@ export type io$k8s$api$core$v1$NamespaceStatus = {
 };
 
 /** Node is a worker node in Kubernetes. Each node will have a unique identifier in the cache (i.e. in etcd). */
-export type io$k8s$api$core$v1$Node = {
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Spec defines the behavior of a node. https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
-  readonly "spec"?: io$k8s$api$core$v1$NodeSpec;
-  /** Most recently observed status of the node. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
-  readonly "status"?: io$k8s$api$core$v1$NodeStatus;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "Node";
-});
+export type io$k8s$api$core$v1$Node =
+  & {
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Spec defines the behavior of a node. https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
+    readonly "spec"?: io$k8s$api$core$v1$NodeSpec;
+    /** Most recently observed status of the node. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
+    readonly "status"?: io$k8s$api$core$v1$NodeStatus;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "Node";
+  });
 
 /** NodeAddress contains information for the node's address. */
 export type io$k8s$api$core$v1$NodeAddress = {
@@ -3380,9 +3593,11 @@ export type io$k8s$api$core$v1$NodeAddress = {
 /** Node affinity is a group of node affinity scheduling rules. */
 export type io$k8s$api$core$v1$NodeAffinity = {
   /** The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node matches the corresponding matchExpressions; the node(s) with the highest sum are the most preferred. */
-  readonly "preferredDuringSchedulingIgnoredDuringExecution"?: readonly io$k8s$api$core$v1$PreferredSchedulingTerm[];
+  readonly "preferredDuringSchedulingIgnoredDuringExecution"?:
+    readonly io$k8s$api$core$v1$PreferredSchedulingTerm[];
   /** If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node. */
-  readonly "requiredDuringSchedulingIgnoredDuringExecution"?: io$k8s$api$core$v1$NodeSelector;
+  readonly "requiredDuringSchedulingIgnoredDuringExecution"?:
+    io$k8s$api$core$v1$NodeSelector;
 };
 
 /** NodeCondition contains condition information for a node. */
@@ -3426,15 +3641,17 @@ export type io$k8s$api$core$v1$NodeDaemonEndpoints = {
 };
 
 /** NodeList is the whole list of all Nodes which have been registered with master. */
-export type io$k8s$api$core$v1$NodeList = {
-  /** List of nodes */
-  readonly "items": readonly io$k8s$api$core$v1$Node[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "NodeList";
-});
+export type io$k8s$api$core$v1$NodeList =
+  & {
+    /** List of nodes */
+    readonly "items": readonly io$k8s$api$core$v1$Node[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "NodeList";
+  });
 
 /** A node selector represents the union of the results of one or more label queries over a set of nodes; that is, it represents the OR of the selectors represented by the node selector terms. */
 export type io$k8s$api$core$v1$NodeSelector = {
@@ -3455,9 +3672,11 @@ export type io$k8s$api$core$v1$NodeSelectorRequirement = {
 /** A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm. */
 export type io$k8s$api$core$v1$NodeSelectorTerm = {
   /** A list of node selector requirements by node's labels. */
-  readonly "matchExpressions"?: readonly io$k8s$api$core$v1$NodeSelectorRequirement[];
+  readonly "matchExpressions"?:
+    readonly io$k8s$api$core$v1$NodeSelectorRequirement[];
   /** A list of node selector requirements by node's fields. */
-  readonly "matchFields"?: readonly io$k8s$api$core$v1$NodeSelectorRequirement[];
+  readonly "matchFields"?:
+    readonly io$k8s$api$core$v1$NodeSelectorRequirement[];
 };
 
 /** NodeSpec describes the attributes that a node is created with. */
@@ -3547,30 +3766,34 @@ export type io$k8s$api$core$v1$ObjectReference = {
 };
 
 /** PersistentVolume (PV) is a storage resource provisioned by an administrator. It is analogous to a node. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes */
-export type io$k8s$api$core$v1$PersistentVolume = {
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Spec defines a specification of a persistent volume owned by the cluster. Provisioned by an administrator. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistent-volumes */
-  readonly "spec"?: io$k8s$api$core$v1$PersistentVolumeSpec;
-  /** Status represents the current information/status for the persistent volume. Populated by the system. Read-only. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistent-volumes */
-  readonly "status"?: io$k8s$api$core$v1$PersistentVolumeStatus;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "PersistentVolume";
-});
+export type io$k8s$api$core$v1$PersistentVolume =
+  & {
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Spec defines a specification of a persistent volume owned by the cluster. Provisioned by an administrator. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistent-volumes */
+    readonly "spec"?: io$k8s$api$core$v1$PersistentVolumeSpec;
+    /** Status represents the current information/status for the persistent volume. Populated by the system. Read-only. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistent-volumes */
+    readonly "status"?: io$k8s$api$core$v1$PersistentVolumeStatus;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "PersistentVolume";
+  });
 
 /** PersistentVolumeClaim is a user's request for and claim to a persistent volume */
-export type io$k8s$api$core$v1$PersistentVolumeClaim = {
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Spec defines the desired characteristics of a volume requested by a pod author. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims */
-  readonly "spec"?: io$k8s$api$core$v1$PersistentVolumeClaimSpec;
-  /** Status represents the current information/status of a persistent volume claim. Read-only. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims */
-  readonly "status"?: io$k8s$api$core$v1$PersistentVolumeClaimStatus;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "PersistentVolumeClaim";
-});
+export type io$k8s$api$core$v1$PersistentVolumeClaim =
+  & {
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Spec defines the desired characteristics of a volume requested by a pod author. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims */
+    readonly "spec"?: io$k8s$api$core$v1$PersistentVolumeClaimSpec;
+    /** Status represents the current information/status of a persistent volume claim. Read-only. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims */
+    readonly "status"?: io$k8s$api$core$v1$PersistentVolumeClaimStatus;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "PersistentVolumeClaim";
+  });
 
 /** PersistentVolumeClaimCondition contails details about state of pvc */
 export type io$k8s$api$core$v1$PersistentVolumeClaimCondition = {
@@ -3587,15 +3810,17 @@ export type io$k8s$api$core$v1$PersistentVolumeClaimCondition = {
 };
 
 /** PersistentVolumeClaimList is a list of PersistentVolumeClaim items. */
-export type io$k8s$api$core$v1$PersistentVolumeClaimList = {
-  /** A list of persistent volume claims. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims */
-  readonly "items": readonly io$k8s$api$core$v1$PersistentVolumeClaim[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "PersistentVolumeClaimList";
-});
+export type io$k8s$api$core$v1$PersistentVolumeClaimList =
+  & {
+    /** A list of persistent volume claims. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims */
+    readonly "items": readonly io$k8s$api$core$v1$PersistentVolumeClaim[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "PersistentVolumeClaimList";
+  });
 
 /** PersistentVolumeClaimSpec describes the common attributes of storage devices and allows a Source for provider-specific attributes */
 export type io$k8s$api$core$v1$PersistentVolumeClaimSpec = {
@@ -3622,7 +3847,8 @@ export type io$k8s$api$core$v1$PersistentVolumeClaimStatus = {
   /** Represents the actual resources of the underlying volume. */
   readonly "capacity"?: object;
   /** Current Condition of persistent volume claim. If underlying persistent volume is being resized then the Condition will be set to 'ResizeStarted'. */
-  readonly "conditions"?: readonly io$k8s$api$core$v1$PersistentVolumeClaimCondition[];
+  readonly "conditions"?:
+    readonly io$k8s$api$core$v1$PersistentVolumeClaimCondition[];
   /** Phase represents the current phase of PersistentVolumeClaim. */
   readonly "phase"?: string;
 };
@@ -3636,22 +3862,25 @@ export type io$k8s$api$core$v1$PersistentVolumeClaimVolumeSource = {
 };
 
 /** PersistentVolumeList is a list of PersistentVolume items. */
-export type io$k8s$api$core$v1$PersistentVolumeList = {
-  /** List of persistent volumes. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes */
-  readonly "items": readonly io$k8s$api$core$v1$PersistentVolume[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "PersistentVolumeList";
-});
+export type io$k8s$api$core$v1$PersistentVolumeList =
+  & {
+    /** List of persistent volumes. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes */
+    readonly "items": readonly io$k8s$api$core$v1$PersistentVolume[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "PersistentVolumeList";
+  });
 
 /** PersistentVolumeSpec is the specification of a persistent volume. */
 export type io$k8s$api$core$v1$PersistentVolumeSpec = {
   /** AccessModes contains all ways the volume can be mounted. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes */
   readonly "accessModes"?: readonly string[];
   /** AWSElasticBlockStore represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore */
-  readonly "awsElasticBlockStore"?: io$k8s$api$core$v1$AWSElasticBlockStoreVolumeSource;
+  readonly "awsElasticBlockStore"?:
+    io$k8s$api$core$v1$AWSElasticBlockStoreVolumeSource;
   /** AzureDisk represents an Azure Data Disk mount on the host and bind mount to the pod. */
   readonly "azureDisk"?: io$k8s$api$core$v1$AzureDiskVolumeSource;
   /** AzureFile represents an Azure File Service mount on the host and bind mount to the pod. */
@@ -3673,7 +3902,8 @@ export type io$k8s$api$core$v1$PersistentVolumeSpec = {
   /** Flocker represents a Flocker volume attached to a kubelet's host machine and exposed to the pod for its usage. This depends on the Flocker control service being running */
   readonly "flocker"?: io$k8s$api$core$v1$FlockerVolumeSource;
   /** GCEPersistentDisk represents a GCE Disk resource that is attached to a kubelet's host machine and then exposed to the pod. Provisioned by an admin. More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk */
-  readonly "gcePersistentDisk"?: io$k8s$api$core$v1$GCEPersistentDiskVolumeSource;
+  readonly "gcePersistentDisk"?:
+    io$k8s$api$core$v1$GCEPersistentDiskVolumeSource;
   /** Glusterfs represents a Glusterfs volume that is attached to a host and exposed to the pod. Provisioned by an admin. More info: https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md */
   readonly "glusterfs"?: io$k8s$api$core$v1$GlusterfsPersistentVolumeSource;
   /** HostPath represents a directory on the host. Provisioned by a developer or tester. This is useful for single-node development and testing only! On-host storage is not supported in any way and WILL NOT WORK in a multi-node cluster. More info: https://kubernetes.io/docs/concepts/storage/volumes#hostpath */
@@ -3691,7 +3921,8 @@ export type io$k8s$api$core$v1$PersistentVolumeSpec = {
   /** What happens to a persistent volume when released from its claim. Valid options are Retain (default for manually created PersistentVolumes), Delete (default for dynamically provisioned PersistentVolumes), and Recycle (deprecated). Recycle must be supported by the volume plugin underlying this PersistentVolume. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming */
   readonly "persistentVolumeReclaimPolicy"?: string;
   /** PhotonPersistentDisk represents a PhotonController persistent disk attached and mounted on kubelets host machine */
-  readonly "photonPersistentDisk"?: io$k8s$api$core$v1$PhotonPersistentDiskVolumeSource;
+  readonly "photonPersistentDisk"?:
+    io$k8s$api$core$v1$PhotonPersistentDiskVolumeSource;
   /** PortworxVolume represents a portworx volume attached and mounted on kubelets host machine */
   readonly "portworxVolume"?: io$k8s$api$core$v1$PortworxVolumeSource;
   /** Quobyte represents a Quobyte mount on the host that shares a pod's lifetime */
@@ -3729,24 +3960,28 @@ export type io$k8s$api$core$v1$PhotonPersistentDiskVolumeSource = {
 };
 
 /** Pod is a collection of containers that can run on a host. This resource is created by clients and scheduled onto hosts. */
-export type io$k8s$api$core$v1$Pod = {
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Specification of the desired behavior of the pod. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
-  readonly "spec"?: io$k8s$api$core$v1$PodSpec;
-  /** Most recently observed status of the pod. This data may not be up to date. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
-  readonly "status"?: io$k8s$api$core$v1$PodStatus;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "Pod";
-});
+export type io$k8s$api$core$v1$Pod =
+  & {
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Specification of the desired behavior of the pod. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
+    readonly "spec"?: io$k8s$api$core$v1$PodSpec;
+    /** Most recently observed status of the pod. This data may not be up to date. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
+    readonly "status"?: io$k8s$api$core$v1$PodStatus;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "Pod";
+  });
 
 /** Pod affinity is a group of inter pod affinity scheduling rules. */
 export type io$k8s$api$core$v1$PodAffinity = {
   /** The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred. */
-  readonly "preferredDuringSchedulingIgnoredDuringExecution"?: readonly io$k8s$api$core$v1$WeightedPodAffinityTerm[];
+  readonly "preferredDuringSchedulingIgnoredDuringExecution"?:
+    readonly io$k8s$api$core$v1$WeightedPodAffinityTerm[];
   /** If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied. */
-  readonly "requiredDuringSchedulingIgnoredDuringExecution"?: readonly io$k8s$api$core$v1$PodAffinityTerm[];
+  readonly "requiredDuringSchedulingIgnoredDuringExecution"?:
+    readonly io$k8s$api$core$v1$PodAffinityTerm[];
 };
 
 /** Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running */
@@ -3762,9 +3997,11 @@ export type io$k8s$api$core$v1$PodAffinityTerm = {
 /** Pod anti affinity is a group of inter pod anti affinity scheduling rules. */
 export type io$k8s$api$core$v1$PodAntiAffinity = {
   /** The scheduler will prefer to schedule pods to nodes that satisfy the anti-affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling anti-affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred. */
-  readonly "preferredDuringSchedulingIgnoredDuringExecution"?: readonly io$k8s$api$core$v1$WeightedPodAffinityTerm[];
+  readonly "preferredDuringSchedulingIgnoredDuringExecution"?:
+    readonly io$k8s$api$core$v1$WeightedPodAffinityTerm[];
   /** If the anti-affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the anti-affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied. */
-  readonly "requiredDuringSchedulingIgnoredDuringExecution"?: readonly io$k8s$api$core$v1$PodAffinityTerm[];
+  readonly "requiredDuringSchedulingIgnoredDuringExecution"?:
+    readonly io$k8s$api$core$v1$PodAffinityTerm[];
 };
 
 /** PodCondition contains details for the current condition of this pod. */
@@ -3801,15 +4038,17 @@ export type io$k8s$api$core$v1$PodDNSConfigOption = {
 };
 
 /** PodList is a list of Pods. */
-export type io$k8s$api$core$v1$PodList = {
-  /** List of pods. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md */
-  readonly "items": readonly io$k8s$api$core$v1$Pod[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "PodList";
-});
+export type io$k8s$api$core$v1$PodList =
+  & {
+    /** List of pods. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md */
+    readonly "items": readonly io$k8s$api$core$v1$Pod[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "PodList";
+  });
 
 /** PodReadinessGate contains the reference to a pod condition */
 export type io$k8s$api$core$v1$PodReadinessGate = {
@@ -3868,7 +4107,8 @@ export type io$k8s$api$core$v1$PodSpec = {
   /** Specifies the hostname of the Pod If not specified, the pod's hostname will be set to a system-defined value. */
   readonly "hostname"?: string;
   /** ImagePullSecrets is an optional list of references to secrets in the same namespace to use for pulling any of the images used by this PodSpec. If specified, these secrets will be passed to individual puller implementations for them to use. For example, in the case of docker, only DockerConfig type secrets are honored. More info: https://kubernetes.io/docs/concepts/containers/images#specifying-imagepullsecrets-on-a-pod */
-  readonly "imagePullSecrets"?: readonly io$k8s$api$core$v1$LocalObjectReference[];
+  readonly "imagePullSecrets"?:
+    readonly io$k8s$api$core$v1$LocalObjectReference[];
   /** List of initialization containers belonging to the pod. Init containers are executed in order prior to containers being started. If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy. The name for an init container or normal container must be unique among all containers. Init containers may not have Lifecycle actions, Readiness probes, or Liveness probes. The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit for each resource type, and then using the max of of that value or the sum of the normal containers. Limits are applied to init containers in a similar fashion. Init containers cannot currently be added or removed. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/ */
   readonly "initContainers"?: readonly io$k8s$api$core$v1$Container[];
   /** NodeName is a request to schedule this pod onto a specific node. If it is non-empty, the scheduler simply schedules this pod onto that node, assuming that it fits resource requirements. */
@@ -3916,7 +4156,8 @@ export type io$k8s$api$core$v1$PodStatus = {
   /** IP address of the host to which the pod is assigned. Empty if not yet scheduled. */
   readonly "hostIP"?: string;
   /** The list has one entry per init container in the manifest. The most recent successful init container will have ready = true, the most recently started container will have startTime set. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status */
-  readonly "initContainerStatuses"?: readonly io$k8s$api$core$v1$ContainerStatus[];
+  readonly "initContainerStatuses"?:
+    readonly io$k8s$api$core$v1$ContainerStatus[];
   /** A human readable message indicating details about why the pod is in this condition. */
   readonly "message"?: string;
   /** nominatedNodeName is set only when this pod preempts other pods on the node, but it cannot be scheduled right away as preemption victims receive their graceful termination periods. This field does not guarantee that the pod will be scheduled on this node. Scheduler may decide to place the pod elsewhere if other nodes become available sooner. Scheduler may also decide to give the resources on this node to a higher priority pod that is created after preemption. As a result, this field may be different than PodSpec.nodeName when the pod is scheduled. */
@@ -3938,26 +4179,30 @@ More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-
 };
 
 /** PodTemplate describes a template for creating copies of a predefined pod. */
-export type io$k8s$api$core$v1$PodTemplate = {
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Template defines the pods that will be created from this pod template. https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
-  readonly "template"?: io$k8s$api$core$v1$PodTemplateSpec;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "PodTemplate";
-});
+export type io$k8s$api$core$v1$PodTemplate =
+  & {
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Template defines the pods that will be created from this pod template. https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
+    readonly "template"?: io$k8s$api$core$v1$PodTemplateSpec;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "PodTemplate";
+  });
 
 /** PodTemplateList is a list of PodTemplates. */
-export type io$k8s$api$core$v1$PodTemplateList = {
-  /** List of pod templates */
-  readonly "items": readonly io$k8s$api$core$v1$PodTemplate[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "PodTemplateList";
-});
+export type io$k8s$api$core$v1$PodTemplateList =
+  & {
+    /** List of pod templates */
+    readonly "items": readonly io$k8s$api$core$v1$PodTemplate[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "PodTemplateList";
+  });
 
 /** PodTemplateSpec describes the data a pod should have when created from a template */
 export type io$k8s$api$core$v1$PodTemplateSpec = {
@@ -4070,17 +4315,19 @@ export type io$k8s$api$core$v1$RBDVolumeSource = {
 };
 
 /** ReplicationController represents the configuration of a replication controller. */
-export type io$k8s$api$core$v1$ReplicationController = {
-  /** If the Labels of a ReplicationController are empty, they are defaulted to be the same as the Pod(s) that the replication controller manages. Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Spec defines the specification of the desired behavior of the replication controller. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
-  readonly "spec"?: io$k8s$api$core$v1$ReplicationControllerSpec;
-  /** Status is the most recently observed status of the replication controller. This data may be out of date by some window of time. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
-  readonly "status"?: io$k8s$api$core$v1$ReplicationControllerStatus;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "ReplicationController";
-});
+export type io$k8s$api$core$v1$ReplicationController =
+  & {
+    /** If the Labels of a ReplicationController are empty, they are defaulted to be the same as the Pod(s) that the replication controller manages. Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Spec defines the specification of the desired behavior of the replication controller. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
+    readonly "spec"?: io$k8s$api$core$v1$ReplicationControllerSpec;
+    /** Status is the most recently observed status of the replication controller. This data may be out of date by some window of time. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
+    readonly "status"?: io$k8s$api$core$v1$ReplicationControllerStatus;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "ReplicationController";
+  });
 
 /** ReplicationControllerCondition describes the state of a replication controller at a certain point. */
 export type io$k8s$api$core$v1$ReplicationControllerCondition = {
@@ -4097,15 +4344,17 @@ export type io$k8s$api$core$v1$ReplicationControllerCondition = {
 };
 
 /** ReplicationControllerList is a collection of replication controllers. */
-export type io$k8s$api$core$v1$ReplicationControllerList = {
-  /** List of replication controllers. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller */
-  readonly "items": readonly io$k8s$api$core$v1$ReplicationController[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "ReplicationControllerList";
-});
+export type io$k8s$api$core$v1$ReplicationControllerList =
+  & {
+    /** List of replication controllers. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller */
+    readonly "items": readonly io$k8s$api$core$v1$ReplicationController[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "ReplicationControllerList";
+  });
 
 /** ReplicationControllerSpec is the specification of a replication controller. */
 export type io$k8s$api$core$v1$ReplicationControllerSpec = {
@@ -4124,7 +4373,8 @@ export type io$k8s$api$core$v1$ReplicationControllerStatus = {
   /** The number of available replicas (ready for at least minReadySeconds) for this replication controller. */
   readonly "availableReplicas"?: number;
   /** Represents the latest available observations of a replication controller's current state. */
-  readonly "conditions"?: readonly io$k8s$api$core$v1$ReplicationControllerCondition[];
+  readonly "conditions"?:
+    readonly io$k8s$api$core$v1$ReplicationControllerCondition[];
   /** The number of pods that have labels matching the labels of the pod template of the replication controller. */
   readonly "fullyLabeledReplicas"?: number;
   /** ObservedGeneration reflects the generation of the most recently observed replication controller. */
@@ -4146,28 +4396,32 @@ export type io$k8s$api$core$v1$ResourceFieldSelector = {
 };
 
 /** ResourceQuota sets aggregate quota restrictions enforced per namespace */
-export type io$k8s$api$core$v1$ResourceQuota = {
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Spec defines the desired quota. https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
-  readonly "spec"?: io$k8s$api$core$v1$ResourceQuotaSpec;
-  /** Status defines the actual enforced quota and its current usage. https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
-  readonly "status"?: io$k8s$api$core$v1$ResourceQuotaStatus;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "ResourceQuota";
-});
+export type io$k8s$api$core$v1$ResourceQuota =
+  & {
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Spec defines the desired quota. https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
+    readonly "spec"?: io$k8s$api$core$v1$ResourceQuotaSpec;
+    /** Status defines the actual enforced quota and its current usage. https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
+    readonly "status"?: io$k8s$api$core$v1$ResourceQuotaStatus;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "ResourceQuota";
+  });
 
 /** ResourceQuotaList is a list of ResourceQuota items. */
-export type io$k8s$api$core$v1$ResourceQuotaList = {
-  /** Items is a list of ResourceQuota objects. More info: https://kubernetes.io/docs/concepts/policy/resource-quotas/ */
-  readonly "items": readonly io$k8s$api$core$v1$ResourceQuota[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "ResourceQuotaList";
-});
+export type io$k8s$api$core$v1$ResourceQuotaList =
+  & {
+    /** Items is a list of ResourceQuota objects. More info: https://kubernetes.io/docs/concepts/policy/resource-quotas/ */
+    readonly "items": readonly io$k8s$api$core$v1$ResourceQuota[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "ResourceQuotaList";
+  });
 
 /** ResourceQuotaSpec defines the desired hard limits to enforce for Quota. */
 export type io$k8s$api$core$v1$ResourceQuotaSpec = {
@@ -4258,7 +4512,8 @@ export type io$k8s$api$core$v1$ScaleIOVolumeSource = {
 /** A scope selector represents the AND of the selectors represented by the scoped-resource selector requirements. */
 export type io$k8s$api$core$v1$ScopeSelector = {
   /** A list of scope selector requirements by scope of the resources. */
-  readonly "matchExpressions"?: readonly io$k8s$api$core$v1$ScopedResourceSelectorRequirement[];
+  readonly "matchExpressions"?:
+    readonly io$k8s$api$core$v1$ScopedResourceSelectorRequirement[];
 };
 
 /** A scoped-resource selector requirement is a selector that contains values, a scope name, and an operator that relates the scope name and values. */
@@ -4272,19 +4527,21 @@ export type io$k8s$api$core$v1$ScopedResourceSelectorRequirement = {
 };
 
 /** Secret holds secret data of a certain type. The total bytes of the values in the Data field must be less than MaxSecretSize bytes. */
-export type io$k8s$api$core$v1$Secret = {
-  /** Data contains the secret data. Each key must consist of alphanumeric characters, '-', '_' or '.'. The serialized form of the secret data is a base64 encoded string, representing the arbitrary (possibly non-string) data value here. Described in https://tools.ietf.org/html/rfc4648#section-4 */
-  readonly "data"?: object;
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** stringData allows specifying non-binary secret data in string form. It is provided as a write-only convenience method. All keys and values are merged into the data field on write, overwriting any existing values. It is never output when reading from the API. */
-  readonly "stringData"?: object;
-  /** Used to facilitate programmatic handling of secret data. */
-  readonly "type"?: string;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "Secret";
-});
+export type io$k8s$api$core$v1$Secret =
+  & {
+    /** Data contains the secret data. Each key must consist of alphanumeric characters, '-', '_' or '.'. The serialized form of the secret data is a base64 encoded string, representing the arbitrary (possibly non-string) data value here. Described in https://tools.ietf.org/html/rfc4648#section-4 */
+    readonly "data"?: object;
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** stringData allows specifying non-binary secret data in string form. It is provided as a write-only convenience method. All keys and values are merged into the data field on write, overwriting any existing values. It is never output when reading from the API. */
+    readonly "stringData"?: object;
+    /** Used to facilitate programmatic handling of secret data. */
+    readonly "type"?: string;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "Secret";
+  });
 
 /** SecretEnvSource selects a Secret to populate the environment variables with.
 
@@ -4307,15 +4564,17 @@ export type io$k8s$api$core$v1$SecretKeySelector = {
 };
 
 /** SecretList is a list of Secret. */
-export type io$k8s$api$core$v1$SecretList = {
-  /** Items is a list of secret objects. More info: https://kubernetes.io/docs/concepts/configuration/secret */
-  readonly "items": readonly io$k8s$api$core$v1$Secret[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "SecretList";
-});
+export type io$k8s$api$core$v1$SecretList =
+  & {
+    /** Items is a list of secret objects. More info: https://kubernetes.io/docs/concepts/configuration/secret */
+    readonly "items": readonly io$k8s$api$core$v1$Secret[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "SecretList";
+  });
 
 /** Adapts a secret into a projected volume.
 
@@ -4376,43 +4635,50 @@ export type io$k8s$api$core$v1$SecurityContext = {
 };
 
 /** Service is a named abstraction of software service (for example, mysql) consisting of local port (for example 3306) that the proxy listens on, and the selector that determines which pods will answer requests sent through the proxy. */
-export type io$k8s$api$core$v1$Service = {
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Spec defines the behavior of a service. https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
-  readonly "spec"?: io$k8s$api$core$v1$ServiceSpec;
-  /** Most recently observed status of the service. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
-  readonly "status"?: io$k8s$api$core$v1$ServiceStatus;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "Service";
-});
+export type io$k8s$api$core$v1$Service =
+  & {
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Spec defines the behavior of a service. https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
+    readonly "spec"?: io$k8s$api$core$v1$ServiceSpec;
+    /** Most recently observed status of the service. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
+    readonly "status"?: io$k8s$api$core$v1$ServiceStatus;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "Service";
+  });
 
 /** ServiceAccount binds together: * a name, understood by users, and perhaps by peripheral systems, for an identity * a principal that can be authenticated and authorized * a set of secrets */
-export type io$k8s$api$core$v1$ServiceAccount = {
-  /** AutomountServiceAccountToken indicates whether pods running as this service account should have an API token automatically mounted. Can be overridden at the pod level. */
-  readonly "automountServiceAccountToken"?: boolean;
-  /** ImagePullSecrets is a list of references to secrets in the same namespace to use for pulling any images in pods that reference this ServiceAccount. ImagePullSecrets are distinct from Secrets because Secrets can be mounted in the pod, but ImagePullSecrets are only accessed by the kubelet. More info: https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod */
-  readonly "imagePullSecrets"?: readonly io$k8s$api$core$v1$LocalObjectReference[];
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Secrets is the list of secrets allowed to be used by pods running using this ServiceAccount. More info: https://kubernetes.io/docs/concepts/configuration/secret */
-  readonly "secrets"?: readonly io$k8s$api$core$v1$ObjectReference[];
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "ServiceAccount";
-});
+export type io$k8s$api$core$v1$ServiceAccount =
+  & {
+    /** AutomountServiceAccountToken indicates whether pods running as this service account should have an API token automatically mounted. Can be overridden at the pod level. */
+    readonly "automountServiceAccountToken"?: boolean;
+    /** ImagePullSecrets is a list of references to secrets in the same namespace to use for pulling any images in pods that reference this ServiceAccount. ImagePullSecrets are distinct from Secrets because Secrets can be mounted in the pod, but ImagePullSecrets are only accessed by the kubelet. More info: https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod */
+    readonly "imagePullSecrets"?:
+      readonly io$k8s$api$core$v1$LocalObjectReference[];
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Secrets is the list of secrets allowed to be used by pods running using this ServiceAccount. More info: https://kubernetes.io/docs/concepts/configuration/secret */
+    readonly "secrets"?: readonly io$k8s$api$core$v1$ObjectReference[];
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "ServiceAccount";
+  });
 
 /** ServiceAccountList is a list of ServiceAccount objects */
-export type io$k8s$api$core$v1$ServiceAccountList = {
-  /** List of ServiceAccounts. More info: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/ */
-  readonly "items": readonly io$k8s$api$core$v1$ServiceAccount[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "ServiceAccountList";
-});
+export type io$k8s$api$core$v1$ServiceAccountList =
+  & {
+    /** List of ServiceAccounts. More info: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/ */
+    readonly "items": readonly io$k8s$api$core$v1$ServiceAccount[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "ServiceAccountList";
+  });
 
 /** ServiceAccountTokenProjection represents a projected service account token volume. This projection can be used to insert a service account token into the pods runtime filesystem for use against APIs (Kubernetes API Server or otherwise). */
 export type io$k8s$api$core$v1$ServiceAccountTokenProjection = {
@@ -4425,15 +4691,17 @@ export type io$k8s$api$core$v1$ServiceAccountTokenProjection = {
 };
 
 /** ServiceList holds a list of services. */
-export type io$k8s$api$core$v1$ServiceList = {
-  /** List of services */
-  readonly "items": readonly io$k8s$api$core$v1$Service[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "ServiceList";
-});
+export type io$k8s$api$core$v1$ServiceList =
+  & {
+    /** List of services */
+    readonly "items": readonly io$k8s$api$core$v1$Service[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "ServiceList";
+  });
 
 /** ServicePort contains information on service's port. */
 export type io$k8s$api$core$v1$ServicePort = {
@@ -4572,7 +4840,8 @@ export type io$k8s$api$core$v1$TopologySelectorLabelRequirement = {
 /** A topology selector term represents the result of label queries. A null or empty topology selector term matches no objects. The requirements of them are ANDed. It provides a subset of functionality as NodeSelectorTerm. This is an alpha feature and may change in the future. */
 export type io$k8s$api$core$v1$TopologySelectorTerm = {
   /** A list of topology selector requirements by labels. */
-  readonly "matchLabelExpressions"?: readonly io$k8s$api$core$v1$TopologySelectorLabelRequirement[];
+  readonly "matchLabelExpressions"?:
+    readonly io$k8s$api$core$v1$TopologySelectorLabelRequirement[];
 };
 
 /** TypedLocalObjectReference contains enough information to let you locate the typed referenced object inside the same namespace. */
@@ -4586,7 +4855,8 @@ export type io$k8s$api$core$v1$TypedLocalObjectReference = {
 /** Volume represents a named volume in a pod that may be accessed by any container in the pod. */
 export type io$k8s$api$core$v1$Volume = {
   /** AWSElasticBlockStore represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore */
-  readonly "awsElasticBlockStore"?: io$k8s$api$core$v1$AWSElasticBlockStoreVolumeSource;
+  readonly "awsElasticBlockStore"?:
+    io$k8s$api$core$v1$AWSElasticBlockStoreVolumeSource;
   /** AzureDisk represents an Azure Data Disk mount on the host and bind mount to the pod. */
   readonly "azureDisk"?: io$k8s$api$core$v1$AzureDiskVolumeSource;
   /** AzureFile represents an Azure File Service mount on the host and bind mount to the pod. */
@@ -4610,7 +4880,8 @@ export type io$k8s$api$core$v1$Volume = {
   /** Flocker represents a Flocker volume attached to a kubelet's host machine. This depends on the Flocker control service being running */
   readonly "flocker"?: io$k8s$api$core$v1$FlockerVolumeSource;
   /** GCEPersistentDisk represents a GCE Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk */
-  readonly "gcePersistentDisk"?: io$k8s$api$core$v1$GCEPersistentDiskVolumeSource;
+  readonly "gcePersistentDisk"?:
+    io$k8s$api$core$v1$GCEPersistentDiskVolumeSource;
   /** GitRepo represents a git repository at a particular revision. DEPRECATED: GitRepo is deprecated. To provision a container with a git repo, mount an EmptyDir into an InitContainer that clones the repo using git, then mount the EmptyDir into the Pod's container. */
   readonly "gitRepo"?: io$k8s$api$core$v1$GitRepoVolumeSource;
   /** Glusterfs represents a Glusterfs mount on the host that shares a pod's lifetime. More info: https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md */
@@ -4624,9 +4895,11 @@ export type io$k8s$api$core$v1$Volume = {
   /** NFS represents an NFS mount on the host that shares a pod's lifetime More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs */
   readonly "nfs"?: io$k8s$api$core$v1$NFSVolumeSource;
   /** PersistentVolumeClaimVolumeSource represents a reference to a PersistentVolumeClaim in the same namespace. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims */
-  readonly "persistentVolumeClaim"?: io$k8s$api$core$v1$PersistentVolumeClaimVolumeSource;
+  readonly "persistentVolumeClaim"?:
+    io$k8s$api$core$v1$PersistentVolumeClaimVolumeSource;
   /** PhotonPersistentDisk represents a PhotonController persistent disk attached and mounted on kubelets host machine */
-  readonly "photonPersistentDisk"?: io$k8s$api$core$v1$PhotonPersistentDiskVolumeSource;
+  readonly "photonPersistentDisk"?:
+    io$k8s$api$core$v1$PhotonPersistentDiskVolumeSource;
   /** PortworxVolume represents a portworx volume attached and mounted on kubelets host machine */
   readonly "portworxVolume"?: io$k8s$api$core$v1$PortworxVolumeSource;
   /** Items for all in one resources secrets, configmaps, and downward API */
@@ -4684,7 +4957,8 @@ export type io$k8s$api$core$v1$VolumeProjection = {
   /** information about the secret data to project */
   readonly "secret"?: io$k8s$api$core$v1$SecretProjection;
   /** information about the serviceAccountToken data to project */
-  readonly "serviceAccountToken"?: io$k8s$api$core$v1$ServiceAccountTokenProjection;
+  readonly "serviceAccountToken"?:
+    io$k8s$api$core$v1$ServiceAccountTokenProjection;
 };
 
 /** Represents a vSphere volume resource. */
@@ -4716,51 +4990,57 @@ export type io$k8s$api$core$v1$WindowsSecurityContextOptions = {
 };
 
 /** Event is a report of an event somewhere in the cluster. It generally denotes some state change in the system. */
-export type io$k8s$api$events$v1beta1$Event = {
-  /** What action was taken/failed regarding to the regarding object. */
-  readonly "action"?: string;
-  /** Deprecated field assuring backward compatibility with core.v1 Event type */
-  readonly "deprecatedCount"?: number;
-  /** Deprecated field assuring backward compatibility with core.v1 Event type */
-  readonly "deprecatedFirstTimestamp"?: io$k8s$apimachinery$pkg$apis$meta$v1$Time;
-  /** Deprecated field assuring backward compatibility with core.v1 Event type */
-  readonly "deprecatedLastTimestamp"?: io$k8s$apimachinery$pkg$apis$meta$v1$Time;
-  /** Deprecated field assuring backward compatibility with core.v1 Event type */
-  readonly "deprecatedSource"?: io$k8s$api$core$v1$EventSource;
-  /** Required. Time when this Event was first observed. */
-  readonly "eventTime": io$k8s$apimachinery$pkg$apis$meta$v1$MicroTime;
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Optional. A human-readable description of the status of this operation. Maximal length of the note is 1kB, but libraries should be prepared to handle values up to 64kB. */
-  readonly "note"?: string;
-  /** Why the action was taken. */
-  readonly "reason"?: string;
-  /** The object this Event is about. In most cases it's an Object reporting controller implements. E.g. ReplicaSetController implements ReplicaSets and this event is emitted because it acts on some changes in a ReplicaSet object. */
-  readonly "regarding"?: io$k8s$api$core$v1$ObjectReference;
-  /** Optional secondary object for more complex actions. E.g. when regarding object triggers a creation or deletion of related object. */
-  readonly "related"?: io$k8s$api$core$v1$ObjectReference;
-  /** Name of the controller that emitted this Event, e.g. `kubernetes.io/kubelet`. */
-  readonly "reportingController"?: string;
-  /** ID of the controller instance, e.g. `kubelet-xyzf`. */
-  readonly "reportingInstance"?: string;
-  /** Data about the Event series this event represents or nil if it's a singleton Event. */
-  readonly "series"?: io$k8s$api$events$v1beta1$EventSeries;
-  /** Type of this event (Normal, Warning), new types could be added in the future. */
-  readonly "type"?: string;
-} & ({
-  readonly apiVersion: "events.k8s.io/v1beta1";
-  readonly kind: "Event";
-});
+export type io$k8s$api$events$v1beta1$Event =
+  & {
+    /** What action was taken/failed regarding to the regarding object. */
+    readonly "action"?: string;
+    /** Deprecated field assuring backward compatibility with core.v1 Event type */
+    readonly "deprecatedCount"?: number;
+    /** Deprecated field assuring backward compatibility with core.v1 Event type */
+    readonly "deprecatedFirstTimestamp"?:
+      io$k8s$apimachinery$pkg$apis$meta$v1$Time;
+    /** Deprecated field assuring backward compatibility with core.v1 Event type */
+    readonly "deprecatedLastTimestamp"?:
+      io$k8s$apimachinery$pkg$apis$meta$v1$Time;
+    /** Deprecated field assuring backward compatibility with core.v1 Event type */
+    readonly "deprecatedSource"?: io$k8s$api$core$v1$EventSource;
+    /** Required. Time when this Event was first observed. */
+    readonly "eventTime": io$k8s$apimachinery$pkg$apis$meta$v1$MicroTime;
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Optional. A human-readable description of the status of this operation. Maximal length of the note is 1kB, but libraries should be prepared to handle values up to 64kB. */
+    readonly "note"?: string;
+    /** Why the action was taken. */
+    readonly "reason"?: string;
+    /** The object this Event is about. In most cases it's an Object reporting controller implements. E.g. ReplicaSetController implements ReplicaSets and this event is emitted because it acts on some changes in a ReplicaSet object. */
+    readonly "regarding"?: io$k8s$api$core$v1$ObjectReference;
+    /** Optional secondary object for more complex actions. E.g. when regarding object triggers a creation or deletion of related object. */
+    readonly "related"?: io$k8s$api$core$v1$ObjectReference;
+    /** Name of the controller that emitted this Event, e.g. `kubernetes.io/kubelet`. */
+    readonly "reportingController"?: string;
+    /** ID of the controller instance, e.g. `kubelet-xyzf`. */
+    readonly "reportingInstance"?: string;
+    /** Data about the Event series this event represents or nil if it's a singleton Event. */
+    readonly "series"?: io$k8s$api$events$v1beta1$EventSeries;
+    /** Type of this event (Normal, Warning), new types could be added in the future. */
+    readonly "type"?: string;
+  }
+  & ({
+    readonly apiVersion: "events.k8s.io/v1beta1";
+    readonly kind: "Event";
+  });
 
 /** EventList is a list of Event objects. */
-export type io$k8s$api$events$v1beta1$EventList = {
-  /** Items is a list of schema objects. */
-  readonly "items": readonly io$k8s$api$events$v1beta1$Event[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "events.k8s.io/v1beta1";
-  readonly kind: "EventList";
-});
+export type io$k8s$api$events$v1beta1$EventList =
+  & {
+    /** Items is a list of schema objects. */
+    readonly "items": readonly io$k8s$api$events$v1beta1$Event[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "events.k8s.io/v1beta1";
+    readonly kind: "EventList";
+  });
 
 /** EventSeries contain information on series of events, i.e. thing that was/is happening continuously for some time. */
 export type io$k8s$api$events$v1beta1$EventSeries = {
@@ -4795,17 +5075,19 @@ Examples: `/foo` would allow `/foo`, `/foo/` and `/foo/bar` `/foo` would not all
 };
 
 /** DEPRECATED - This group version of DaemonSet is deprecated by apps/v1beta2/DaemonSet. See the release notes for more information. DaemonSet represents the configuration of a daemon set. */
-export type io$k8s$api$extensions$v1beta1$DaemonSet = {
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** The desired behavior of this daemon set. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status */
-  readonly "spec"?: io$k8s$api$extensions$v1beta1$DaemonSetSpec;
-  /** The current status of this daemon set. This data may be out of date by some window of time. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status */
-  readonly "status"?: io$k8s$api$extensions$v1beta1$DaemonSetStatus;
-} & ({
-  readonly apiVersion: "extensions/v1beta1";
-  readonly kind: "DaemonSet";
-});
+export type io$k8s$api$extensions$v1beta1$DaemonSet =
+  & {
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** The desired behavior of this daemon set. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status */
+    readonly "spec"?: io$k8s$api$extensions$v1beta1$DaemonSetSpec;
+    /** The current status of this daemon set. This data may be out of date by some window of time. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status */
+    readonly "status"?: io$k8s$api$extensions$v1beta1$DaemonSetStatus;
+  }
+  & ({
+    readonly apiVersion: "extensions/v1beta1";
+    readonly kind: "DaemonSet";
+  });
 
 /** DaemonSetCondition describes the state of a DaemonSet at a certain point. */
 export type io$k8s$api$extensions$v1beta1$DaemonSetCondition = {
@@ -4822,15 +5104,17 @@ export type io$k8s$api$extensions$v1beta1$DaemonSetCondition = {
 };
 
 /** DaemonSetList is a collection of daemon sets. */
-export type io$k8s$api$extensions$v1beta1$DaemonSetList = {
-  /** A list of daemon sets. */
-  readonly "items": readonly io$k8s$api$extensions$v1beta1$DaemonSet[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "extensions/v1beta1";
-  readonly kind: "DaemonSetList";
-});
+export type io$k8s$api$extensions$v1beta1$DaemonSetList =
+  & {
+    /** A list of daemon sets. */
+    readonly "items": readonly io$k8s$api$extensions$v1beta1$DaemonSet[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "extensions/v1beta1";
+    readonly kind: "DaemonSetList";
+  });
 
 /** DaemonSetSpec is the specification of a daemon set. */
 export type io$k8s$api$extensions$v1beta1$DaemonSetSpec = {
@@ -4845,7 +5129,8 @@ export type io$k8s$api$extensions$v1beta1$DaemonSetSpec = {
   /** DEPRECATED. A sequence number representing a specific generation of the template. Populated by the system. It can be set only during the creation. */
   readonly "templateGeneration"?: number;
   /** An update strategy to replace existing DaemonSet pods with new pods. */
-  readonly "updateStrategy"?: io$k8s$api$extensions$v1beta1$DaemonSetUpdateStrategy;
+  readonly "updateStrategy"?:
+    io$k8s$api$extensions$v1beta1$DaemonSetUpdateStrategy;
 };
 
 /** DaemonSetStatus represents the current status of a daemon set. */
@@ -4853,7 +5138,8 @@ export type io$k8s$api$extensions$v1beta1$DaemonSetStatus = {
   /** Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision. */
   readonly "collisionCount"?: number;
   /** Represents the latest available observations of a DaemonSet's current state. */
-  readonly "conditions"?: readonly io$k8s$api$extensions$v1beta1$DaemonSetCondition[];
+  readonly "conditions"?:
+    readonly io$k8s$api$extensions$v1beta1$DaemonSetCondition[];
   /** The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/ */
   readonly "currentNumberScheduled": number;
   /** The total number of nodes that should be running the daemon pod (including nodes correctly running the daemon pod). More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/ */
@@ -4874,23 +5160,26 @@ export type io$k8s$api$extensions$v1beta1$DaemonSetStatus = {
 
 export type io$k8s$api$extensions$v1beta1$DaemonSetUpdateStrategy = {
   /** Rolling update config params. Present only if type = "RollingUpdate". */
-  readonly "rollingUpdate"?: io$k8s$api$extensions$v1beta1$RollingUpdateDaemonSet;
+  readonly "rollingUpdate"?:
+    io$k8s$api$extensions$v1beta1$RollingUpdateDaemonSet;
   /** Type of daemon set update. Can be "RollingUpdate" or "OnDelete". Default is OnDelete. */
   readonly "type"?: string;
 };
 
 /** DEPRECATED - This group version of Deployment is deprecated by apps/v1beta2/Deployment. See the release notes for more information. Deployment enables declarative updates for Pods and ReplicaSets. */
-export type io$k8s$api$extensions$v1beta1$Deployment = {
-  /** Standard object metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Specification of the desired behavior of the Deployment. */
-  readonly "spec"?: io$k8s$api$extensions$v1beta1$DeploymentSpec;
-  /** Most recently observed status of the Deployment. */
-  readonly "status"?: io$k8s$api$extensions$v1beta1$DeploymentStatus;
-} & ({
-  readonly apiVersion: "extensions/v1beta1";
-  readonly kind: "Deployment";
-});
+export type io$k8s$api$extensions$v1beta1$Deployment =
+  & {
+    /** Standard object metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Specification of the desired behavior of the Deployment. */
+    readonly "spec"?: io$k8s$api$extensions$v1beta1$DeploymentSpec;
+    /** Most recently observed status of the Deployment. */
+    readonly "status"?: io$k8s$api$extensions$v1beta1$DeploymentStatus;
+  }
+  & ({
+    readonly apiVersion: "extensions/v1beta1";
+    readonly kind: "Deployment";
+  });
 
 /** DeploymentCondition describes the state of a deployment at a certain point. */
 export type io$k8s$api$extensions$v1beta1$DeploymentCondition = {
@@ -4909,28 +5198,32 @@ export type io$k8s$api$extensions$v1beta1$DeploymentCondition = {
 };
 
 /** DeploymentList is a list of Deployments. */
-export type io$k8s$api$extensions$v1beta1$DeploymentList = {
-  /** Items is the list of Deployments. */
-  readonly "items": readonly io$k8s$api$extensions$v1beta1$Deployment[];
-  /** Standard list metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "extensions/v1beta1";
-  readonly kind: "DeploymentList";
-});
+export type io$k8s$api$extensions$v1beta1$DeploymentList =
+  & {
+    /** Items is the list of Deployments. */
+    readonly "items": readonly io$k8s$api$extensions$v1beta1$Deployment[];
+    /** Standard list metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "extensions/v1beta1";
+    readonly kind: "DeploymentList";
+  });
 
 /** DEPRECATED. DeploymentRollback stores the information required to rollback a deployment. */
-export type io$k8s$api$extensions$v1beta1$DeploymentRollback = {
-  /** Required: This must match the Name of a deployment. */
-  readonly "name": string;
-  /** The config of this deployment rollback. */
-  readonly "rollbackTo": io$k8s$api$extensions$v1beta1$RollbackConfig;
-  /** The annotations to be updated to a deployment */
-  readonly "updatedAnnotations"?: object;
-} & ({
-  readonly apiVersion: "extensions/v1beta1";
-  readonly kind: "DeploymentRollback";
-});
+export type io$k8s$api$extensions$v1beta1$DeploymentRollback =
+  & {
+    /** Required: This must match the Name of a deployment. */
+    readonly "name": string;
+    /** The config of this deployment rollback. */
+    readonly "rollbackTo": io$k8s$api$extensions$v1beta1$RollbackConfig;
+    /** The annotations to be updated to a deployment */
+    readonly "updatedAnnotations"?: object;
+  }
+  & ({
+    readonly apiVersion: "extensions/v1beta1";
+    readonly kind: "DeploymentRollback";
+  });
 
 /** DeploymentSpec is the specification of the desired behavior of the Deployment. */
 export type io$k8s$api$extensions$v1beta1$DeploymentSpec = {
@@ -4961,7 +5254,8 @@ export type io$k8s$api$extensions$v1beta1$DeploymentStatus = {
   /** Count of hash collisions for the Deployment. The Deployment controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ReplicaSet. */
   readonly "collisionCount"?: number;
   /** Represents the latest available observations of a deployment's current state. */
-  readonly "conditions"?: readonly io$k8s$api$extensions$v1beta1$DeploymentCondition[];
+  readonly "conditions"?:
+    readonly io$k8s$api$extensions$v1beta1$DeploymentCondition[];
   /** The generation observed by the deployment controller. */
   readonly "observedGeneration"?: number;
   /** Total number of ready pods targeted by this deployment. */
@@ -4977,7 +5271,8 @@ export type io$k8s$api$extensions$v1beta1$DeploymentStatus = {
 /** DeploymentStrategy describes how to replace existing pods with new ones. */
 export type io$k8s$api$extensions$v1beta1$DeploymentStrategy = {
   /** Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate. */
-  readonly "rollingUpdate"?: io$k8s$api$extensions$v1beta1$RollingUpdateDeployment;
+  readonly "rollingUpdate"?:
+    io$k8s$api$extensions$v1beta1$RollingUpdateDeployment;
   /** Type of deployment. Can be "Recreate" or "RollingUpdate". Default is RollingUpdate. */
   readonly "type"?: string;
 };
@@ -5029,17 +5324,19 @@ export type io$k8s$api$extensions$v1beta1$IPBlock = {
 };
 
 /** Ingress is a collection of rules that allow inbound connections to reach the endpoints defined by a backend. An Ingress can be configured to give services externally-reachable urls, load balance traffic, terminate SSL, offer name based virtual hosting etc. DEPRECATED - This group version of Ingress is deprecated by networking.k8s.io/v1beta1 Ingress. See the release notes for more information. */
-export type io$k8s$api$extensions$v1beta1$Ingress = {
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Spec is the desired state of the Ingress. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status */
-  readonly "spec"?: io$k8s$api$extensions$v1beta1$IngressSpec;
-  /** Status is the current state of the Ingress. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status */
-  readonly "status"?: io$k8s$api$extensions$v1beta1$IngressStatus;
-} & ({
-  readonly apiVersion: "extensions/v1beta1";
-  readonly kind: "Ingress";
-});
+export type io$k8s$api$extensions$v1beta1$Ingress =
+  & {
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Spec is the desired state of the Ingress. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status */
+    readonly "spec"?: io$k8s$api$extensions$v1beta1$IngressSpec;
+    /** Status is the current state of the Ingress. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status */
+    readonly "status"?: io$k8s$api$extensions$v1beta1$IngressStatus;
+  }
+  & ({
+    readonly apiVersion: "extensions/v1beta1";
+    readonly kind: "Ingress";
+  });
 
 /** IngressBackend describes all endpoints for a given service and port. */
 export type io$k8s$api$extensions$v1beta1$IngressBackend = {
@@ -5050,15 +5347,17 @@ export type io$k8s$api$extensions$v1beta1$IngressBackend = {
 };
 
 /** IngressList is a collection of Ingress. */
-export type io$k8s$api$extensions$v1beta1$IngressList = {
-  /** Items is the list of Ingress. */
-  readonly "items": readonly io$k8s$api$extensions$v1beta1$Ingress[];
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "extensions/v1beta1";
-  readonly kind: "IngressList";
-});
+export type io$k8s$api$extensions$v1beta1$IngressList =
+  & {
+    /** Items is the list of Ingress. */
+    readonly "items": readonly io$k8s$api$extensions$v1beta1$Ingress[];
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "extensions/v1beta1";
+    readonly kind: "IngressList";
+  });
 
 /** IngressRule represents the rules mapping the paths under a specified host to the related backend services. Incoming requests are first evaluated for a host match, then routed to the backend associated with the matching IngressRuleValue. */
 export type io$k8s$api$extensions$v1beta1$IngressRule = {
@@ -5097,15 +5396,17 @@ export type io$k8s$api$extensions$v1beta1$IngressTLS = {
 };
 
 /** DEPRECATED 1.9 - This group version of NetworkPolicy is deprecated by networking/v1/NetworkPolicy. NetworkPolicy describes what network traffic is allowed for a set of Pods */
-export type io$k8s$api$extensions$v1beta1$NetworkPolicy = {
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Specification of the desired behavior for this NetworkPolicy. */
-  readonly "spec"?: io$k8s$api$extensions$v1beta1$NetworkPolicySpec;
-} & ({
-  readonly apiVersion: "extensions/v1beta1";
-  readonly kind: "NetworkPolicy";
-});
+export type io$k8s$api$extensions$v1beta1$NetworkPolicy =
+  & {
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Specification of the desired behavior for this NetworkPolicy. */
+    readonly "spec"?: io$k8s$api$extensions$v1beta1$NetworkPolicySpec;
+  }
+  & ({
+    readonly apiVersion: "extensions/v1beta1";
+    readonly kind: "NetworkPolicy";
+  });
 
 /** DEPRECATED 1.9 - This group version of NetworkPolicyEgressRule is deprecated by networking/v1/NetworkPolicyEgressRule. NetworkPolicyEgressRule describes a particular set of traffic that is allowed out of pods matched by a NetworkPolicySpec's podSelector. The traffic must match both ports and to. This type is beta-level in 1.8 */
 export type io$k8s$api$extensions$v1beta1$NetworkPolicyEgressRule = {
@@ -5124,15 +5425,17 @@ export type io$k8s$api$extensions$v1beta1$NetworkPolicyIngressRule = {
 };
 
 /** DEPRECATED 1.9 - This group version of NetworkPolicyList is deprecated by networking/v1/NetworkPolicyList. Network Policy List is a list of NetworkPolicy objects. */
-export type io$k8s$api$extensions$v1beta1$NetworkPolicyList = {
-  /** Items is a list of schema objects. */
-  readonly "items": readonly io$k8s$api$extensions$v1beta1$NetworkPolicy[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "extensions/v1beta1";
-  readonly kind: "NetworkPolicyList";
-});
+export type io$k8s$api$extensions$v1beta1$NetworkPolicyList =
+  & {
+    /** Items is a list of schema objects. */
+    readonly "items": readonly io$k8s$api$extensions$v1beta1$NetworkPolicy[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "extensions/v1beta1";
+    readonly kind: "NetworkPolicyList";
+  });
 
 /** DEPRECATED 1.9 - This group version of NetworkPolicyPeer is deprecated by networking/v1/NetworkPolicyPeer. */
 export type io$k8s$api$extensions$v1beta1$NetworkPolicyPeer = {
@@ -5141,7 +5444,8 @@ export type io$k8s$api$extensions$v1beta1$NetworkPolicyPeer = {
   /** Selects Namespaces using cluster-scoped labels. This field follows standard label selector semantics; if present but empty, it selects all namespaces.
 
 If PodSelector is also set, then the NetworkPolicyPeer as a whole selects the Pods matching PodSelector in the Namespaces selected by NamespaceSelector. Otherwise it selects all Pods in the Namespaces selected by NamespaceSelector. */
-  readonly "namespaceSelector"?: io$k8s$apimachinery$pkg$apis$meta$v1$LabelSelector;
+  readonly "namespaceSelector"?:
+    io$k8s$apimachinery$pkg$apis$meta$v1$LabelSelector;
   /** This is a label selector which selects Pods. This field follows standard label selector semantics; if present but empty, it selects all pods.
 
 If NamespaceSelector is also set, then the NetworkPolicyPeer as a whole selects the Pods matching PodSelector in the Namespaces selected by NamespaceSelector. Otherwise it selects the Pods matching PodSelector in the policy's own Namespace. */
@@ -5159,9 +5463,11 @@ export type io$k8s$api$extensions$v1beta1$NetworkPolicyPort = {
 /** DEPRECATED 1.9 - This group version of NetworkPolicySpec is deprecated by networking/v1/NetworkPolicySpec. */
 export type io$k8s$api$extensions$v1beta1$NetworkPolicySpec = {
   /** List of egress rules to be applied to the selected pods. Outgoing traffic is allowed if there are no NetworkPolicies selecting the pod (and cluster policy otherwise allows the traffic), OR if the traffic matches at least one egress rule across all of the NetworkPolicy objects whose podSelector matches the pod. If this field is empty then this NetworkPolicy limits all outgoing traffic (and serves solely to ensure that the pods it selects are isolated by default). This field is beta-level in 1.8 */
-  readonly "egress"?: readonly io$k8s$api$extensions$v1beta1$NetworkPolicyEgressRule[];
+  readonly "egress"?:
+    readonly io$k8s$api$extensions$v1beta1$NetworkPolicyEgressRule[];
   /** List of ingress rules to be applied to the selected pods. Traffic is allowed to a pod if there are no NetworkPolicies selecting the pod OR if the traffic source is the pod's local node, OR if the traffic matches at least one ingress rule across all of the NetworkPolicy objects whose podSelector matches the pod. If this field is empty then this NetworkPolicy does not allow any traffic (and serves solely to ensure that the pods it selects are isolated by default). */
-  readonly "ingress"?: readonly io$k8s$api$extensions$v1beta1$NetworkPolicyIngressRule[];
+  readonly "ingress"?:
+    readonly io$k8s$api$extensions$v1beta1$NetworkPolicyIngressRule[];
   /** Selects the pods to which this NetworkPolicy object applies.  The array of ingress rules is applied to any pods selected by this field. Multiple network policies can select the same set of pods.  In this case, the ingress rules for each are combined additively. This field is NOT optional and follows standard label selector semantics. An empty podSelector matches all pods in this namespace. */
   readonly "podSelector": io$k8s$apimachinery$pkg$apis$meta$v1$LabelSelector;
   /** List of rule types that the NetworkPolicy relates to. Valid options are "Ingress", "Egress", or "Ingress,Egress". If this field is not specified, it will default based on the existence of Ingress or Egress rules; policies that contain an Egress section are assumed to affect Egress, and all policies (whether or not they contain an Ingress section) are assumed to affect Ingress. If you want to write an egress-only policy, you must explicitly specify policyTypes [ "Egress" ]. Likewise, if you want to write a policy that specifies that no egress is allowed, you must specify a policyTypes value that include "Egress" (since such a policy would not include an Egress section and would otherwise default to just [ "Ingress" ]). This field is beta-level in 1.8 */
@@ -5169,39 +5475,47 @@ export type io$k8s$api$extensions$v1beta1$NetworkPolicySpec = {
 };
 
 /** PodSecurityPolicy governs the ability to make requests that affect the Security Context that will be applied to a pod and container. Deprecated: use PodSecurityPolicy from policy API Group instead. */
-export type io$k8s$api$extensions$v1beta1$PodSecurityPolicy = {
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** spec defines the policy enforced. */
-  readonly "spec"?: io$k8s$api$extensions$v1beta1$PodSecurityPolicySpec;
-} & ({
-  readonly apiVersion: "extensions/v1beta1";
-  readonly kind: "PodSecurityPolicy";
-});
+export type io$k8s$api$extensions$v1beta1$PodSecurityPolicy =
+  & {
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** spec defines the policy enforced. */
+    readonly "spec"?: io$k8s$api$extensions$v1beta1$PodSecurityPolicySpec;
+  }
+  & ({
+    readonly apiVersion: "extensions/v1beta1";
+    readonly kind: "PodSecurityPolicy";
+  });
 
 /** PodSecurityPolicyList is a list of PodSecurityPolicy objects. Deprecated: use PodSecurityPolicyList from policy API Group instead. */
-export type io$k8s$api$extensions$v1beta1$PodSecurityPolicyList = {
-  /** items is a list of schema objects. */
-  readonly "items": readonly io$k8s$api$extensions$v1beta1$PodSecurityPolicy[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "extensions/v1beta1";
-  readonly kind: "PodSecurityPolicyList";
-});
+export type io$k8s$api$extensions$v1beta1$PodSecurityPolicyList =
+  & {
+    /** items is a list of schema objects. */
+    readonly "items":
+      readonly io$k8s$api$extensions$v1beta1$PodSecurityPolicy[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "extensions/v1beta1";
+    readonly kind: "PodSecurityPolicyList";
+  });
 
 /** PodSecurityPolicySpec defines the policy enforced. Deprecated: use PodSecurityPolicySpec from policy API Group instead. */
 export type io$k8s$api$extensions$v1beta1$PodSecurityPolicySpec = {
   /** allowPrivilegeEscalation determines if a pod can request to allow privilege escalation. If unspecified, defaults to true. */
   readonly "allowPrivilegeEscalation"?: boolean;
   /** AllowedCSIDrivers is a whitelist of inline CSI drivers that must be explicitly set to be embedded within a pod spec. An empty value indicates that any CSI driver can be used for inline ephemeral volumes. This is an alpha field, and is only honored if the API server enables the CSIInlineVolume feature gate. */
-  readonly "allowedCSIDrivers"?: readonly io$k8s$api$extensions$v1beta1$AllowedCSIDriver[];
+  readonly "allowedCSIDrivers"?:
+    readonly io$k8s$api$extensions$v1beta1$AllowedCSIDriver[];
   /** allowedCapabilities is a list of capabilities that can be requested to add to the container. Capabilities in this field may be added at the pod author's discretion. You must not list a capability in both allowedCapabilities and requiredDropCapabilities. */
   readonly "allowedCapabilities"?: readonly string[];
   /** allowedFlexVolumes is a whitelist of allowed Flexvolumes.  Empty or nil indicates that all Flexvolumes may be used.  This parameter is effective only when the usage of the Flexvolumes is allowed in the "volumes" field. */
-  readonly "allowedFlexVolumes"?: readonly io$k8s$api$extensions$v1beta1$AllowedFlexVolume[];
+  readonly "allowedFlexVolumes"?:
+    readonly io$k8s$api$extensions$v1beta1$AllowedFlexVolume[];
   /** allowedHostPaths is a white list of allowed host paths. Empty indicates that all host paths may be used. */
-  readonly "allowedHostPaths"?: readonly io$k8s$api$extensions$v1beta1$AllowedHostPath[];
+  readonly "allowedHostPaths"?:
+    readonly io$k8s$api$extensions$v1beta1$AllowedHostPath[];
   /** AllowedProcMountTypes is a whitelist of allowed ProcMountTypes. Empty or nil indicates that only the DefaultProcMountType may be used. This requires the ProcMountType feature flag to be enabled. */
   readonly "allowedProcMountTypes"?: readonly string[];
   /** allowedUnsafeSysctls is a list of explicitly allowed unsafe sysctls, defaults to none. Each entry is either a plain sysctl name or ends in "*" in which case it is considered as a prefix of allowed sysctls. Single * means all unsafe sysctls are allowed. Kubelet has to whitelist all allowed unsafe sysctls explicitly to avoid rejection.
@@ -5233,31 +5547,36 @@ Examples: e.g. "foo^*" forbids "foo/bar", "foo/baz", etc. e.g. "foo.*" forbids "
   /** requiredDropCapabilities are the capabilities that will be dropped from the container.  These are required to be dropped and cannot be added. */
   readonly "requiredDropCapabilities"?: readonly string[];
   /** RunAsGroup is the strategy that will dictate the allowable RunAsGroup values that may be set. If this field is omitted, the pod's RunAsGroup can take any value. This field requires the RunAsGroup feature gate to be enabled. */
-  readonly "runAsGroup"?: io$k8s$api$extensions$v1beta1$RunAsGroupStrategyOptions;
+  readonly "runAsGroup"?:
+    io$k8s$api$extensions$v1beta1$RunAsGroupStrategyOptions;
   /** runAsUser is the strategy that will dictate the allowable RunAsUser values that may be set. */
   readonly "runAsUser": io$k8s$api$extensions$v1beta1$RunAsUserStrategyOptions;
   /** runtimeClass is the strategy that will dictate the allowable RuntimeClasses for a pod. If this field is omitted, the pod's runtimeClassName field is unrestricted. Enforcement of this field depends on the RuntimeClass feature gate being enabled. */
-  readonly "runtimeClass"?: io$k8s$api$extensions$v1beta1$RuntimeClassStrategyOptions;
+  readonly "runtimeClass"?:
+    io$k8s$api$extensions$v1beta1$RuntimeClassStrategyOptions;
   /** seLinux is the strategy that will dictate the allowable labels that may be set. */
   readonly "seLinux": io$k8s$api$extensions$v1beta1$SELinuxStrategyOptions;
   /** supplementalGroups is the strategy that will dictate what supplemental groups are used by the SecurityContext. */
-  readonly "supplementalGroups": io$k8s$api$extensions$v1beta1$SupplementalGroupsStrategyOptions;
+  readonly "supplementalGroups":
+    io$k8s$api$extensions$v1beta1$SupplementalGroupsStrategyOptions;
   /** volumes is a white list of allowed volume plugins. Empty indicates that no volumes may be used. To allow all volumes you may use '*'. */
   readonly "volumes"?: readonly string[];
 };
 
 /** DEPRECATED - This group version of ReplicaSet is deprecated by apps/v1beta2/ReplicaSet. See the release notes for more information. ReplicaSet ensures that a specified number of pod replicas are running at any given time. */
-export type io$k8s$api$extensions$v1beta1$ReplicaSet = {
-  /** If the Labels of a ReplicaSet are empty, they are defaulted to be the same as the Pod(s) that the ReplicaSet manages. Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Spec defines the specification of the desired behavior of the ReplicaSet. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status */
-  readonly "spec"?: io$k8s$api$extensions$v1beta1$ReplicaSetSpec;
-  /** Status is the most recently observed status of the ReplicaSet. This data may be out of date by some window of time. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status */
-  readonly "status"?: io$k8s$api$extensions$v1beta1$ReplicaSetStatus;
-} & ({
-  readonly apiVersion: "extensions/v1beta1";
-  readonly kind: "ReplicaSet";
-});
+export type io$k8s$api$extensions$v1beta1$ReplicaSet =
+  & {
+    /** If the Labels of a ReplicaSet are empty, they are defaulted to be the same as the Pod(s) that the ReplicaSet manages. Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Spec defines the specification of the desired behavior of the ReplicaSet. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status */
+    readonly "spec"?: io$k8s$api$extensions$v1beta1$ReplicaSetSpec;
+    /** Status is the most recently observed status of the ReplicaSet. This data may be out of date by some window of time. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status */
+    readonly "status"?: io$k8s$api$extensions$v1beta1$ReplicaSetStatus;
+  }
+  & ({
+    readonly apiVersion: "extensions/v1beta1";
+    readonly kind: "ReplicaSet";
+  });
 
 /** ReplicaSetCondition describes the state of a replica set at a certain point. */
 export type io$k8s$api$extensions$v1beta1$ReplicaSetCondition = {
@@ -5274,15 +5593,17 @@ export type io$k8s$api$extensions$v1beta1$ReplicaSetCondition = {
 };
 
 /** ReplicaSetList is a collection of ReplicaSets. */
-export type io$k8s$api$extensions$v1beta1$ReplicaSetList = {
-  /** List of ReplicaSets. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller */
-  readonly "items": readonly io$k8s$api$extensions$v1beta1$ReplicaSet[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "extensions/v1beta1";
-  readonly kind: "ReplicaSetList";
-});
+export type io$k8s$api$extensions$v1beta1$ReplicaSetList =
+  & {
+    /** List of ReplicaSets. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller */
+    readonly "items": readonly io$k8s$api$extensions$v1beta1$ReplicaSet[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "extensions/v1beta1";
+    readonly kind: "ReplicaSetList";
+  });
 
 /** ReplicaSetSpec is the specification of a ReplicaSet. */
 export type io$k8s$api$extensions$v1beta1$ReplicaSetSpec = {
@@ -5301,7 +5622,8 @@ export type io$k8s$api$extensions$v1beta1$ReplicaSetStatus = {
   /** The number of available replicas (ready for at least minReadySeconds) for this replica set. */
   readonly "availableReplicas"?: number;
   /** Represents the latest available observations of a replica set's current state. */
-  readonly "conditions"?: readonly io$k8s$api$extensions$v1beta1$ReplicaSetCondition[];
+  readonly "conditions"?:
+    readonly io$k8s$api$extensions$v1beta1$ReplicaSetCondition[];
   /** The number of pods that have labels matching the labels of the pod template of the replicaset. */
   readonly "fullyLabeledReplicas"?: number;
   /** ObservedGeneration reflects the generation of the most recently observed ReplicaSet. */
@@ -5365,17 +5687,19 @@ export type io$k8s$api$extensions$v1beta1$SELinuxStrategyOptions = {
 };
 
 /** represents a scaling request for a resource. */
-export type io$k8s$api$extensions$v1beta1$Scale = {
-  /** Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** defines the behavior of the scale. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status. */
-  readonly "spec"?: io$k8s$api$extensions$v1beta1$ScaleSpec;
-  /** current status of the scale. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status. Read-only. */
-  readonly "status"?: io$k8s$api$extensions$v1beta1$ScaleStatus;
-} & ({
-  readonly apiVersion: "extensions/v1beta1";
-  readonly kind: "Scale";
-});
+export type io$k8s$api$extensions$v1beta1$Scale =
+  & {
+    /** Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** defines the behavior of the scale. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status. */
+    readonly "spec"?: io$k8s$api$extensions$v1beta1$ScaleSpec;
+    /** current status of the scale. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status. Read-only. */
+    readonly "status"?: io$k8s$api$extensions$v1beta1$ScaleStatus;
+  }
+  & ({
+    readonly apiVersion: "extensions/v1beta1";
+    readonly kind: "Scale";
+  });
 
 /** describes the attributes of a scale subresource */
 export type io$k8s$api$extensions$v1beta1$ScaleSpec = {
@@ -5410,15 +5734,17 @@ export type io$k8s$api$networking$v1$IPBlock = {
 };
 
 /** NetworkPolicy describes what network traffic is allowed for a set of Pods */
-export type io$k8s$api$networking$v1$NetworkPolicy = {
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Specification of the desired behavior for this NetworkPolicy. */
-  readonly "spec"?: io$k8s$api$networking$v1$NetworkPolicySpec;
-} & ({
-  readonly apiVersion: "networking.k8s.io/v1";
-  readonly kind: "NetworkPolicy";
-});
+export type io$k8s$api$networking$v1$NetworkPolicy =
+  & {
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Specification of the desired behavior for this NetworkPolicy. */
+    readonly "spec"?: io$k8s$api$networking$v1$NetworkPolicySpec;
+  }
+  & ({
+    readonly apiVersion: "networking.k8s.io/v1";
+    readonly kind: "NetworkPolicy";
+  });
 
 /** NetworkPolicyEgressRule describes a particular set of traffic that is allowed out of pods matched by a NetworkPolicySpec's podSelector. The traffic must match both ports and to. This type is beta-level in 1.8 */
 export type io$k8s$api$networking$v1$NetworkPolicyEgressRule = {
@@ -5437,15 +5763,17 @@ export type io$k8s$api$networking$v1$NetworkPolicyIngressRule = {
 };
 
 /** NetworkPolicyList is a list of NetworkPolicy objects. */
-export type io$k8s$api$networking$v1$NetworkPolicyList = {
-  /** Items is a list of schema objects. */
-  readonly "items": readonly io$k8s$api$networking$v1$NetworkPolicy[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "networking.k8s.io/v1";
-  readonly kind: "NetworkPolicyList";
-});
+export type io$k8s$api$networking$v1$NetworkPolicyList =
+  & {
+    /** Items is a list of schema objects. */
+    readonly "items": readonly io$k8s$api$networking$v1$NetworkPolicy[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "networking.k8s.io/v1";
+    readonly kind: "NetworkPolicyList";
+  });
 
 /** NetworkPolicyPeer describes a peer to allow traffic from. Only certain combinations of fields are allowed */
 export type io$k8s$api$networking$v1$NetworkPolicyPeer = {
@@ -5454,7 +5782,8 @@ export type io$k8s$api$networking$v1$NetworkPolicyPeer = {
   /** Selects Namespaces using cluster-scoped labels. This field follows standard label selector semantics; if present but empty, it selects all namespaces.
 
 If PodSelector is also set, then the NetworkPolicyPeer as a whole selects the Pods matching PodSelector in the Namespaces selected by NamespaceSelector. Otherwise it selects all Pods in the Namespaces selected by NamespaceSelector. */
-  readonly "namespaceSelector"?: io$k8s$apimachinery$pkg$apis$meta$v1$LabelSelector;
+  readonly "namespaceSelector"?:
+    io$k8s$apimachinery$pkg$apis$meta$v1$LabelSelector;
   /** This is a label selector which selects Pods. This field follows standard label selector semantics; if present but empty, it selects all pods.
 
 If NamespaceSelector is also set, then the NetworkPolicyPeer as a whole selects the Pods matching PodSelector in the Namespaces selected by NamespaceSelector. Otherwise it selects the Pods matching PodSelector in the policy's own Namespace. */
@@ -5472,9 +5801,11 @@ export type io$k8s$api$networking$v1$NetworkPolicyPort = {
 /** NetworkPolicySpec provides the specification of a NetworkPolicy */
 export type io$k8s$api$networking$v1$NetworkPolicySpec = {
   /** List of egress rules to be applied to the selected pods. Outgoing traffic is allowed if there are no NetworkPolicies selecting the pod (and cluster policy otherwise allows the traffic), OR if the traffic matches at least one egress rule across all of the NetworkPolicy objects whose podSelector matches the pod. If this field is empty then this NetworkPolicy limits all outgoing traffic (and serves solely to ensure that the pods it selects are isolated by default). This field is beta-level in 1.8 */
-  readonly "egress"?: readonly io$k8s$api$networking$v1$NetworkPolicyEgressRule[];
+  readonly "egress"?:
+    readonly io$k8s$api$networking$v1$NetworkPolicyEgressRule[];
   /** List of ingress rules to be applied to the selected pods. Traffic is allowed to a pod if there are no NetworkPolicies selecting the pod (and cluster policy otherwise allows the traffic), OR if the traffic source is the pod's local node, OR if the traffic matches at least one ingress rule across all of the NetworkPolicy objects whose podSelector matches the pod. If this field is empty then this NetworkPolicy does not allow any traffic (and serves solely to ensure that the pods it selects are isolated by default) */
-  readonly "ingress"?: readonly io$k8s$api$networking$v1$NetworkPolicyIngressRule[];
+  readonly "ingress"?:
+    readonly io$k8s$api$networking$v1$NetworkPolicyIngressRule[];
   /** Selects the pods to which this NetworkPolicy object applies. The array of ingress rules is applied to any pods selected by this field. Multiple network policies can select the same set of pods. In this case, the ingress rules for each are combined additively. This field is NOT optional and follows standard label selector semantics. An empty podSelector matches all pods in this namespace. */
   readonly "podSelector": io$k8s$apimachinery$pkg$apis$meta$v1$LabelSelector;
   /** List of rule types that the NetworkPolicy relates to. Valid options are "Ingress", "Egress", or "Ingress,Egress". If this field is not specified, it will default based on the existence of Ingress or Egress rules; policies that contain an Egress section are assumed to affect Egress, and all policies (whether or not they contain an Ingress section) are assumed to affect Ingress. If you want to write an egress-only policy, you must explicitly specify policyTypes [ "Egress" ]. Likewise, if you want to write a policy that specifies that no egress is allowed, you must specify a policyTypes value that include "Egress" (since such a policy would not include an Egress section and would otherwise default to just [ "Ingress" ]). This field is beta-level in 1.8 */
@@ -5496,17 +5827,19 @@ export type io$k8s$api$networking$v1beta1$HTTPIngressRuleValue = {
 };
 
 /** Ingress is a collection of rules that allow inbound connections to reach the endpoints defined by a backend. An Ingress can be configured to give services externally-reachable urls, load balance traffic, terminate SSL, offer name based virtual hosting etc. */
-export type io$k8s$api$networking$v1beta1$Ingress = {
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Spec is the desired state of the Ingress. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
-  readonly "spec"?: io$k8s$api$networking$v1beta1$IngressSpec;
-  /** Status is the current state of the Ingress. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
-  readonly "status"?: io$k8s$api$networking$v1beta1$IngressStatus;
-} & ({
-  readonly apiVersion: "networking.k8s.io/v1beta1";
-  readonly kind: "Ingress";
-});
+export type io$k8s$api$networking$v1beta1$Ingress =
+  & {
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Spec is the desired state of the Ingress. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
+    readonly "spec"?: io$k8s$api$networking$v1beta1$IngressSpec;
+    /** Status is the current state of the Ingress. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
+    readonly "status"?: io$k8s$api$networking$v1beta1$IngressStatus;
+  }
+  & ({
+    readonly apiVersion: "networking.k8s.io/v1beta1";
+    readonly kind: "Ingress";
+  });
 
 /** IngressBackend describes all endpoints for a given service and port. */
 export type io$k8s$api$networking$v1beta1$IngressBackend = {
@@ -5517,15 +5850,17 @@ export type io$k8s$api$networking$v1beta1$IngressBackend = {
 };
 
 /** IngressList is a collection of Ingress. */
-export type io$k8s$api$networking$v1beta1$IngressList = {
-  /** Items is the list of Ingress. */
-  readonly "items": readonly io$k8s$api$networking$v1beta1$Ingress[];
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "networking.k8s.io/v1beta1";
-  readonly kind: "IngressList";
-});
+export type io$k8s$api$networking$v1beta1$IngressList =
+  & {
+    /** Items is the list of Ingress. */
+    readonly "items": readonly io$k8s$api$networking$v1beta1$Ingress[];
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "networking.k8s.io/v1beta1";
+    readonly kind: "IngressList";
+  });
 
 /** IngressRule represents the rules mapping the paths under a specified host to the related backend services. Incoming requests are first evaluated for a host match, then routed to the backend associated with the matching IngressRuleValue. */
 export type io$k8s$api$networking$v1beta1$IngressRule = {
@@ -5564,26 +5899,30 @@ export type io$k8s$api$networking$v1beta1$IngressTLS = {
 };
 
 /** RuntimeClass defines a class of container runtime supported in the cluster. The RuntimeClass is used to determine which container runtime is used to run all containers in a pod. RuntimeClasses are (currently) manually defined by a user or cluster provisioner, and referenced in the PodSpec. The Kubelet is responsible for resolving the RuntimeClassName reference before running the pod.  For more details, see https://git.k8s.io/enhancements/keps/sig-node/runtime-class.md */
-export type io$k8s$api$node$v1beta1$RuntimeClass = {
-  /** Handler specifies the underlying runtime and configuration that the CRI implementation will use to handle pods of this class. The possible values are specific to the node & CRI configuration.  It is assumed that all handlers are available on every node, and handlers of the same name are equivalent on every node. For example, a handler called "runc" might specify that the runc OCI runtime (using native Linux containers) will be used to run the containers in a pod. The Handler must conform to the DNS Label (RFC 1123) requirements, and is immutable. */
-  readonly "handler": string;
-  /** More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-} & ({
-  readonly apiVersion: "node.k8s.io/v1beta1";
-  readonly kind: "RuntimeClass";
-});
+export type io$k8s$api$node$v1beta1$RuntimeClass =
+  & {
+    /** Handler specifies the underlying runtime and configuration that the CRI implementation will use to handle pods of this class. The possible values are specific to the node & CRI configuration.  It is assumed that all handlers are available on every node, and handlers of the same name are equivalent on every node. For example, a handler called "runc" might specify that the runc OCI runtime (using native Linux containers) will be used to run the containers in a pod. The Handler must conform to the DNS Label (RFC 1123) requirements, and is immutable. */
+    readonly "handler": string;
+    /** More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+  }
+  & ({
+    readonly apiVersion: "node.k8s.io/v1beta1";
+    readonly kind: "RuntimeClass";
+  });
 
 /** RuntimeClassList is a list of RuntimeClass objects. */
-export type io$k8s$api$node$v1beta1$RuntimeClassList = {
-  /** Items is a list of schema objects. */
-  readonly "items": readonly io$k8s$api$node$v1beta1$RuntimeClass[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "node.k8s.io/v1beta1";
-  readonly kind: "RuntimeClassList";
-});
+export type io$k8s$api$node$v1beta1$RuntimeClassList =
+  & {
+    /** Items is a list of schema objects. */
+    readonly "items": readonly io$k8s$api$node$v1beta1$RuntimeClass[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "node.k8s.io/v1beta1";
+    readonly kind: "RuntimeClassList";
+  });
 
 /** AllowedCSIDriver represents a single inline CSI Driver that is allowed to be used. */
 export type io$k8s$api$policy$v1beta1$AllowedCSIDriver = {
@@ -5608,15 +5947,18 @@ Examples: `/foo` would allow `/foo`, `/foo/` and `/foo/bar` `/foo` would not all
 };
 
 /** Eviction evicts a pod from its node subject to certain policies and safety constraints. This is a subresource of Pod.  A request to cause such an eviction is created by POSTing to .../pods/<pod name>/evictions. */
-export type io$k8s$api$policy$v1beta1$Eviction = {
-  /** DeleteOptions may be provided */
-  readonly "deleteOptions"?: io$k8s$apimachinery$pkg$apis$meta$v1$DeleteOptions;
-  /** ObjectMeta describes the pod that is being evicted. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-} & ({
-  readonly apiVersion: "policy/v1beta1";
-  readonly kind: "Eviction";
-});
+export type io$k8s$api$policy$v1beta1$Eviction =
+  & {
+    /** DeleteOptions may be provided */
+    readonly "deleteOptions"?:
+      io$k8s$apimachinery$pkg$apis$meta$v1$DeleteOptions;
+    /** ObjectMeta describes the pod that is being evicted. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+  }
+  & ({
+    readonly apiVersion: "policy/v1beta1";
+    readonly kind: "Eviction";
+  });
 
 /** FSGroupStrategyOptions defines the strategy type and options used to create the strategy. */
 export type io$k8s$api$policy$v1beta1$FSGroupStrategyOptions = {
@@ -5643,25 +5985,29 @@ export type io$k8s$api$policy$v1beta1$IDRange = {
 };
 
 /** PodDisruptionBudget is an object to define the max disruption that can be caused to a collection of pods */
-export type io$k8s$api$policy$v1beta1$PodDisruptionBudget = {
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Specification of the desired behavior of the PodDisruptionBudget. */
-  readonly "spec"?: io$k8s$api$policy$v1beta1$PodDisruptionBudgetSpec;
-  /** Most recently observed status of the PodDisruptionBudget. */
-  readonly "status"?: io$k8s$api$policy$v1beta1$PodDisruptionBudgetStatus;
-} & ({
-  readonly apiVersion: "policy/v1beta1";
-  readonly kind: "PodDisruptionBudget";
-});
+export type io$k8s$api$policy$v1beta1$PodDisruptionBudget =
+  & {
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Specification of the desired behavior of the PodDisruptionBudget. */
+    readonly "spec"?: io$k8s$api$policy$v1beta1$PodDisruptionBudgetSpec;
+    /** Most recently observed status of the PodDisruptionBudget. */
+    readonly "status"?: io$k8s$api$policy$v1beta1$PodDisruptionBudgetStatus;
+  }
+  & ({
+    readonly apiVersion: "policy/v1beta1";
+    readonly kind: "PodDisruptionBudget";
+  });
 
 /** PodDisruptionBudgetList is a collection of PodDisruptionBudgets. */
-export type io$k8s$api$policy$v1beta1$PodDisruptionBudgetList = {
-  readonly "items": readonly io$k8s$api$policy$v1beta1$PodDisruptionBudget[];
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "policy/v1beta1";
-  readonly kind: "PodDisruptionBudgetList";
-});
+export type io$k8s$api$policy$v1beta1$PodDisruptionBudgetList =
+  & {
+    readonly "items": readonly io$k8s$api$policy$v1beta1$PodDisruptionBudget[];
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "policy/v1beta1";
+    readonly kind: "PodDisruptionBudgetList";
+  });
 
 /** PodDisruptionBudgetSpec is a description of a PodDisruptionBudget. */
 export type io$k8s$api$policy$v1beta1$PodDisruptionBudgetSpec = {
@@ -5690,39 +6036,46 @@ export type io$k8s$api$policy$v1beta1$PodDisruptionBudgetStatus = {
 };
 
 /** PodSecurityPolicy governs the ability to make requests that affect the Security Context that will be applied to a pod and container. */
-export type io$k8s$api$policy$v1beta1$PodSecurityPolicy = {
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** spec defines the policy enforced. */
-  readonly "spec"?: io$k8s$api$policy$v1beta1$PodSecurityPolicySpec;
-} & ({
-  readonly apiVersion: "policy/v1beta1";
-  readonly kind: "PodSecurityPolicy";
-});
+export type io$k8s$api$policy$v1beta1$PodSecurityPolicy =
+  & {
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** spec defines the policy enforced. */
+    readonly "spec"?: io$k8s$api$policy$v1beta1$PodSecurityPolicySpec;
+  }
+  & ({
+    readonly apiVersion: "policy/v1beta1";
+    readonly kind: "PodSecurityPolicy";
+  });
 
 /** PodSecurityPolicyList is a list of PodSecurityPolicy objects. */
-export type io$k8s$api$policy$v1beta1$PodSecurityPolicyList = {
-  /** items is a list of schema objects. */
-  readonly "items": readonly io$k8s$api$policy$v1beta1$PodSecurityPolicy[];
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "policy/v1beta1";
-  readonly kind: "PodSecurityPolicyList";
-});
+export type io$k8s$api$policy$v1beta1$PodSecurityPolicyList =
+  & {
+    /** items is a list of schema objects. */
+    readonly "items": readonly io$k8s$api$policy$v1beta1$PodSecurityPolicy[];
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "policy/v1beta1";
+    readonly kind: "PodSecurityPolicyList";
+  });
 
 /** PodSecurityPolicySpec defines the policy enforced. */
 export type io$k8s$api$policy$v1beta1$PodSecurityPolicySpec = {
   /** allowPrivilegeEscalation determines if a pod can request to allow privilege escalation. If unspecified, defaults to true. */
   readonly "allowPrivilegeEscalation"?: boolean;
   /** AllowedCSIDrivers is a whitelist of inline CSI drivers that must be explicitly set to be embedded within a pod spec. An empty value indicates that any CSI driver can be used for inline ephemeral volumes. This is an alpha field, and is only honored if the API server enables the CSIInlineVolume feature gate. */
-  readonly "allowedCSIDrivers"?: readonly io$k8s$api$policy$v1beta1$AllowedCSIDriver[];
+  readonly "allowedCSIDrivers"?:
+    readonly io$k8s$api$policy$v1beta1$AllowedCSIDriver[];
   /** allowedCapabilities is a list of capabilities that can be requested to add to the container. Capabilities in this field may be added at the pod author's discretion. You must not list a capability in both allowedCapabilities and requiredDropCapabilities. */
   readonly "allowedCapabilities"?: readonly string[];
   /** allowedFlexVolumes is a whitelist of allowed Flexvolumes.  Empty or nil indicates that all Flexvolumes may be used.  This parameter is effective only when the usage of the Flexvolumes is allowed in the "volumes" field. */
-  readonly "allowedFlexVolumes"?: readonly io$k8s$api$policy$v1beta1$AllowedFlexVolume[];
+  readonly "allowedFlexVolumes"?:
+    readonly io$k8s$api$policy$v1beta1$AllowedFlexVolume[];
   /** allowedHostPaths is a white list of allowed host paths. Empty indicates that all host paths may be used. */
-  readonly "allowedHostPaths"?: readonly io$k8s$api$policy$v1beta1$AllowedHostPath[];
+  readonly "allowedHostPaths"?:
+    readonly io$k8s$api$policy$v1beta1$AllowedHostPath[];
   /** AllowedProcMountTypes is a whitelist of allowed ProcMountTypes. Empty or nil indicates that only the DefaultProcMountType may be used. This requires the ProcMountType feature flag to be enabled. */
   readonly "allowedProcMountTypes"?: readonly string[];
   /** allowedUnsafeSysctls is a list of explicitly allowed unsafe sysctls, defaults to none. Each entry is either a plain sysctl name or ends in "*" in which case it is considered as a prefix of allowed sysctls. Single * means all unsafe sysctls are allowed. Kubelet has to whitelist all allowed unsafe sysctls explicitly to avoid rejection.
@@ -5758,11 +6111,13 @@ Examples: e.g. "foo^*" forbids "foo/bar", "foo/baz", etc. e.g. "foo.*" forbids "
   /** runAsUser is the strategy that will dictate the allowable RunAsUser values that may be set. */
   readonly "runAsUser": io$k8s$api$policy$v1beta1$RunAsUserStrategyOptions;
   /** runtimeClass is the strategy that will dictate the allowable RuntimeClasses for a pod. If this field is omitted, the pod's runtimeClassName field is unrestricted. Enforcement of this field depends on the RuntimeClass feature gate being enabled. */
-  readonly "runtimeClass"?: io$k8s$api$policy$v1beta1$RuntimeClassStrategyOptions;
+  readonly "runtimeClass"?:
+    io$k8s$api$policy$v1beta1$RuntimeClassStrategyOptions;
   /** seLinux is the strategy that will dictate the allowable labels that may be set. */
   readonly "seLinux": io$k8s$api$policy$v1beta1$SELinuxStrategyOptions;
   /** supplementalGroups is the strategy that will dictate what supplemental groups are used by the SecurityContext. */
-  readonly "supplementalGroups": io$k8s$api$policy$v1beta1$SupplementalGroupsStrategyOptions;
+  readonly "supplementalGroups":
+    io$k8s$api$policy$v1beta1$SupplementalGroupsStrategyOptions;
   /** volumes is a white list of allowed volume plugins. Empty indicates that no volumes may be used. To allow all volumes you may use '*'. */
   readonly "volumes"?: readonly string[];
 };
@@ -5810,56 +6165,65 @@ export type io$k8s$api$policy$v1beta1$SupplementalGroupsStrategyOptions = {
 /** AggregationRule describes how to locate ClusterRoles to aggregate into the ClusterRole */
 export type io$k8s$api$rbac$v1$AggregationRule = {
   /** ClusterRoleSelectors holds a list of selectors which will be used to find ClusterRoles and create the rules. If any of the selectors match, then the ClusterRole's permissions will be added */
-  readonly "clusterRoleSelectors"?: readonly io$k8s$apimachinery$pkg$apis$meta$v1$LabelSelector[];
+  readonly "clusterRoleSelectors"?:
+    readonly io$k8s$apimachinery$pkg$apis$meta$v1$LabelSelector[];
 };
 
 /** ClusterRole is a cluster level, logical grouping of PolicyRules that can be referenced as a unit by a RoleBinding or ClusterRoleBinding. */
-export type io$k8s$api$rbac$v1$ClusterRole = {
-  /** AggregationRule is an optional field that describes how to build the Rules for this ClusterRole. If AggregationRule is set, then the Rules are controller managed and direct changes to Rules will be stomped by the controller. */
-  readonly "aggregationRule"?: io$k8s$api$rbac$v1$AggregationRule;
-  /** Standard object's metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Rules holds all the PolicyRules for this ClusterRole */
-  readonly "rules"?: readonly io$k8s$api$rbac$v1$PolicyRule[];
-} & ({
-  readonly apiVersion: "rbac.authorization.k8s.io/v1";
-  readonly kind: "ClusterRole";
-});
+export type io$k8s$api$rbac$v1$ClusterRole =
+  & {
+    /** AggregationRule is an optional field that describes how to build the Rules for this ClusterRole. If AggregationRule is set, then the Rules are controller managed and direct changes to Rules will be stomped by the controller. */
+    readonly "aggregationRule"?: io$k8s$api$rbac$v1$AggregationRule;
+    /** Standard object's metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Rules holds all the PolicyRules for this ClusterRole */
+    readonly "rules"?: readonly io$k8s$api$rbac$v1$PolicyRule[];
+  }
+  & ({
+    readonly apiVersion: "rbac.authorization.k8s.io/v1";
+    readonly kind: "ClusterRole";
+  });
 
 /** ClusterRoleBinding references a ClusterRole, but not contain it.  It can reference a ClusterRole in the global namespace, and adds who information via Subject. */
-export type io$k8s$api$rbac$v1$ClusterRoleBinding = {
-  /** Standard object's metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** RoleRef can only reference a ClusterRole in the global namespace. If the RoleRef cannot be resolved, the Authorizer must return an error. */
-  readonly "roleRef": io$k8s$api$rbac$v1$RoleRef;
-  /** Subjects holds references to the objects the role applies to. */
-  readonly "subjects"?: readonly io$k8s$api$rbac$v1$Subject[];
-} & ({
-  readonly apiVersion: "rbac.authorization.k8s.io/v1";
-  readonly kind: "ClusterRoleBinding";
-});
+export type io$k8s$api$rbac$v1$ClusterRoleBinding =
+  & {
+    /** Standard object's metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** RoleRef can only reference a ClusterRole in the global namespace. If the RoleRef cannot be resolved, the Authorizer must return an error. */
+    readonly "roleRef": io$k8s$api$rbac$v1$RoleRef;
+    /** Subjects holds references to the objects the role applies to. */
+    readonly "subjects"?: readonly io$k8s$api$rbac$v1$Subject[];
+  }
+  & ({
+    readonly apiVersion: "rbac.authorization.k8s.io/v1";
+    readonly kind: "ClusterRoleBinding";
+  });
 
 /** ClusterRoleBindingList is a collection of ClusterRoleBindings */
-export type io$k8s$api$rbac$v1$ClusterRoleBindingList = {
-  /** Items is a list of ClusterRoleBindings */
-  readonly "items": readonly io$k8s$api$rbac$v1$ClusterRoleBinding[];
-  /** Standard object's metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "rbac.authorization.k8s.io/v1";
-  readonly kind: "ClusterRoleBindingList";
-});
+export type io$k8s$api$rbac$v1$ClusterRoleBindingList =
+  & {
+    /** Items is a list of ClusterRoleBindings */
+    readonly "items": readonly io$k8s$api$rbac$v1$ClusterRoleBinding[];
+    /** Standard object's metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "rbac.authorization.k8s.io/v1";
+    readonly kind: "ClusterRoleBindingList";
+  });
 
 /** ClusterRoleList is a collection of ClusterRoles */
-export type io$k8s$api$rbac$v1$ClusterRoleList = {
-  /** Items is a list of ClusterRoles */
-  readonly "items": readonly io$k8s$api$rbac$v1$ClusterRole[];
-  /** Standard object's metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "rbac.authorization.k8s.io/v1";
-  readonly kind: "ClusterRoleList";
-});
+export type io$k8s$api$rbac$v1$ClusterRoleList =
+  & {
+    /** Items is a list of ClusterRoles */
+    readonly "items": readonly io$k8s$api$rbac$v1$ClusterRole[];
+    /** Standard object's metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "rbac.authorization.k8s.io/v1";
+    readonly kind: "ClusterRoleList";
+  });
 
 /** PolicyRule holds information that describes a policy rule, but does not contain information about who the rule applies to or which namespace the rule applies to. */
 export type io$k8s$api$rbac$v1$PolicyRule = {
@@ -5876,50 +6240,58 @@ export type io$k8s$api$rbac$v1$PolicyRule = {
 };
 
 /** Role is a namespaced, logical grouping of PolicyRules that can be referenced as a unit by a RoleBinding. */
-export type io$k8s$api$rbac$v1$Role = {
-  /** Standard object's metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Rules holds all the PolicyRules for this Role */
-  readonly "rules"?: readonly io$k8s$api$rbac$v1$PolicyRule[];
-} & ({
-  readonly apiVersion: "rbac.authorization.k8s.io/v1";
-  readonly kind: "Role";
-});
+export type io$k8s$api$rbac$v1$Role =
+  & {
+    /** Standard object's metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Rules holds all the PolicyRules for this Role */
+    readonly "rules"?: readonly io$k8s$api$rbac$v1$PolicyRule[];
+  }
+  & ({
+    readonly apiVersion: "rbac.authorization.k8s.io/v1";
+    readonly kind: "Role";
+  });
 
 /** RoleBinding references a role, but does not contain it.  It can reference a Role in the same namespace or a ClusterRole in the global namespace. It adds who information via Subjects and namespace information by which namespace it exists in.  RoleBindings in a given namespace only have effect in that namespace. */
-export type io$k8s$api$rbac$v1$RoleBinding = {
-  /** Standard object's metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** RoleRef can reference a Role in the current namespace or a ClusterRole in the global namespace. If the RoleRef cannot be resolved, the Authorizer must return an error. */
-  readonly "roleRef": io$k8s$api$rbac$v1$RoleRef;
-  /** Subjects holds references to the objects the role applies to. */
-  readonly "subjects"?: readonly io$k8s$api$rbac$v1$Subject[];
-} & ({
-  readonly apiVersion: "rbac.authorization.k8s.io/v1";
-  readonly kind: "RoleBinding";
-});
+export type io$k8s$api$rbac$v1$RoleBinding =
+  & {
+    /** Standard object's metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** RoleRef can reference a Role in the current namespace or a ClusterRole in the global namespace. If the RoleRef cannot be resolved, the Authorizer must return an error. */
+    readonly "roleRef": io$k8s$api$rbac$v1$RoleRef;
+    /** Subjects holds references to the objects the role applies to. */
+    readonly "subjects"?: readonly io$k8s$api$rbac$v1$Subject[];
+  }
+  & ({
+    readonly apiVersion: "rbac.authorization.k8s.io/v1";
+    readonly kind: "RoleBinding";
+  });
 
 /** RoleBindingList is a collection of RoleBindings */
-export type io$k8s$api$rbac$v1$RoleBindingList = {
-  /** Items is a list of RoleBindings */
-  readonly "items": readonly io$k8s$api$rbac$v1$RoleBinding[];
-  /** Standard object's metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "rbac.authorization.k8s.io/v1";
-  readonly kind: "RoleBindingList";
-});
+export type io$k8s$api$rbac$v1$RoleBindingList =
+  & {
+    /** Items is a list of RoleBindings */
+    readonly "items": readonly io$k8s$api$rbac$v1$RoleBinding[];
+    /** Standard object's metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "rbac.authorization.k8s.io/v1";
+    readonly kind: "RoleBindingList";
+  });
 
 /** RoleList is a collection of Roles */
-export type io$k8s$api$rbac$v1$RoleList = {
-  /** Items is a list of Roles */
-  readonly "items": readonly io$k8s$api$rbac$v1$Role[];
-  /** Standard object's metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "rbac.authorization.k8s.io/v1";
-  readonly kind: "RoleList";
-});
+export type io$k8s$api$rbac$v1$RoleList =
+  & {
+    /** Items is a list of Roles */
+    readonly "items": readonly io$k8s$api$rbac$v1$Role[];
+    /** Standard object's metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "rbac.authorization.k8s.io/v1";
+    readonly kind: "RoleList";
+  });
 
 /** RoleRef contains information that points to the role being used */
 export type io$k8s$api$rbac$v1$RoleRef = {
@@ -5942,56 +6314,65 @@ export type io$k8s$api$rbac$v1$Subject = {
 /** AggregationRule describes how to locate ClusterRoles to aggregate into the ClusterRole */
 export type io$k8s$api$rbac$v1beta1$AggregationRule = {
   /** ClusterRoleSelectors holds a list of selectors which will be used to find ClusterRoles and create the rules. If any of the selectors match, then the ClusterRole's permissions will be added */
-  readonly "clusterRoleSelectors"?: readonly io$k8s$apimachinery$pkg$apis$meta$v1$LabelSelector[];
+  readonly "clusterRoleSelectors"?:
+    readonly io$k8s$apimachinery$pkg$apis$meta$v1$LabelSelector[];
 };
 
 /** ClusterRole is a cluster level, logical grouping of PolicyRules that can be referenced as a unit by a RoleBinding or ClusterRoleBinding. */
-export type io$k8s$api$rbac$v1beta1$ClusterRole = {
-  /** AggregationRule is an optional field that describes how to build the Rules for this ClusterRole. If AggregationRule is set, then the Rules are controller managed and direct changes to Rules will be stomped by the controller. */
-  readonly "aggregationRule"?: io$k8s$api$rbac$v1beta1$AggregationRule;
-  /** Standard object's metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Rules holds all the PolicyRules for this ClusterRole */
-  readonly "rules"?: readonly io$k8s$api$rbac$v1beta1$PolicyRule[];
-} & ({
-  readonly apiVersion: "rbac.authorization.k8s.io/v1beta1";
-  readonly kind: "ClusterRole";
-});
+export type io$k8s$api$rbac$v1beta1$ClusterRole =
+  & {
+    /** AggregationRule is an optional field that describes how to build the Rules for this ClusterRole. If AggregationRule is set, then the Rules are controller managed and direct changes to Rules will be stomped by the controller. */
+    readonly "aggregationRule"?: io$k8s$api$rbac$v1beta1$AggregationRule;
+    /** Standard object's metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Rules holds all the PolicyRules for this ClusterRole */
+    readonly "rules"?: readonly io$k8s$api$rbac$v1beta1$PolicyRule[];
+  }
+  & ({
+    readonly apiVersion: "rbac.authorization.k8s.io/v1beta1";
+    readonly kind: "ClusterRole";
+  });
 
 /** ClusterRoleBinding references a ClusterRole, but not contain it.  It can reference a ClusterRole in the global namespace, and adds who information via Subject. */
-export type io$k8s$api$rbac$v1beta1$ClusterRoleBinding = {
-  /** Standard object's metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** RoleRef can only reference a ClusterRole in the global namespace. If the RoleRef cannot be resolved, the Authorizer must return an error. */
-  readonly "roleRef": io$k8s$api$rbac$v1beta1$RoleRef;
-  /** Subjects holds references to the objects the role applies to. */
-  readonly "subjects"?: readonly io$k8s$api$rbac$v1beta1$Subject[];
-} & ({
-  readonly apiVersion: "rbac.authorization.k8s.io/v1beta1";
-  readonly kind: "ClusterRoleBinding";
-});
+export type io$k8s$api$rbac$v1beta1$ClusterRoleBinding =
+  & {
+    /** Standard object's metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** RoleRef can only reference a ClusterRole in the global namespace. If the RoleRef cannot be resolved, the Authorizer must return an error. */
+    readonly "roleRef": io$k8s$api$rbac$v1beta1$RoleRef;
+    /** Subjects holds references to the objects the role applies to. */
+    readonly "subjects"?: readonly io$k8s$api$rbac$v1beta1$Subject[];
+  }
+  & ({
+    readonly apiVersion: "rbac.authorization.k8s.io/v1beta1";
+    readonly kind: "ClusterRoleBinding";
+  });
 
 /** ClusterRoleBindingList is a collection of ClusterRoleBindings */
-export type io$k8s$api$rbac$v1beta1$ClusterRoleBindingList = {
-  /** Items is a list of ClusterRoleBindings */
-  readonly "items": readonly io$k8s$api$rbac$v1beta1$ClusterRoleBinding[];
-  /** Standard object's metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "rbac.authorization.k8s.io/v1beta1";
-  readonly kind: "ClusterRoleBindingList";
-});
+export type io$k8s$api$rbac$v1beta1$ClusterRoleBindingList =
+  & {
+    /** Items is a list of ClusterRoleBindings */
+    readonly "items": readonly io$k8s$api$rbac$v1beta1$ClusterRoleBinding[];
+    /** Standard object's metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "rbac.authorization.k8s.io/v1beta1";
+    readonly kind: "ClusterRoleBindingList";
+  });
 
 /** ClusterRoleList is a collection of ClusterRoles */
-export type io$k8s$api$rbac$v1beta1$ClusterRoleList = {
-  /** Items is a list of ClusterRoles */
-  readonly "items": readonly io$k8s$api$rbac$v1beta1$ClusterRole[];
-  /** Standard object's metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "rbac.authorization.k8s.io/v1beta1";
-  readonly kind: "ClusterRoleList";
-});
+export type io$k8s$api$rbac$v1beta1$ClusterRoleList =
+  & {
+    /** Items is a list of ClusterRoles */
+    readonly "items": readonly io$k8s$api$rbac$v1beta1$ClusterRole[];
+    /** Standard object's metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "rbac.authorization.k8s.io/v1beta1";
+    readonly kind: "ClusterRoleList";
+  });
 
 /** PolicyRule holds information that describes a policy rule, but does not contain information about who the rule applies to or which namespace the rule applies to. */
 export type io$k8s$api$rbac$v1beta1$PolicyRule = {
@@ -6008,50 +6389,58 @@ export type io$k8s$api$rbac$v1beta1$PolicyRule = {
 };
 
 /** Role is a namespaced, logical grouping of PolicyRules that can be referenced as a unit by a RoleBinding. */
-export type io$k8s$api$rbac$v1beta1$Role = {
-  /** Standard object's metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Rules holds all the PolicyRules for this Role */
-  readonly "rules"?: readonly io$k8s$api$rbac$v1beta1$PolicyRule[];
-} & ({
-  readonly apiVersion: "rbac.authorization.k8s.io/v1beta1";
-  readonly kind: "Role";
-});
+export type io$k8s$api$rbac$v1beta1$Role =
+  & {
+    /** Standard object's metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Rules holds all the PolicyRules for this Role */
+    readonly "rules"?: readonly io$k8s$api$rbac$v1beta1$PolicyRule[];
+  }
+  & ({
+    readonly apiVersion: "rbac.authorization.k8s.io/v1beta1";
+    readonly kind: "Role";
+  });
 
 /** RoleBinding references a role, but does not contain it.  It can reference a Role in the same namespace or a ClusterRole in the global namespace. It adds who information via Subjects and namespace information by which namespace it exists in.  RoleBindings in a given namespace only have effect in that namespace. */
-export type io$k8s$api$rbac$v1beta1$RoleBinding = {
-  /** Standard object's metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** RoleRef can reference a Role in the current namespace or a ClusterRole in the global namespace. If the RoleRef cannot be resolved, the Authorizer must return an error. */
-  readonly "roleRef": io$k8s$api$rbac$v1beta1$RoleRef;
-  /** Subjects holds references to the objects the role applies to. */
-  readonly "subjects"?: readonly io$k8s$api$rbac$v1beta1$Subject[];
-} & ({
-  readonly apiVersion: "rbac.authorization.k8s.io/v1beta1";
-  readonly kind: "RoleBinding";
-});
+export type io$k8s$api$rbac$v1beta1$RoleBinding =
+  & {
+    /** Standard object's metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** RoleRef can reference a Role in the current namespace or a ClusterRole in the global namespace. If the RoleRef cannot be resolved, the Authorizer must return an error. */
+    readonly "roleRef": io$k8s$api$rbac$v1beta1$RoleRef;
+    /** Subjects holds references to the objects the role applies to. */
+    readonly "subjects"?: readonly io$k8s$api$rbac$v1beta1$Subject[];
+  }
+  & ({
+    readonly apiVersion: "rbac.authorization.k8s.io/v1beta1";
+    readonly kind: "RoleBinding";
+  });
 
 /** RoleBindingList is a collection of RoleBindings */
-export type io$k8s$api$rbac$v1beta1$RoleBindingList = {
-  /** Items is a list of RoleBindings */
-  readonly "items": readonly io$k8s$api$rbac$v1beta1$RoleBinding[];
-  /** Standard object's metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "rbac.authorization.k8s.io/v1beta1";
-  readonly kind: "RoleBindingList";
-});
+export type io$k8s$api$rbac$v1beta1$RoleBindingList =
+  & {
+    /** Items is a list of RoleBindings */
+    readonly "items": readonly io$k8s$api$rbac$v1beta1$RoleBinding[];
+    /** Standard object's metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "rbac.authorization.k8s.io/v1beta1";
+    readonly kind: "RoleBindingList";
+  });
 
 /** RoleList is a collection of Roles */
-export type io$k8s$api$rbac$v1beta1$RoleList = {
-  /** Items is a list of Roles */
-  readonly "items": readonly io$k8s$api$rbac$v1beta1$Role[];
-  /** Standard object's metadata. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "rbac.authorization.k8s.io/v1beta1";
-  readonly kind: "RoleList";
-});
+export type io$k8s$api$rbac$v1beta1$RoleList =
+  & {
+    /** Items is a list of Roles */
+    readonly "items": readonly io$k8s$api$rbac$v1beta1$Role[];
+    /** Standard object's metadata. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "rbac.authorization.k8s.io/v1beta1";
+    readonly kind: "RoleList";
+  });
 
 /** RoleRef contains information that points to the role being used */
 export type io$k8s$api$rbac$v1beta1$RoleRef = {
@@ -6072,122 +6461,139 @@ export type io$k8s$api$rbac$v1beta1$Subject = {
 };
 
 /** PriorityClass defines mapping from a priority class name to the priority integer value. The value can be any valid integer. */
-export type io$k8s$api$scheduling$v1$PriorityClass = {
-  /** description is an arbitrary string that usually provides guidelines on when this priority class should be used. */
-  readonly "description"?: string;
-  /** globalDefault specifies whether this PriorityClass should be considered as the default priority for pods that do not have any priority class. Only one PriorityClass can be marked as `globalDefault`. However, if more than one PriorityClasses exists with their `globalDefault` field set to true, the smallest value of such global default PriorityClasses will be used as the default priority. */
-  readonly "globalDefault"?: boolean;
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never, PreemptLowerPriority. Defaults to PreemptLowerPriority if unset. This field is alpha-level and is only honored by servers that enable the NonPreemptingPriority feature. */
-  readonly "preemptionPolicy"?: string;
-  /** The value of this priority class. This is the actual priority that pods receive when they have the name of this class in their pod spec. */
-  readonly "value": number;
-} & ({
-  readonly apiVersion: "scheduling.k8s.io/v1";
-  readonly kind: "PriorityClass";
-});
+export type io$k8s$api$scheduling$v1$PriorityClass =
+  & {
+    /** description is an arbitrary string that usually provides guidelines on when this priority class should be used. */
+    readonly "description"?: string;
+    /** globalDefault specifies whether this PriorityClass should be considered as the default priority for pods that do not have any priority class. Only one PriorityClass can be marked as `globalDefault`. However, if more than one PriorityClasses exists with their `globalDefault` field set to true, the smallest value of such global default PriorityClasses will be used as the default priority. */
+    readonly "globalDefault"?: boolean;
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never, PreemptLowerPriority. Defaults to PreemptLowerPriority if unset. This field is alpha-level and is only honored by servers that enable the NonPreemptingPriority feature. */
+    readonly "preemptionPolicy"?: string;
+    /** The value of this priority class. This is the actual priority that pods receive when they have the name of this class in their pod spec. */
+    readonly "value": number;
+  }
+  & ({
+    readonly apiVersion: "scheduling.k8s.io/v1";
+    readonly kind: "PriorityClass";
+  });
 
 /** PriorityClassList is a collection of priority classes. */
-export type io$k8s$api$scheduling$v1$PriorityClassList = {
-  /** items is the list of PriorityClasses */
-  readonly "items": readonly io$k8s$api$scheduling$v1$PriorityClass[];
-  /** Standard list metadata More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "scheduling.k8s.io/v1";
-  readonly kind: "PriorityClassList";
-});
+export type io$k8s$api$scheduling$v1$PriorityClassList =
+  & {
+    /** items is the list of PriorityClasses */
+    readonly "items": readonly io$k8s$api$scheduling$v1$PriorityClass[];
+    /** Standard list metadata More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "scheduling.k8s.io/v1";
+    readonly kind: "PriorityClassList";
+  });
 
 /** DEPRECATED - This group version of PriorityClass is deprecated by scheduling.k8s.io/v1/PriorityClass. PriorityClass defines mapping from a priority class name to the priority integer value. The value can be any valid integer. */
-export type io$k8s$api$scheduling$v1beta1$PriorityClass = {
-  /** description is an arbitrary string that usually provides guidelines on when this priority class should be used. */
-  readonly "description"?: string;
-  /** globalDefault specifies whether this PriorityClass should be considered as the default priority for pods that do not have any priority class. Only one PriorityClass can be marked as `globalDefault`. However, if more than one PriorityClasses exists with their `globalDefault` field set to true, the smallest value of such global default PriorityClasses will be used as the default priority. */
-  readonly "globalDefault"?: boolean;
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never, PreemptLowerPriority. Defaults to PreemptLowerPriority if unset. This field is alpha-level and is only honored by servers that enable the NonPreemptingPriority feature. */
-  readonly "preemptionPolicy"?: string;
-  /** The value of this priority class. This is the actual priority that pods receive when they have the name of this class in their pod spec. */
-  readonly "value": number;
-} & ({
-  readonly apiVersion: "scheduling.k8s.io/v1beta1";
-  readonly kind: "PriorityClass";
-});
+export type io$k8s$api$scheduling$v1beta1$PriorityClass =
+  & {
+    /** description is an arbitrary string that usually provides guidelines on when this priority class should be used. */
+    readonly "description"?: string;
+    /** globalDefault specifies whether this PriorityClass should be considered as the default priority for pods that do not have any priority class. Only one PriorityClass can be marked as `globalDefault`. However, if more than one PriorityClasses exists with their `globalDefault` field set to true, the smallest value of such global default PriorityClasses will be used as the default priority. */
+    readonly "globalDefault"?: boolean;
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never, PreemptLowerPriority. Defaults to PreemptLowerPriority if unset. This field is alpha-level and is only honored by servers that enable the NonPreemptingPriority feature. */
+    readonly "preemptionPolicy"?: string;
+    /** The value of this priority class. This is the actual priority that pods receive when they have the name of this class in their pod spec. */
+    readonly "value": number;
+  }
+  & ({
+    readonly apiVersion: "scheduling.k8s.io/v1beta1";
+    readonly kind: "PriorityClass";
+  });
 
 /** PriorityClassList is a collection of priority classes. */
-export type io$k8s$api$scheduling$v1beta1$PriorityClassList = {
-  /** items is the list of PriorityClasses */
-  readonly "items": readonly io$k8s$api$scheduling$v1beta1$PriorityClass[];
-  /** Standard list metadata More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "scheduling.k8s.io/v1beta1";
-  readonly kind: "PriorityClassList";
-});
+export type io$k8s$api$scheduling$v1beta1$PriorityClassList =
+  & {
+    /** items is the list of PriorityClasses */
+    readonly "items": readonly io$k8s$api$scheduling$v1beta1$PriorityClass[];
+    /** Standard list metadata More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "scheduling.k8s.io/v1beta1";
+    readonly kind: "PriorityClassList";
+  });
 
 /** StorageClass describes the parameters for a class of storage for which PersistentVolumes can be dynamically provisioned.
 
 StorageClasses are non-namespaced; the name of the storage class according to etcd is in ObjectMeta.Name. */
-export type io$k8s$api$storage$v1$StorageClass = {
-  /** AllowVolumeExpansion shows whether the storage class allow volume expand */
-  readonly "allowVolumeExpansion"?: boolean;
-  /** Restrict the node topologies where volumes can be dynamically provisioned. Each volume plugin defines its own supported topology specifications. An empty TopologySelectorTerm list means there is no topology restriction. This field is only honored by servers that enable the VolumeScheduling feature. */
-  readonly "allowedTopologies"?: readonly io$k8s$api$core$v1$TopologySelectorTerm[];
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g. ["ro", "soft"]. Not validated - mount of the PVs will simply fail if one is invalid. */
-  readonly "mountOptions"?: readonly string[];
-  /** Parameters holds the parameters for the provisioner that should create volumes of this storage class. */
-  readonly "parameters"?: object;
-  /** Provisioner indicates the type of the provisioner. */
-  readonly "provisioner": string;
-  /** Dynamically provisioned PersistentVolumes of this storage class are created with this reclaimPolicy. Defaults to Delete. */
-  readonly "reclaimPolicy"?: string;
-  /** VolumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound.  When unset, VolumeBindingImmediate is used. This field is only honored by servers that enable the VolumeScheduling feature. */
-  readonly "volumeBindingMode"?: string;
-} & ({
-  readonly apiVersion: "storage.k8s.io/v1";
-  readonly kind: "StorageClass";
-});
+export type io$k8s$api$storage$v1$StorageClass =
+  & {
+    /** AllowVolumeExpansion shows whether the storage class allow volume expand */
+    readonly "allowVolumeExpansion"?: boolean;
+    /** Restrict the node topologies where volumes can be dynamically provisioned. Each volume plugin defines its own supported topology specifications. An empty TopologySelectorTerm list means there is no topology restriction. This field is only honored by servers that enable the VolumeScheduling feature. */
+    readonly "allowedTopologies"?:
+      readonly io$k8s$api$core$v1$TopologySelectorTerm[];
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g. ["ro", "soft"]. Not validated - mount of the PVs will simply fail if one is invalid. */
+    readonly "mountOptions"?: readonly string[];
+    /** Parameters holds the parameters for the provisioner that should create volumes of this storage class. */
+    readonly "parameters"?: object;
+    /** Provisioner indicates the type of the provisioner. */
+    readonly "provisioner": string;
+    /** Dynamically provisioned PersistentVolumes of this storage class are created with this reclaimPolicy. Defaults to Delete. */
+    readonly "reclaimPolicy"?: string;
+    /** VolumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound.  When unset, VolumeBindingImmediate is used. This field is only honored by servers that enable the VolumeScheduling feature. */
+    readonly "volumeBindingMode"?: string;
+  }
+  & ({
+    readonly apiVersion: "storage.k8s.io/v1";
+    readonly kind: "StorageClass";
+  });
 
 /** StorageClassList is a collection of storage classes. */
-export type io$k8s$api$storage$v1$StorageClassList = {
-  /** Items is the list of StorageClasses */
-  readonly "items": readonly io$k8s$api$storage$v1$StorageClass[];
-  /** Standard list metadata More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "storage.k8s.io/v1";
-  readonly kind: "StorageClassList";
-});
+export type io$k8s$api$storage$v1$StorageClassList =
+  & {
+    /** Items is the list of StorageClasses */
+    readonly "items": readonly io$k8s$api$storage$v1$StorageClass[];
+    /** Standard list metadata More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "storage.k8s.io/v1";
+    readonly kind: "StorageClassList";
+  });
 
 /** VolumeAttachment captures the intent to attach or detach the specified volume to/from the specified node.
 
 VolumeAttachment objects are non-namespaced. */
-export type io$k8s$api$storage$v1$VolumeAttachment = {
-  /** Standard object metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Specification of the desired attach/detach volume behavior. Populated by the Kubernetes system. */
-  readonly "spec": io$k8s$api$storage$v1$VolumeAttachmentSpec;
-  /** Status of the VolumeAttachment request. Populated by the entity completing the attach or detach operation, i.e. the external-attacher. */
-  readonly "status"?: io$k8s$api$storage$v1$VolumeAttachmentStatus;
-} & ({
-  readonly apiVersion: "storage.k8s.io/v1";
-  readonly kind: "VolumeAttachment";
-});
+export type io$k8s$api$storage$v1$VolumeAttachment =
+  & {
+    /** Standard object metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Specification of the desired attach/detach volume behavior. Populated by the Kubernetes system. */
+    readonly "spec": io$k8s$api$storage$v1$VolumeAttachmentSpec;
+    /** Status of the VolumeAttachment request. Populated by the entity completing the attach or detach operation, i.e. the external-attacher. */
+    readonly "status"?: io$k8s$api$storage$v1$VolumeAttachmentStatus;
+  }
+  & ({
+    readonly apiVersion: "storage.k8s.io/v1";
+    readonly kind: "VolumeAttachment";
+  });
 
 /** VolumeAttachmentList is a collection of VolumeAttachment objects. */
-export type io$k8s$api$storage$v1$VolumeAttachmentList = {
-  /** Items is the list of VolumeAttachments */
-  readonly "items": readonly io$k8s$api$storage$v1$VolumeAttachment[];
-  /** Standard list metadata More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "storage.k8s.io/v1";
-  readonly kind: "VolumeAttachmentList";
-});
+export type io$k8s$api$storage$v1$VolumeAttachmentList =
+  & {
+    /** Items is the list of VolumeAttachments */
+    readonly "items": readonly io$k8s$api$storage$v1$VolumeAttachment[];
+    /** Standard list metadata More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "storage.k8s.io/v1";
+    readonly kind: "VolumeAttachmentList";
+  });
 
 /** VolumeAttachmentSource represents a volume that should be attached. Right now only PersistenVolumes can be attached via external attacher, in future we may allow also inline volumes in pods. Exactly one member can be set. */
 export type io$k8s$api$storage$v1$VolumeAttachmentSource = {
@@ -6228,26 +6634,30 @@ export type io$k8s$api$storage$v1$VolumeError = {
 };
 
 /** CSIDriver captures information about a Container Storage Interface (CSI) volume driver deployed on the cluster. CSI drivers do not need to create the CSIDriver object directly. Instead they may use the cluster-driver-registrar sidecar container. When deployed with a CSI driver it automatically creates a CSIDriver object representing the driver. Kubernetes attach detach controller uses this object to determine whether attach is required. Kubelet uses this object to determine whether pod information needs to be passed on mount. CSIDriver objects are non-namespaced. */
-export type io$k8s$api$storage$v1beta1$CSIDriver = {
-  /** Standard object metadata. metadata.Name indicates the name of the CSI driver that this object refers to; it MUST be the same name returned by the CSI GetPluginName() call for that driver. The driver name must be 63 characters or less, beginning and ending with an alphanumeric character ([a-z0-9A-Z]) with dashes (-), dots (.), and alphanumerics between. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Specification of the CSI Driver. */
-  readonly "spec": io$k8s$api$storage$v1beta1$CSIDriverSpec;
-} & ({
-  readonly apiVersion: "storage.k8s.io/v1beta1";
-  readonly kind: "CSIDriver";
-});
+export type io$k8s$api$storage$v1beta1$CSIDriver =
+  & {
+    /** Standard object metadata. metadata.Name indicates the name of the CSI driver that this object refers to; it MUST be the same name returned by the CSI GetPluginName() call for that driver. The driver name must be 63 characters or less, beginning and ending with an alphanumeric character ([a-z0-9A-Z]) with dashes (-), dots (.), and alphanumerics between. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Specification of the CSI Driver. */
+    readonly "spec": io$k8s$api$storage$v1beta1$CSIDriverSpec;
+  }
+  & ({
+    readonly apiVersion: "storage.k8s.io/v1beta1";
+    readonly kind: "CSIDriver";
+  });
 
 /** CSIDriverList is a collection of CSIDriver objects. */
-export type io$k8s$api$storage$v1beta1$CSIDriverList = {
-  /** items is the list of CSIDriver */
-  readonly "items": readonly io$k8s$api$storage$v1beta1$CSIDriver[];
-  /** Standard list metadata More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "storage.k8s.io/v1beta1";
-  readonly kind: "CSIDriverList";
-});
+export type io$k8s$api$storage$v1beta1$CSIDriverList =
+  & {
+    /** items is the list of CSIDriver */
+    readonly "items": readonly io$k8s$api$storage$v1beta1$CSIDriver[];
+    /** Standard list metadata More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "storage.k8s.io/v1beta1";
+    readonly kind: "CSIDriverList";
+  });
 
 /** CSIDriverSpec is the specification of a CSIDriver. */
 export type io$k8s$api$storage$v1beta1$CSIDriverSpec = {
@@ -6258,15 +6668,17 @@ export type io$k8s$api$storage$v1beta1$CSIDriverSpec = {
 };
 
 /** CSINode holds information about all CSI drivers installed on a node. CSI drivers do not need to create the CSINode object directly. As long as they use the node-driver-registrar sidecar container, the kubelet will automatically populate the CSINode object for the CSI driver as part of kubelet plugin registration. CSINode has the same name as a node. If the object is missing, it means either there are no CSI Drivers available on the node, or the Kubelet version is low enough that it doesn't create this object. CSINode has an OwnerReference that points to the corresponding node object. */
-export type io$k8s$api$storage$v1beta1$CSINode = {
-  /** metadata.name must be the Kubernetes node name. */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** spec is the specification of CSINode */
-  readonly "spec": io$k8s$api$storage$v1beta1$CSINodeSpec;
-} & ({
-  readonly apiVersion: "storage.k8s.io/v1beta1";
-  readonly kind: "CSINode";
-});
+export type io$k8s$api$storage$v1beta1$CSINode =
+  & {
+    /** metadata.name must be the Kubernetes node name. */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** spec is the specification of CSINode */
+    readonly "spec": io$k8s$api$storage$v1beta1$CSINodeSpec;
+  }
+  & ({
+    readonly apiVersion: "storage.k8s.io/v1beta1";
+    readonly kind: "CSINode";
+  });
 
 /** CSINodeDriver holds information about the specification of one CSI driver installed on a node */
 export type io$k8s$api$storage$v1beta1$CSINodeDriver = {
@@ -6279,15 +6691,17 @@ export type io$k8s$api$storage$v1beta1$CSINodeDriver = {
 };
 
 /** CSINodeList is a collection of CSINode objects. */
-export type io$k8s$api$storage$v1beta1$CSINodeList = {
-  /** items is the list of CSINode */
-  readonly "items": readonly io$k8s$api$storage$v1beta1$CSINode[];
-  /** Standard list metadata More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "storage.k8s.io/v1beta1";
-  readonly kind: "CSINodeList";
-});
+export type io$k8s$api$storage$v1beta1$CSINodeList =
+  & {
+    /** items is the list of CSINode */
+    readonly "items": readonly io$k8s$api$storage$v1beta1$CSINode[];
+    /** Standard list metadata More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "storage.k8s.io/v1beta1";
+    readonly kind: "CSINodeList";
+  });
 
 /** CSINodeSpec holds information about the specification of all CSI drivers installed on a node */
 export type io$k8s$api$storage$v1beta1$CSINodeSpec = {
@@ -6298,64 +6712,73 @@ export type io$k8s$api$storage$v1beta1$CSINodeSpec = {
 /** StorageClass describes the parameters for a class of storage for which PersistentVolumes can be dynamically provisioned.
 
 StorageClasses are non-namespaced; the name of the storage class according to etcd is in ObjectMeta.Name. */
-export type io$k8s$api$storage$v1beta1$StorageClass = {
-  /** AllowVolumeExpansion shows whether the storage class allow volume expand */
-  readonly "allowVolumeExpansion"?: boolean;
-  /** Restrict the node topologies where volumes can be dynamically provisioned. Each volume plugin defines its own supported topology specifications. An empty TopologySelectorTerm list means there is no topology restriction. This field is only honored by servers that enable the VolumeScheduling feature. */
-  readonly "allowedTopologies"?: readonly io$k8s$api$core$v1$TopologySelectorTerm[];
-  /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g. ["ro", "soft"]. Not validated - mount of the PVs will simply fail if one is invalid. */
-  readonly "mountOptions"?: readonly string[];
-  /** Parameters holds the parameters for the provisioner that should create volumes of this storage class. */
-  readonly "parameters"?: object;
-  /** Provisioner indicates the type of the provisioner. */
-  readonly "provisioner": string;
-  /** Dynamically provisioned PersistentVolumes of this storage class are created with this reclaimPolicy. Defaults to Delete. */
-  readonly "reclaimPolicy"?: string;
-  /** VolumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound.  When unset, VolumeBindingImmediate is used. This field is only honored by servers that enable the VolumeScheduling feature. */
-  readonly "volumeBindingMode"?: string;
-} & ({
-  readonly apiVersion: "storage.k8s.io/v1beta1";
-  readonly kind: "StorageClass";
-});
+export type io$k8s$api$storage$v1beta1$StorageClass =
+  & {
+    /** AllowVolumeExpansion shows whether the storage class allow volume expand */
+    readonly "allowVolumeExpansion"?: boolean;
+    /** Restrict the node topologies where volumes can be dynamically provisioned. Each volume plugin defines its own supported topology specifications. An empty TopologySelectorTerm list means there is no topology restriction. This field is only honored by servers that enable the VolumeScheduling feature. */
+    readonly "allowedTopologies"?:
+      readonly io$k8s$api$core$v1$TopologySelectorTerm[];
+    /** Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g. ["ro", "soft"]. Not validated - mount of the PVs will simply fail if one is invalid. */
+    readonly "mountOptions"?: readonly string[];
+    /** Parameters holds the parameters for the provisioner that should create volumes of this storage class. */
+    readonly "parameters"?: object;
+    /** Provisioner indicates the type of the provisioner. */
+    readonly "provisioner": string;
+    /** Dynamically provisioned PersistentVolumes of this storage class are created with this reclaimPolicy. Defaults to Delete. */
+    readonly "reclaimPolicy"?: string;
+    /** VolumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound.  When unset, VolumeBindingImmediate is used. This field is only honored by servers that enable the VolumeScheduling feature. */
+    readonly "volumeBindingMode"?: string;
+  }
+  & ({
+    readonly apiVersion: "storage.k8s.io/v1beta1";
+    readonly kind: "StorageClass";
+  });
 
 /** StorageClassList is a collection of storage classes. */
-export type io$k8s$api$storage$v1beta1$StorageClassList = {
-  /** Items is the list of StorageClasses */
-  readonly "items": readonly io$k8s$api$storage$v1beta1$StorageClass[];
-  /** Standard list metadata More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "storage.k8s.io/v1beta1";
-  readonly kind: "StorageClassList";
-});
+export type io$k8s$api$storage$v1beta1$StorageClassList =
+  & {
+    /** Items is the list of StorageClasses */
+    readonly "items": readonly io$k8s$api$storage$v1beta1$StorageClass[];
+    /** Standard list metadata More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "storage.k8s.io/v1beta1";
+    readonly kind: "StorageClassList";
+  });
 
 /** VolumeAttachment captures the intent to attach or detach the specified volume to/from the specified node.
 
 VolumeAttachment objects are non-namespaced. */
-export type io$k8s$api$storage$v1beta1$VolumeAttachment = {
-  /** Standard object metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Specification of the desired attach/detach volume behavior. Populated by the Kubernetes system. */
-  readonly "spec": io$k8s$api$storage$v1beta1$VolumeAttachmentSpec;
-  /** Status of the VolumeAttachment request. Populated by the entity completing the attach or detach operation, i.e. the external-attacher. */
-  readonly "status"?: io$k8s$api$storage$v1beta1$VolumeAttachmentStatus;
-} & ({
-  readonly apiVersion: "storage.k8s.io/v1beta1";
-  readonly kind: "VolumeAttachment";
-});
+export type io$k8s$api$storage$v1beta1$VolumeAttachment =
+  & {
+    /** Standard object metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Specification of the desired attach/detach volume behavior. Populated by the Kubernetes system. */
+    readonly "spec": io$k8s$api$storage$v1beta1$VolumeAttachmentSpec;
+    /** Status of the VolumeAttachment request. Populated by the entity completing the attach or detach operation, i.e. the external-attacher. */
+    readonly "status"?: io$k8s$api$storage$v1beta1$VolumeAttachmentStatus;
+  }
+  & ({
+    readonly apiVersion: "storage.k8s.io/v1beta1";
+    readonly kind: "VolumeAttachment";
+  });
 
 /** VolumeAttachmentList is a collection of VolumeAttachment objects. */
-export type io$k8s$api$storage$v1beta1$VolumeAttachmentList = {
-  /** Items is the list of VolumeAttachments */
-  readonly "items": readonly io$k8s$api$storage$v1beta1$VolumeAttachment[];
-  /** Standard list metadata More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "storage.k8s.io/v1beta1";
-  readonly kind: "VolumeAttachmentList";
-});
+export type io$k8s$api$storage$v1beta1$VolumeAttachmentList =
+  & {
+    /** Items is the list of VolumeAttachments */
+    readonly "items": readonly io$k8s$api$storage$v1beta1$VolumeAttachment[];
+    /** Standard list metadata More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "storage.k8s.io/v1beta1";
+    readonly kind: "VolumeAttachmentList";
+  });
 
 /** VolumeAttachmentSource represents a volume that should be attached. Right now only PersistenVolumes can be attached via external attacher, in future we may allow also inline volumes in pods. Exactly one member can be set. */
 export type io$k8s$api$storage$v1beta1$VolumeAttachmentSource = {
@@ -6396,213 +6819,258 @@ export type io$k8s$api$storage$v1beta1$VolumeError = {
 };
 
 /** CustomResourceColumnDefinition specifies a column for server side printing. */
-export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceColumnDefinition = {
-  /** JSONPath is a simple JSON path, i.e. with array notation. */
-  readonly "JSONPath": string;
-  /** description is a human readable description of this column. */
-  readonly "description"?: string;
-  /** format is an optional OpenAPI type definition for this column. The 'name' format is applied to the primary identifier column to assist in clients identifying column is the resource name. See https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for more. */
-  readonly "format"?: string;
-  /** name is a human readable name for the column. */
-  readonly "name": string;
-  /** priority is an integer defining the relative importance of this column compared to others. Lower numbers are considered higher priority. Columns that may be omitted in limited space scenarios should be given a higher priority. */
-  readonly "priority"?: number;
-  /** type is an OpenAPI type definition for this column. See https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for more. */
-  readonly "type": string;
-};
+export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceColumnDefinition =
+  {
+    /** JSONPath is a simple JSON path, i.e. with array notation. */
+    readonly "JSONPath": string;
+    /** description is a human readable description of this column. */
+    readonly "description"?: string;
+    /** format is an optional OpenAPI type definition for this column. The 'name' format is applied to the primary identifier column to assist in clients identifying column is the resource name. See https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for more. */
+    readonly "format"?: string;
+    /** name is a human readable name for the column. */
+    readonly "name": string;
+    /** priority is an integer defining the relative importance of this column compared to others. Lower numbers are considered higher priority. Columns that may be omitted in limited space scenarios should be given a higher priority. */
+    readonly "priority"?: number;
+    /** type is an OpenAPI type definition for this column. See https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for more. */
+    readonly "type": string;
+  };
 
 /** CustomResourceConversion describes how to convert different versions of a CR. */
-export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceConversion = {
-  /** ConversionReviewVersions is an ordered list of preferred `ConversionReview` versions the Webhook expects. API server will try to use first version in the list which it supports. If none of the versions specified in this list supported by API server, conversion will fail for this object. If a persisted Webhook configuration specifies allowed versions and does not include any versions known to the API Server, calls to the webhook will fail. Default to `['v1beta1']`. */
-  readonly "conversionReviewVersions"?: readonly string[];
-  /** `strategy` specifies the conversion strategy. Allowed values are: - `None`: The converter only change the apiVersion and would not touch any other field in the CR. - `Webhook`: API Server will call to an external webhook to do the conversion. Additional information
+export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceConversion =
+  {
+    /** ConversionReviewVersions is an ordered list of preferred `ConversionReview` versions the Webhook expects. API server will try to use first version in the list which it supports. If none of the versions specified in this list supported by API server, conversion will fail for this object. If a persisted Webhook configuration specifies allowed versions and does not include any versions known to the API Server, calls to the webhook will fail. Default to `['v1beta1']`. */
+    readonly "conversionReviewVersions"?: readonly string[];
+    /** `strategy` specifies the conversion strategy. Allowed values are: - `None`: The converter only change the apiVersion and would not touch any other field in the CR. - `Webhook`: API Server will call to an external webhook to do the conversion. Additional information
   is needed for this option. This requires spec.preserveUnknownFields to be false. */
-  readonly "strategy": string;
-  /** `webhookClientConfig` is the instructions for how to call the webhook if strategy is `Webhook`. This field is alpha-level and is only honored by servers that enable the CustomResourceWebhookConversion feature. */
-  readonly "webhookClientConfig"?: io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$WebhookClientConfig;
-};
+    readonly "strategy": string;
+    /** `webhookClientConfig` is the instructions for how to call the webhook if strategy is `Webhook`. This field is alpha-level and is only honored by servers that enable the CustomResourceWebhookConversion feature. */
+    readonly "webhookClientConfig"?:
+      io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$WebhookClientConfig;
+  };
 
 /** CustomResourceDefinition represents a resource that should be exposed on the API server.  Its name MUST be in the format <.spec.name>.<.spec.group>. */
-export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinition = {
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Spec describes how the user wants the resources to appear */
-  readonly "spec": io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionSpec;
-  /** Status indicates the actual state of the CustomResourceDefinition */
-  readonly "status"?: io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionStatus;
-} & ({
-  readonly apiVersion: "apiextensions.k8s.io/v1beta1";
-  readonly kind: "CustomResourceDefinition";
-});
+export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinition =
+  & {
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Spec describes how the user wants the resources to appear */
+    readonly "spec":
+      io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionSpec;
+    /** Status indicates the actual state of the CustomResourceDefinition */
+    readonly "status"?:
+      io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionStatus;
+  }
+  & ({
+    readonly apiVersion: "apiextensions.k8s.io/v1beta1";
+    readonly kind: "CustomResourceDefinition";
+  });
 
 /** CustomResourceDefinitionCondition contains details for the current condition of this pod. */
-export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionCondition = {
-  /** Last time the condition transitioned from one status to another. */
-  readonly "lastTransitionTime"?: io$k8s$apimachinery$pkg$apis$meta$v1$Time;
-  /** Human-readable message indicating details about last transition. */
-  readonly "message"?: string;
-  /** Unique, one-word, CamelCase reason for the condition's last transition. */
-  readonly "reason"?: string;
-  /** Status is the status of the condition. Can be True, False, Unknown. */
-  readonly "status": string;
-  /** Type is the type of the condition. Types include Established, NamesAccepted and Terminating. */
-  readonly "type": string;
-};
+export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionCondition =
+  {
+    /** Last time the condition transitioned from one status to another. */
+    readonly "lastTransitionTime"?: io$k8s$apimachinery$pkg$apis$meta$v1$Time;
+    /** Human-readable message indicating details about last transition. */
+    readonly "message"?: string;
+    /** Unique, one-word, CamelCase reason for the condition's last transition. */
+    readonly "reason"?: string;
+    /** Status is the status of the condition. Can be True, False, Unknown. */
+    readonly "status": string;
+    /** Type is the type of the condition. Types include Established, NamesAccepted and Terminating. */
+    readonly "type": string;
+  };
 
 /** CustomResourceDefinitionList is a list of CustomResourceDefinition objects. */
-export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionList = {
-  /** Items individual CustomResourceDefinitions */
-  readonly "items": readonly io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinition[];
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "apiextensions.k8s.io/v1beta1";
-  readonly kind: "CustomResourceDefinitionList";
-});
+export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionList =
+  & {
+    /** Items individual CustomResourceDefinitions */
+    readonly "items":
+      readonly io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinition[];
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "apiextensions.k8s.io/v1beta1";
+    readonly kind: "CustomResourceDefinitionList";
+  });
 
 /** CustomResourceDefinitionNames indicates the names to serve this CustomResourceDefinition */
-export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionNames = {
-  /** Categories is a list of grouped resources custom resources belong to (e.g. 'all') */
-  readonly "categories"?: readonly string[];
-  /** ListKind is the serialized kind of the list for this resource.  Defaults to <kind>List. */
-  readonly "listKind"?: string;
-  /** Plural is the plural name of the resource to serve.  It must match the name of the CustomResourceDefinition-registration too: plural.group and it must be all lowercase. */
-  readonly "plural": string;
-  /** ShortNames are short names for the resource.  It must be all lowercase. */
-  readonly "shortNames"?: readonly string[];
-  /** Singular is the singular name of the resource.  It must be all lowercase  Defaults to lowercased <kind> */
-  readonly "singular"?: string;
-};
+export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionNames =
+  {
+    /** Categories is a list of grouped resources custom resources belong to (e.g. 'all') */
+    readonly "categories"?: readonly string[];
+    /** ListKind is the serialized kind of the list for this resource.  Defaults to <kind>List. */
+    readonly "listKind"?: string;
+    /** Plural is the plural name of the resource to serve.  It must match the name of the CustomResourceDefinition-registration too: plural.group and it must be all lowercase. */
+    readonly "plural": string;
+    /** ShortNames are short names for the resource.  It must be all lowercase. */
+    readonly "shortNames"?: readonly string[];
+    /** Singular is the singular name of the resource.  It must be all lowercase  Defaults to lowercased <kind> */
+    readonly "singular"?: string;
+  };
 
 /** CustomResourceDefinitionSpec describes how a user wants their resource to appear */
-export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionSpec = {
-  /** AdditionalPrinterColumns are additional columns shown e.g. in kubectl next to the name. Defaults to a created-at column. Optional, the global columns for all versions. Top-level and per-version columns are mutually exclusive. */
-  readonly "additionalPrinterColumns"?: readonly io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceColumnDefinition[];
-  /** `conversion` defines conversion settings for the CRD. */
-  readonly "conversion"?: io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceConversion;
-  /** Group is the group this resource belongs in */
-  readonly "group": string;
-  /** Names are the names used to describe this custom resource */
-  readonly "names": io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionNames;
-  /** preserveUnknownFields disables pruning of object fields which are not specified in the OpenAPI schema. apiVersion, kind, metadata and known fields inside metadata are always preserved. Defaults to true in v1beta and will default to false in v1. */
-  readonly "preserveUnknownFields"?: boolean;
-  /** Scope indicates whether this resource is cluster or namespace scoped.  Default is namespaced */
-  readonly "scope": string;
-  /** Subresources describes the subresources for CustomResource Optional, the global subresources for all versions. Top-level and per-version subresources are mutually exclusive. */
-  readonly "subresources"?: io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceSubresources;
-  /** Validation describes the validation methods for CustomResources Optional, the global validation schema for all versions. Top-level and per-version schemas are mutually exclusive. */
-  readonly "validation"?: io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceValidation;
-  /** Version is the version this resource belongs in Should be always first item in Versions field if provided. Optional, but at least one of Version or Versions must be set. Deprecated: Please use `Versions`. */
-  readonly "version"?: string;
-  /** Versions is the list of all supported versions for this resource. If Version field is provided, this field is optional. Validation: All versions must use the same validation schema for now. i.e., top level Validation field is applied to all of these versions. Order: The version name will be used to compute the order. If the version string is "kube-like", it will sort above non "kube-like" version strings, which are ordered lexicographically. "Kube-like" versions start with a "v", then are followed by a number (the major version), then optionally the string "alpha" or "beta" and another number (the minor version). These are sorted first by GA > beta > alpha (where GA is a version with no suffix such as beta or alpha), and then by comparing major version, then minor version. An example sorted list of versions: v10, v2, v1, v11beta2, v10beta3, v3beta1, v12alpha1, v11alpha2, foo1, foo10. */
-  readonly "versions"?: readonly io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionVersion[];
-};
+export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionSpec =
+  {
+    /** AdditionalPrinterColumns are additional columns shown e.g. in kubectl next to the name. Defaults to a created-at column. Optional, the global columns for all versions. Top-level and per-version columns are mutually exclusive. */
+    readonly "additionalPrinterColumns"?:
+      readonly io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceColumnDefinition[];
+    /** `conversion` defines conversion settings for the CRD. */
+    readonly "conversion"?:
+      io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceConversion;
+    /** Group is the group this resource belongs in */
+    readonly "group": string;
+    /** Names are the names used to describe this custom resource */
+    readonly "names":
+      io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionNames;
+    /** preserveUnknownFields disables pruning of object fields which are not specified in the OpenAPI schema. apiVersion, kind, metadata and known fields inside metadata are always preserved. Defaults to true in v1beta and will default to false in v1. */
+    readonly "preserveUnknownFields"?: boolean;
+    /** Scope indicates whether this resource is cluster or namespace scoped.  Default is namespaced */
+    readonly "scope": string;
+    /** Subresources describes the subresources for CustomResource Optional, the global subresources for all versions. Top-level and per-version subresources are mutually exclusive. */
+    readonly "subresources"?:
+      io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceSubresources;
+    /** Validation describes the validation methods for CustomResources Optional, the global validation schema for all versions. Top-level and per-version schemas are mutually exclusive. */
+    readonly "validation"?:
+      io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceValidation;
+    /** Version is the version this resource belongs in Should be always first item in Versions field if provided. Optional, but at least one of Version or Versions must be set. Deprecated: Please use `Versions`. */
+    readonly "version"?: string;
+    /** Versions is the list of all supported versions for this resource. If Version field is provided, this field is optional. Validation: All versions must use the same validation schema for now. i.e., top level Validation field is applied to all of these versions. Order: The version name will be used to compute the order. If the version string is "kube-like", it will sort above non "kube-like" version strings, which are ordered lexicographically. "Kube-like" versions start with a "v", then are followed by a number (the major version), then optionally the string "alpha" or "beta" and another number (the minor version). These are sorted first by GA > beta > alpha (where GA is a version with no suffix such as beta or alpha), and then by comparing major version, then minor version. An example sorted list of versions: v10, v2, v1, v11beta2, v10beta3, v3beta1, v12alpha1, v11alpha2, foo1, foo10. */
+    readonly "versions"?:
+      readonly io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionVersion[];
+  };
 
 /** CustomResourceDefinitionStatus indicates the state of the CustomResourceDefinition */
-export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionStatus = {
-  /** AcceptedNames are the names that are actually being used to serve discovery They may be different than the names in spec. */
-  readonly "acceptedNames": io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionNames;
-  /** Conditions indicate state for particular aspects of a CustomResourceDefinition */
-  readonly "conditions": readonly io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionCondition[];
-  /** StoredVersions are all versions of CustomResources that were ever persisted. Tracking these versions allows a migration path for stored versions in etcd. The field is mutable so the migration controller can first finish a migration to another version (i.e. that no old objects are left in the storage), and then remove the rest of the versions from this list. None of the versions in this list can be removed from the spec.Versions field. */
-  readonly "storedVersions": readonly string[];
-};
+export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionStatus =
+  {
+    /** AcceptedNames are the names that are actually being used to serve discovery They may be different than the names in spec. */
+    readonly "acceptedNames":
+      io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionNames;
+    /** Conditions indicate state for particular aspects of a CustomResourceDefinition */
+    readonly "conditions":
+      readonly io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionCondition[];
+    /** StoredVersions are all versions of CustomResources that were ever persisted. Tracking these versions allows a migration path for stored versions in etcd. The field is mutable so the migration controller can first finish a migration to another version (i.e. that no old objects are left in the storage), and then remove the rest of the versions from this list. None of the versions in this list can be removed from the spec.Versions field. */
+    readonly "storedVersions": readonly string[];
+  };
 
 /** CustomResourceDefinitionVersion describes a version for CRD. */
-export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionVersion = {
-  /** AdditionalPrinterColumns are additional columns shown e.g. in kubectl next to the name. Defaults to a created-at column. Top-level and per-version columns are mutually exclusive. Per-version columns must not all be set to identical values (top-level columns should be used instead) This field is alpha-level and is only honored by servers that enable the CustomResourceWebhookConversion feature. NOTE: CRDs created prior to 1.13 populated the top-level additionalPrinterColumns field by default. To apply an update that changes to per-version additionalPrinterColumns, the top-level additionalPrinterColumns field must be explicitly set to null */
-  readonly "additionalPrinterColumns"?: readonly io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceColumnDefinition[];
-  /** Name is the version name, e.g. “v1”, “v2beta1”, etc. */
-  readonly "name": string;
-  /** Schema describes the schema for CustomResource used in validation, pruning, and defaulting. Top-level and per-version schemas are mutually exclusive. Per-version schemas must not all be set to identical values (top-level validation schema should be used instead) This field is alpha-level and is only honored by servers that enable the CustomResourceWebhookConversion feature. */
-  readonly "schema"?: io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceValidation;
-  /** Served is a flag enabling/disabling this version from being served via REST APIs */
-  readonly "served": boolean;
-  /** Storage flags the version as storage version. There must be exactly one flagged as storage version. */
-  readonly "storage": boolean;
-  /** Subresources describes the subresources for CustomResource Top-level and per-version subresources are mutually exclusive. Per-version subresources must not all be set to identical values (top-level subresources should be used instead) This field is alpha-level and is only honored by servers that enable the CustomResourceWebhookConversion feature. */
-  readonly "subresources"?: io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceSubresources;
-};
+export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionVersion =
+  {
+    /** AdditionalPrinterColumns are additional columns shown e.g. in kubectl next to the name. Defaults to a created-at column. Top-level and per-version columns are mutually exclusive. Per-version columns must not all be set to identical values (top-level columns should be used instead) This field is alpha-level and is only honored by servers that enable the CustomResourceWebhookConversion feature. NOTE: CRDs created prior to 1.13 populated the top-level additionalPrinterColumns field by default. To apply an update that changes to per-version additionalPrinterColumns, the top-level additionalPrinterColumns field must be explicitly set to null */
+    readonly "additionalPrinterColumns"?:
+      readonly io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceColumnDefinition[];
+    /** Name is the version name, e.g. “v1”, “v2beta1”, etc. */
+    readonly "name": string;
+    /** Schema describes the schema for CustomResource used in validation, pruning, and defaulting. Top-level and per-version schemas are mutually exclusive. Per-version schemas must not all be set to identical values (top-level validation schema should be used instead) This field is alpha-level and is only honored by servers that enable the CustomResourceWebhookConversion feature. */
+    readonly "schema"?:
+      io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceValidation;
+    /** Served is a flag enabling/disabling this version from being served via REST APIs */
+    readonly "served": boolean;
+    /** Storage flags the version as storage version. There must be exactly one flagged as storage version. */
+    readonly "storage": boolean;
+    /** Subresources describes the subresources for CustomResource Top-level and per-version subresources are mutually exclusive. Per-version subresources must not all be set to identical values (top-level subresources should be used instead) This field is alpha-level and is only honored by servers that enable the CustomResourceWebhookConversion feature. */
+    readonly "subresources"?:
+      io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceSubresources;
+  };
 
 /** CustomResourceSubresourceScale defines how to serve the scale subresource for CustomResources. */
-export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceSubresourceScale = {
-  /** LabelSelectorPath defines the JSON path inside of a CustomResource that corresponds to Scale.Status.Selector. Only JSON paths without the array notation are allowed. Must be a JSON Path under .status or .spec. Must be set to work with HPA. The field pointed by this JSON path must be a string field (not a complex selector struct) which contains a serialized label selector in string form. More info: https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions#scale-subresource If there is no value under the given path in the CustomResource, the status label selector value in the /scale subresource will default to the empty string. */
-  readonly "labelSelectorPath"?: string;
-  /** SpecReplicasPath defines the JSON path inside of a CustomResource that corresponds to Scale.Spec.Replicas. Only JSON paths without the array notation are allowed. Must be a JSON Path under .spec. If there is no value under the given path in the CustomResource, the /scale subresource will return an error on GET. */
-  readonly "specReplicasPath": string;
-  /** StatusReplicasPath defines the JSON path inside of a CustomResource that corresponds to Scale.Status.Replicas. Only JSON paths without the array notation are allowed. Must be a JSON Path under .status. If there is no value under the given path in the CustomResource, the status replica value in the /scale subresource will default to 0. */
-  readonly "statusReplicasPath": string;
-};
+export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceSubresourceScale =
+  {
+    /** LabelSelectorPath defines the JSON path inside of a CustomResource that corresponds to Scale.Status.Selector. Only JSON paths without the array notation are allowed. Must be a JSON Path under .status or .spec. Must be set to work with HPA. The field pointed by this JSON path must be a string field (not a complex selector struct) which contains a serialized label selector in string form. More info: https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions#scale-subresource If there is no value under the given path in the CustomResource, the status label selector value in the /scale subresource will default to the empty string. */
+    readonly "labelSelectorPath"?: string;
+    /** SpecReplicasPath defines the JSON path inside of a CustomResource that corresponds to Scale.Spec.Replicas. Only JSON paths without the array notation are allowed. Must be a JSON Path under .spec. If there is no value under the given path in the CustomResource, the /scale subresource will return an error on GET. */
+    readonly "specReplicasPath": string;
+    /** StatusReplicasPath defines the JSON path inside of a CustomResource that corresponds to Scale.Status.Replicas. Only JSON paths without the array notation are allowed. Must be a JSON Path under .status. If there is no value under the given path in the CustomResource, the status replica value in the /scale subresource will default to 0. */
+    readonly "statusReplicasPath": string;
+  };
 
 /** CustomResourceSubresourceStatus defines how to serve the status subresource for CustomResources. Status is represented by the `.status` JSON path inside of a CustomResource. When set, * exposes a /status subresource for the custom resource * PUT requests to the /status subresource take a custom resource object, and ignore changes to anything except the status stanza * PUT/POST/PATCH requests to the custom resource ignore changes to the status stanza */
-export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceSubresourceStatus = {
-};
+export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceSubresourceStatus =
+  {};
 
 /** CustomResourceSubresources defines the status and scale subresources for CustomResources. */
-export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceSubresources = {
-  /** Scale denotes the scale subresource for CustomResources */
-  readonly "scale"?: io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceSubresourceScale;
-  /** Status denotes the status subresource for CustomResources */
-  readonly "status"?: io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceSubresourceStatus;
-};
+export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceSubresources =
+  {
+    /** Scale denotes the scale subresource for CustomResources */
+    readonly "scale"?:
+      io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceSubresourceScale;
+    /** Status denotes the status subresource for CustomResources */
+    readonly "status"?:
+      io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceSubresourceStatus;
+  };
 
 /** CustomResourceValidation is a list of validation methods for CustomResources. */
-export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceValidation = {
-  /** OpenAPIV3Schema is the OpenAPI v3 schema to be validated against. */
-  readonly "openAPIV3Schema"?: io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSONSchemaProps;
-};
+export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceValidation =
+  {
+    /** OpenAPIV3Schema is the OpenAPI v3 schema to be validated against. */
+    readonly "openAPIV3Schema"?:
+      io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSONSchemaProps;
+  };
 
 /** ExternalDocumentation allows referencing an external resource for extended documentation. */
-export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$ExternalDocumentation = {
-  readonly "description"?: string;
-  readonly "url"?: string;
-};
+export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$ExternalDocumentation =
+  {
+    readonly "description"?: string;
+    readonly "url"?: string;
+  };
 
 /** JSON represents any valid JSON value. These types are supported: bool, int64, float64, string, []interface{}, map[string]interface{} and nil. */
-export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSON = {
-};
+export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSON =
+  {};
 
 /** JSONSchemaProps is a JSON-Schema following Specification Draft 4 (http://json-schema.org/). */
-export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSONSchemaProps = {
-  readonly "$ref"?: string;
-  readonly "$schema"?: string;
-  readonly "additionalItems"?: io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSONSchemaPropsOrBool;
-  readonly "additionalProperties"?: io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSONSchemaPropsOrBool;
-  readonly "allOf"?: readonly io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSONSchemaProps[];
-  readonly "anyOf"?: readonly io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSONSchemaProps[];
-  /** default is a default value for undefined object fields. Defaulting is an alpha feature under the CustomResourceDefaulting feature gate. Defaulting requires spec.preserveUnknownFields to be false. */
-  readonly "default"?: io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSON;
-  readonly "definitions"?: object;
-  readonly "dependencies"?: object;
-  readonly "description"?: string;
-  readonly "enum"?: readonly io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSON[];
-  readonly "example"?: io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSON;
-  readonly "exclusiveMaximum"?: boolean;
-  readonly "exclusiveMinimum"?: boolean;
-  readonly "externalDocs"?: io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$ExternalDocumentation;
-  readonly "format"?: string;
-  readonly "id"?: string;
-  readonly "items"?: io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSONSchemaPropsOrArray;
-  readonly "maxItems"?: number;
-  readonly "maxLength"?: number;
-  readonly "maxProperties"?: number;
-  readonly "maximum"?: number;
-  readonly "minItems"?: number;
-  readonly "minLength"?: number;
-  readonly "minProperties"?: number;
-  readonly "minimum"?: number;
-  readonly "multipleOf"?: number;
-  readonly "not"?: io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSONSchemaProps;
-  readonly "nullable"?: boolean;
-  readonly "oneOf"?: readonly io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSONSchemaProps[];
-  readonly "pattern"?: string;
-  readonly "patternProperties"?: object;
-  readonly "properties"?: object;
-  readonly "required"?: readonly string[];
-  readonly "title"?: string;
-  readonly "type"?: string;
-  readonly "uniqueItems"?: boolean;
-  /** x-kubernetes-embedded-resource defines that the value is an embedded Kubernetes runtime.Object, with TypeMeta and ObjectMeta. The type must be object. It is allowed to further restrict the embedded object. kind, apiVersion and metadata are validated automatically. x-kubernetes-preserve-unknown-fields is allowed to be true, but does not have to be if the object is fully specified (up to kind, apiVersion, metadata). */
-  readonly "x-kubernetes-embedded-resource"?: boolean;
-  /** x-kubernetes-int-or-string specifies that this value is either an integer or a string. If this is true, an empty type is allowed and type as child of anyOf is permitted if following one of the following patterns:
+export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSONSchemaProps =
+  {
+    readonly "$ref"?: string;
+    readonly "$schema"?: string;
+    readonly "additionalItems"?:
+      io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSONSchemaPropsOrBool;
+    readonly "additionalProperties"?:
+      io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSONSchemaPropsOrBool;
+    readonly "allOf"?:
+      readonly io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSONSchemaProps[];
+    readonly "anyOf"?:
+      readonly io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSONSchemaProps[];
+    /** default is a default value for undefined object fields. Defaulting is an alpha feature under the CustomResourceDefaulting feature gate. Defaulting requires spec.preserveUnknownFields to be false. */
+    readonly "default"?:
+      io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSON;
+    readonly "definitions"?: object;
+    readonly "dependencies"?: object;
+    readonly "description"?: string;
+    readonly "enum"?:
+      readonly io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSON[];
+    readonly "example"?:
+      io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSON;
+    readonly "exclusiveMaximum"?: boolean;
+    readonly "exclusiveMinimum"?: boolean;
+    readonly "externalDocs"?:
+      io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$ExternalDocumentation;
+    readonly "format"?: string;
+    readonly "id"?: string;
+    readonly "items"?:
+      io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSONSchemaPropsOrArray;
+    readonly "maxItems"?: number;
+    readonly "maxLength"?: number;
+    readonly "maxProperties"?: number;
+    readonly "maximum"?: number;
+    readonly "minItems"?: number;
+    readonly "minLength"?: number;
+    readonly "minProperties"?: number;
+    readonly "minimum"?: number;
+    readonly "multipleOf"?: number;
+    readonly "not"?:
+      io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSONSchemaProps;
+    readonly "nullable"?: boolean;
+    readonly "oneOf"?:
+      readonly io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSONSchemaProps[];
+    readonly "pattern"?: string;
+    readonly "patternProperties"?: object;
+    readonly "properties"?: object;
+    readonly "required"?: readonly string[];
+    readonly "title"?: string;
+    readonly "type"?: string;
+    readonly "uniqueItems"?: boolean;
+    /** x-kubernetes-embedded-resource defines that the value is an embedded Kubernetes runtime.Object, with TypeMeta and ObjectMeta. The type must be object. It is allowed to further restrict the embedded object. kind, apiVersion and metadata are validated automatically. x-kubernetes-preserve-unknown-fields is allowed to be true, but does not have to be if the object is fully specified (up to kind, apiVersion, metadata). */
+    readonly "x-kubernetes-embedded-resource"?: boolean;
+    /** x-kubernetes-int-or-string specifies that this value is either an integer or a string. If this is true, an empty type is allowed and type as child of anyOf is permitted if following one of the following patterns:
 
 1) anyOf:
    - type: integer
@@ -6612,44 +7080,47 @@ export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSONSc
      - type: integer
      - type: string
    - ... zero or more */
-  readonly "x-kubernetes-int-or-string"?: boolean;
-  /** x-kubernetes-preserve-unknown-fields stops the API server decoding step from pruning fields which are not specified in the validation schema. This affects fields recursively, but switches back to normal pruning behaviour if nested properties or additionalProperties are specified in the schema. This can either be true or undefined. False is forbidden. */
-  readonly "x-kubernetes-preserve-unknown-fields"?: boolean;
-};
+    readonly "x-kubernetes-int-or-string"?: boolean;
+    /** x-kubernetes-preserve-unknown-fields stops the API server decoding step from pruning fields which are not specified in the validation schema. This affects fields recursively, but switches back to normal pruning behaviour if nested properties or additionalProperties are specified in the schema. This can either be true or undefined. False is forbidden. */
+    readonly "x-kubernetes-preserve-unknown-fields"?: boolean;
+  };
 
 /** JSONSchemaPropsOrArray represents a value that can either be a JSONSchemaProps or an array of JSONSchemaProps. Mainly here for serialization purposes. */
-export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSONSchemaPropsOrArray = {
-};
+export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSONSchemaPropsOrArray =
+  {};
 
 /** JSONSchemaPropsOrBool represents JSONSchemaProps or a boolean value. Defaults to true for the boolean property. */
-export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSONSchemaPropsOrBool = {
-};
+export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSONSchemaPropsOrBool =
+  {};
 
 /** JSONSchemaPropsOrStringArray represents a JSONSchemaProps or a string array. */
-export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSONSchemaPropsOrStringArray = {
-};
+export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSONSchemaPropsOrStringArray =
+  {};
 
 /** ServiceReference holds a reference to Service.legacy.k8s.io */
-export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$ServiceReference = {
-  /** `name` is the name of the service. Required */
-  readonly "name": string;
-  /** `namespace` is the namespace of the service. Required */
-  readonly "namespace": string;
-  /** `path` is an optional URL path which will be sent in any request to this service. */
-  readonly "path"?: string;
-  /** If specified, the port on the service that hosting webhook. Default to 443 for backward compatibility. `port` should be a valid port number (1-65535, inclusive). */
-  readonly "port"?: number;
-};
+export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$ServiceReference =
+  {
+    /** `name` is the name of the service. Required */
+    readonly "name": string;
+    /** `namespace` is the namespace of the service. Required */
+    readonly "namespace": string;
+    /** `path` is an optional URL path which will be sent in any request to this service. */
+    readonly "path"?: string;
+    /** If specified, the port on the service that hosting webhook. Default to 443 for backward compatibility. `port` should be a valid port number (1-65535, inclusive). */
+    readonly "port"?: number;
+  };
 
 /** WebhookClientConfig contains the information to make a TLS connection with the webhook. It has the same field as admissionregistration.v1beta1.WebhookClientConfig. */
-export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$WebhookClientConfig = {
-  /** `caBundle` is a PEM encoded CA bundle which will be used to validate the webhook's server certificate. If unspecified, system trust roots on the apiserver are used. */
-  readonly "caBundle"?: string;
-  /** `service` is a reference to the service for this webhook. Either `service` or `url` must be specified.
+export type io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$WebhookClientConfig =
+  {
+    /** `caBundle` is a PEM encoded CA bundle which will be used to validate the webhook's server certificate. If unspecified, system trust roots on the apiserver are used. */
+    readonly "caBundle"?: string;
+    /** `service` is a reference to the service for this webhook. Either `service` or `url` must be specified.
 
 If the webhook is running within the cluster, then you should use `service`. */
-  readonly "service"?: io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$ServiceReference;
-  /** `url` gives the location of the webhook, in standard URL form (`scheme://host:port/path`). Exactly one of `url` or `service` must be specified.
+    readonly "service"?:
+      io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$ServiceReference;
+    /** `url` gives the location of the webhook, in standard URL form (`scheme://host:port/path`). Exactly one of `url` or `service` must be specified.
 
 The `host` should not refer to a service running in the cluster; use the `service` field instead. The host might be resolved via external DNS in some apiservers (e.g., `kube-apiserver` cannot resolve in-cluster DNS as that would be a layering violation). `host` may also be an IP address.
 
@@ -6660,8 +7131,8 @@ The scheme must be "https"; the URL must begin with "https://".
 A path is optional, and if present may be any string permissible in a URL. You may use the path to pass an arbitrary string to the webhook, for example, a cluster identifier.
 
 Attempting to use a user or basic auth e.g. "user:password@" is not allowed. Fragments ("#...") and query parameters ("?...") are not allowed, either. */
-  readonly "url"?: string;
-};
+    readonly "url"?: string;
+  };
 
 /** Quantity is a fixed-point representation of a number. It provides convenient marshaling/unmarshaling in JSON and YAML, in addition to String() and Int64() accessors.
 
@@ -6694,47 +7165,58 @@ Note that the quantity will NEVER be internally represented by a floating point 
 Non-canonical values will still parse as long as they are well formed, but will be re-emitted in their canonical form. (So always use canonical form, or don't diff.)
 
 This format is intended to make it difficult to use these numbers without writing some sort of special handling code in the hopes that that will cause implementors to also use a fixed point implementation. */
-export type io$k8s$apimachinery$pkg$api$resource$Quantity = {
-};
+export type io$k8s$apimachinery$pkg$api$resource$Quantity = {};
 
 /** APIGroup contains the name, the supported versions, and the preferred version of a group. */
-export type io$k8s$apimachinery$pkg$apis$meta$v1$APIGroup = {
-  /** name is the name of the group. */
-  readonly "name": string;
-  /** preferredVersion is the version preferred by the API server, which probably is the storage version. */
-  readonly "preferredVersion"?: io$k8s$apimachinery$pkg$apis$meta$v1$GroupVersionForDiscovery;
-  /** a map of client CIDR to server address that is serving this group. This is to help clients reach servers in the most network-efficient way possible. Clients can use the appropriate server address as per the CIDR that they match. In case of multiple matches, clients should use the longest matching CIDR. The server returns only those CIDRs that it thinks that the client can match. For example: the master will return an internal IP CIDR only, if the client reaches the server using an internal IP. Server looks at X-Forwarded-For header or X-Real-Ip header or request.RemoteAddr (in that order) to get the client IP. */
-  readonly "serverAddressByClientCIDRs"?: readonly io$k8s$apimachinery$pkg$apis$meta$v1$ServerAddressByClientCIDR[];
-  /** versions are the versions supported in this group. */
-  readonly "versions": readonly io$k8s$apimachinery$pkg$apis$meta$v1$GroupVersionForDiscovery[];
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "APIGroup";
-});
+export type io$k8s$apimachinery$pkg$apis$meta$v1$APIGroup =
+  & {
+    /** name is the name of the group. */
+    readonly "name": string;
+    /** preferredVersion is the version preferred by the API server, which probably is the storage version. */
+    readonly "preferredVersion"?:
+      io$k8s$apimachinery$pkg$apis$meta$v1$GroupVersionForDiscovery;
+    /** a map of client CIDR to server address that is serving this group. This is to help clients reach servers in the most network-efficient way possible. Clients can use the appropriate server address as per the CIDR that they match. In case of multiple matches, clients should use the longest matching CIDR. The server returns only those CIDRs that it thinks that the client can match. For example: the master will return an internal IP CIDR only, if the client reaches the server using an internal IP. Server looks at X-Forwarded-For header or X-Real-Ip header or request.RemoteAddr (in that order) to get the client IP. */
+    readonly "serverAddressByClientCIDRs"?:
+      readonly io$k8s$apimachinery$pkg$apis$meta$v1$ServerAddressByClientCIDR[];
+    /** versions are the versions supported in this group. */
+    readonly "versions":
+      readonly io$k8s$apimachinery$pkg$apis$meta$v1$GroupVersionForDiscovery[];
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "APIGroup";
+  });
 
 /** APIGroupList is a list of APIGroup, to allow clients to discover the API at /apis. */
-export type io$k8s$apimachinery$pkg$apis$meta$v1$APIGroupList = {
-  /** groups is a list of APIGroup. */
-  readonly "groups": readonly io$k8s$apimachinery$pkg$apis$meta$v1$APIGroup[];
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "APIGroupList";
-});
+export type io$k8s$apimachinery$pkg$apis$meta$v1$APIGroupList =
+  & {
+    /** groups is a list of APIGroup. */
+    readonly "groups": readonly io$k8s$apimachinery$pkg$apis$meta$v1$APIGroup[];
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "APIGroupList";
+  });
 
 /** APIGroup contains the name, the supported versions, and the preferred version of a group. */
-export type io$k8s$apimachinery$pkg$apis$meta$v1$APIGroup_v2 = {
-  /** name is the name of the group. */
-  readonly "name": string;
-  /** preferredVersion is the version preferred by the API server, which probably is the storage version. */
-  readonly "preferredVersion"?: io$k8s$apimachinery$pkg$apis$meta$v1$GroupVersionForDiscovery_v2;
-  /** a map of client CIDR to server address that is serving this group. This is to help clients reach servers in the most network-efficient way possible. Clients can use the appropriate server address as per the CIDR that they match. In case of multiple matches, clients should use the longest matching CIDR. The server returns only those CIDRs that it thinks that the client can match. For example: the master will return an internal IP CIDR only, if the client reaches the server using an internal IP. Server looks at X-Forwarded-For header or X-Real-Ip header or request.RemoteAddr (in that order) to get the client IP. */
-  readonly "serverAddressByClientCIDRs"?: readonly io$k8s$apimachinery$pkg$apis$meta$v1$ServerAddressByClientCIDR_v2[];
-  /** versions are the versions supported in this group. */
-  readonly "versions": readonly io$k8s$apimachinery$pkg$apis$meta$v1$GroupVersionForDiscovery_v2[];
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "APIGroup";
-});
+export type io$k8s$apimachinery$pkg$apis$meta$v1$APIGroup_v2 =
+  & {
+    /** name is the name of the group. */
+    readonly "name": string;
+    /** preferredVersion is the version preferred by the API server, which probably is the storage version. */
+    readonly "preferredVersion"?:
+      io$k8s$apimachinery$pkg$apis$meta$v1$GroupVersionForDiscovery_v2;
+    /** a map of client CIDR to server address that is serving this group. This is to help clients reach servers in the most network-efficient way possible. Clients can use the appropriate server address as per the CIDR that they match. In case of multiple matches, clients should use the longest matching CIDR. The server returns only those CIDRs that it thinks that the client can match. For example: the master will return an internal IP CIDR only, if the client reaches the server using an internal IP. Server looks at X-Forwarded-For header or X-Real-Ip header or request.RemoteAddr (in that order) to get the client IP. */
+    readonly "serverAddressByClientCIDRs"?:
+      readonly io$k8s$apimachinery$pkg$apis$meta$v1$ServerAddressByClientCIDR_v2[];
+    /** versions are the versions supported in this group. */
+    readonly "versions":
+      readonly io$k8s$apimachinery$pkg$apis$meta$v1$GroupVersionForDiscovery_v2[];
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "APIGroup";
+  });
 
 /** APIResource specifies the name of a resource and whether it is namespaced. */
 export type io$k8s$apimachinery$pkg$apis$meta$v1$APIResource = {
@@ -6759,26 +7241,32 @@ export type io$k8s$apimachinery$pkg$apis$meta$v1$APIResource = {
 };
 
 /** APIResourceList is a list of APIResource, it is used to expose the name of the resources supported in a specific group and version, and if the resource is namespaced. */
-export type io$k8s$apimachinery$pkg$apis$meta$v1$APIResourceList = {
-  /** groupVersion is the group and version this APIResourceList is for. */
-  readonly "groupVersion": string;
-  /** resources contains the name of the resources and if they are namespaced. */
-  readonly "resources": readonly io$k8s$apimachinery$pkg$apis$meta$v1$APIResource[];
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "APIResourceList";
-});
+export type io$k8s$apimachinery$pkg$apis$meta$v1$APIResourceList =
+  & {
+    /** groupVersion is the group and version this APIResourceList is for. */
+    readonly "groupVersion": string;
+    /** resources contains the name of the resources and if they are namespaced. */
+    readonly "resources":
+      readonly io$k8s$apimachinery$pkg$apis$meta$v1$APIResource[];
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "APIResourceList";
+  });
 
 /** APIResourceList is a list of APIResource, it is used to expose the name of the resources supported in a specific group and version, and if the resource is namespaced. */
-export type io$k8s$apimachinery$pkg$apis$meta$v1$APIResourceList_v2 = {
-  /** groupVersion is the group and version this APIResourceList is for. */
-  readonly "groupVersion": string;
-  /** resources contains the name of the resources and if they are namespaced. */
-  readonly "resources": readonly io$k8s$apimachinery$pkg$apis$meta$v1$APIResource_v2[];
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "APIResourceList";
-});
+export type io$k8s$apimachinery$pkg$apis$meta$v1$APIResourceList_v2 =
+  & {
+    /** groupVersion is the group and version this APIResourceList is for. */
+    readonly "groupVersion": string;
+    /** resources contains the name of the resources and if they are namespaced. */
+    readonly "resources":
+      readonly io$k8s$apimachinery$pkg$apis$meta$v1$APIResource_v2[];
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "APIResourceList";
+  });
 
 /** APIResource specifies the name of a resource and whether it is namespaced. */
 export type io$k8s$apimachinery$pkg$apis$meta$v1$APIResource_v2 = {
@@ -6801,180 +7289,188 @@ export type io$k8s$apimachinery$pkg$apis$meta$v1$APIResource_v2 = {
 };
 
 /** APIVersions lists the versions that are available, to allow clients to discover the API at /api, which is the root path of the legacy v1 API. */
-export type io$k8s$apimachinery$pkg$apis$meta$v1$APIVersions = {
-  /** a map of client CIDR to server address that is serving this group. This is to help clients reach servers in the most network-efficient way possible. Clients can use the appropriate server address as per the CIDR that they match. In case of multiple matches, clients should use the longest matching CIDR. The server returns only those CIDRs that it thinks that the client can match. For example: the master will return an internal IP CIDR only, if the client reaches the server using an internal IP. Server looks at X-Forwarded-For header or X-Real-Ip header or request.RemoteAddr (in that order) to get the client IP. */
-  readonly "serverAddressByClientCIDRs": readonly io$k8s$apimachinery$pkg$apis$meta$v1$ServerAddressByClientCIDR[];
-  /** versions are the api versions that are available. */
-  readonly "versions": readonly string[];
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "APIVersions";
-});
+export type io$k8s$apimachinery$pkg$apis$meta$v1$APIVersions =
+  & {
+    /** a map of client CIDR to server address that is serving this group. This is to help clients reach servers in the most network-efficient way possible. Clients can use the appropriate server address as per the CIDR that they match. In case of multiple matches, clients should use the longest matching CIDR. The server returns only those CIDRs that it thinks that the client can match. For example: the master will return an internal IP CIDR only, if the client reaches the server using an internal IP. Server looks at X-Forwarded-For header or X-Real-Ip header or request.RemoteAddr (in that order) to get the client IP. */
+    readonly "serverAddressByClientCIDRs":
+      readonly io$k8s$apimachinery$pkg$apis$meta$v1$ServerAddressByClientCIDR[];
+    /** versions are the api versions that are available. */
+    readonly "versions": readonly string[];
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "APIVersions";
+  });
 
 /** DeleteOptions may be provided when deleting an API object. */
-export type io$k8s$apimachinery$pkg$apis$meta$v1$DeleteOptions = {
-  /** When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed */
-  readonly "dryRun"?: readonly string[];
-  /** The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately. */
-  readonly "gracePeriodSeconds"?: number;
-  /** Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both. */
-  readonly "orphanDependents"?: boolean;
-  /** Must be fulfilled before a deletion is carried out. If not possible, a 409 Conflict status will be returned. */
-  readonly "preconditions"?: io$k8s$apimachinery$pkg$apis$meta$v1$Preconditions;
-  /** Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground. */
-  readonly "propagationPolicy"?: string;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "admission.k8s.io/v1beta1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "admissionregistration.k8s.io/v1beta1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "apiextensions.k8s.io/v1beta1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "apiregistration.k8s.io/v1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "apiregistration.k8s.io/v1beta1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "apps/v1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "apps/v1beta1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "apps/v1beta2";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "auditregistration.k8s.io/v1alpha1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "authentication.k8s.io/v1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "authentication.k8s.io/v1beta1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "authorization.k8s.io/v1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "authorization.k8s.io/v1beta1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "autoscaling/v1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "autoscaling/v2beta1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "autoscaling/v2beta2";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "batch/v1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "batch/v1beta1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "batch/v2alpha1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "certificates.k8s.io/v1beta1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "coordination.k8s.io/v1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "coordination.k8s.io/v1beta1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "events.k8s.io/v1beta1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "extensions/v1beta1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "imagepolicy.k8s.io/v1alpha1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "networking.k8s.io/v1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "networking.k8s.io/v1beta1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "node.k8s.io/v1alpha1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "node.k8s.io/v1beta1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "policy/v1beta1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "rbac.authorization.k8s.io/v1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "rbac.authorization.k8s.io/v1alpha1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "rbac.authorization.k8s.io/v1beta1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "scheduling.k8s.io/v1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "scheduling.k8s.io/v1alpha1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "scheduling.k8s.io/v1beta1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "settings.k8s.io/v1alpha1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "storage.k8s.io/v1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "storage.k8s.io/v1alpha1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "storage.k8s.io/v1beta1";
-  readonly kind: "DeleteOptions";
-});
+export type io$k8s$apimachinery$pkg$apis$meta$v1$DeleteOptions =
+  & {
+    /** When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed */
+    readonly "dryRun"?: readonly string[];
+    /** The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately. */
+    readonly "gracePeriodSeconds"?: number;
+    /** Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both. */
+    readonly "orphanDependents"?: boolean;
+    /** Must be fulfilled before a deletion is carried out. If not possible, a 409 Conflict status will be returned. */
+    readonly "preconditions"?:
+      io$k8s$apimachinery$pkg$apis$meta$v1$Preconditions;
+    /** Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground. */
+    readonly "propagationPolicy"?: string;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "admission.k8s.io/v1beta1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "admissionregistration.k8s.io/v1beta1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "apiextensions.k8s.io/v1beta1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "apiregistration.k8s.io/v1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "apiregistration.k8s.io/v1beta1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "apps/v1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "apps/v1beta1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "apps/v1beta2";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "auditregistration.k8s.io/v1alpha1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "authentication.k8s.io/v1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "authentication.k8s.io/v1beta1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "authorization.k8s.io/v1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "authorization.k8s.io/v1beta1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "autoscaling/v1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "autoscaling/v2beta1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "autoscaling/v2beta2";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "batch/v1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "batch/v1beta1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "batch/v2alpha1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "certificates.k8s.io/v1beta1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "coordination.k8s.io/v1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "coordination.k8s.io/v1beta1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "events.k8s.io/v1beta1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "extensions/v1beta1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "imagepolicy.k8s.io/v1alpha1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "networking.k8s.io/v1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "networking.k8s.io/v1beta1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "node.k8s.io/v1alpha1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "node.k8s.io/v1beta1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "policy/v1beta1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "rbac.authorization.k8s.io/v1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "rbac.authorization.k8s.io/v1alpha1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "rbac.authorization.k8s.io/v1beta1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "scheduling.k8s.io/v1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "scheduling.k8s.io/v1alpha1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "scheduling.k8s.io/v1beta1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "settings.k8s.io/v1alpha1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "storage.k8s.io/v1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "storage.k8s.io/v1alpha1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "storage.k8s.io/v1beta1";
+    readonly kind: "DeleteOptions";
+  });
 
 /** DeleteOptions may be provided when deleting an API object. */
-export type io$k8s$apimachinery$pkg$apis$meta$v1$DeleteOptions_v2 = {
-  /** The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately. */
-  readonly "gracePeriodSeconds"?: number;
-  /** Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both. */
-  readonly "orphanDependents"?: boolean;
-  /** Must be fulfilled before a deletion is carried out. If not possible, a 409 Conflict status will be returned. */
-  readonly "preconditions"?: io$k8s$apimachinery$pkg$apis$meta$v1$Preconditions_v2;
-  /** Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground. */
-  readonly "propagationPolicy"?: string;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "compose.docker.com/v1alpha3";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "compose.docker.com/v1beta1";
-  readonly kind: "DeleteOptions";
-} | {
-  readonly apiVersion: "compose.docker.com/v1beta2";
-  readonly kind: "DeleteOptions";
-});
+export type io$k8s$apimachinery$pkg$apis$meta$v1$DeleteOptions_v2 =
+  & {
+    /** The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately. */
+    readonly "gracePeriodSeconds"?: number;
+    /** Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both. */
+    readonly "orphanDependents"?: boolean;
+    /** Must be fulfilled before a deletion is carried out. If not possible, a 409 Conflict status will be returned. */
+    readonly "preconditions"?:
+      io$k8s$apimachinery$pkg$apis$meta$v1$Preconditions_v2;
+    /** Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground. */
+    readonly "propagationPolicy"?: string;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "compose.docker.com/v1alpha3";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "compose.docker.com/v1beta1";
+    readonly kind: "DeleteOptions";
+  } | {
+    readonly apiVersion: "compose.docker.com/v1beta2";
+    readonly kind: "DeleteOptions";
+  });
 
 /** Fields stores a set of fields in a data structure like a Trie. To understand how this is used, see: https://github.com/kubernetes-sigs/structured-merge-diff */
-export type io$k8s$apimachinery$pkg$apis$meta$v1$Fields = {
-};
+export type io$k8s$apimachinery$pkg$apis$meta$v1$Fields = {};
 
 /** GroupVersion contains the "group/version" and "version" string of a version. It is made a struct to keep extensibility. */
 export type io$k8s$apimachinery$pkg$apis$meta$v1$GroupVersionForDiscovery = {
@@ -7007,7 +7503,8 @@ export type io$k8s$apimachinery$pkg$apis$meta$v1$Initializer_v2 = {
 /** Initializers tracks the progress of initialization. */
 export type io$k8s$apimachinery$pkg$apis$meta$v1$Initializers = {
   /** Pending is a list of initializers that must execute in order before this object is visible. When the last pending initializer is removed, and no failing result is set, the initializers struct will be set to nil and the object is considered as initialized and visible to all clients. */
-  readonly "pending": readonly io$k8s$apimachinery$pkg$apis$meta$v1$Initializer[];
+  readonly "pending":
+    readonly io$k8s$apimachinery$pkg$apis$meta$v1$Initializer[];
   /** If result is set with the Failure field, the object will be persisted to storage and then deleted, ensuring that other clients can observe the deletion. */
   readonly "result"?: io$k8s$apimachinery$pkg$apis$meta$v1$Status;
 };
@@ -7015,7 +7512,8 @@ export type io$k8s$apimachinery$pkg$apis$meta$v1$Initializers = {
 /** Initializers tracks the progress of initialization. */
 export type io$k8s$apimachinery$pkg$apis$meta$v1$Initializers_v2 = {
   /** Pending is a list of initializers that must execute in order before this object is visible. When the last pending initializer is removed, and no failing result is set, the initializers struct will be set to nil and the object is considered as initialized and visible to all clients. */
-  readonly "pending": readonly io$k8s$apimachinery$pkg$apis$meta$v1$Initializer_v2[];
+  readonly "pending":
+    readonly io$k8s$apimachinery$pkg$apis$meta$v1$Initializer_v2[];
   /** If result is set with the Failure field, the object will be persisted to storage and then deleted, ensuring that other clients can observe the deletion. */
   readonly "result"?: io$k8s$apimachinery$pkg$apis$meta$v1$Status_v2;
 };
@@ -7023,7 +7521,8 @@ export type io$k8s$apimachinery$pkg$apis$meta$v1$Initializers_v2 = {
 /** A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all objects. A null label selector matches no objects. */
 export type io$k8s$apimachinery$pkg$apis$meta$v1$LabelSelector = {
   /** matchExpressions is a list of label selector requirements. The requirements are ANDed. */
-  readonly "matchExpressions"?: readonly io$k8s$apimachinery$pkg$apis$meta$v1$LabelSelectorRequirement[];
+  readonly "matchExpressions"?:
+    readonly io$k8s$apimachinery$pkg$apis$meta$v1$LabelSelectorRequirement[];
   /** matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed. */
   readonly "matchLabels"?: object;
 };
@@ -7075,8 +7574,7 @@ export type io$k8s$apimachinery$pkg$apis$meta$v1$ManagedFieldsEntry = {
 };
 
 /** MicroTime is version of Time with microsecond level precision. */
-export type io$k8s$apimachinery$pkg$apis$meta$v1$MicroTime = {
-};
+export type io$k8s$apimachinery$pkg$apis$meta$v1$MicroTime = {};
 
 /** ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create. */
 export type io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta = {
@@ -7115,7 +7613,8 @@ DEPRECATED - initializers are an alpha field and will be removed in v1.15. */
   /** ManagedFields maps workflow-id and version to the set of fields that are managed by that workflow. This is mostly for internal housekeeping, and users typically shouldn't need to set or understand this field. A workflow can be the user's name, a controller's name, or the name of a specific apply path like "ci-cd". The set of fields is always in the version that the workflow used when modifying the object.
 
 This field is alpha and can be changed or removed without notice. */
-  readonly "managedFields"?: readonly io$k8s$apimachinery$pkg$apis$meta$v1$ManagedFieldsEntry[];
+  readonly "managedFields"?:
+    readonly io$k8s$apimachinery$pkg$apis$meta$v1$ManagedFieldsEntry[];
   /** Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names */
   readonly "name"?: string;
   /** Namespace defines the space within each name must be unique. An empty namespace is equivalent to the "default" namespace, but "default" is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.
@@ -7123,7 +7622,8 @@ This field is alpha and can be changed or removed without notice. */
 Must be a DNS_LABEL. Cannot be updated. More info: http://kubernetes.io/docs/user-guide/namespaces */
   readonly "namespace"?: string;
   /** List of objects depended by this object. If ALL objects in the list have been deleted, this object will be garbage collected. If this object is managed by a controller, then an entry in this list will point to this controller, with the controller field set to true. There cannot be more than one managing controller. */
-  readonly "ownerReferences"?: readonly io$k8s$apimachinery$pkg$apis$meta$v1$OwnerReference[];
+  readonly "ownerReferences"?:
+    readonly io$k8s$apimachinery$pkg$apis$meta$v1$OwnerReference[];
   /** An opaque value that represents the internal version of this object that can be used by clients to determine when objects have changed. May be used for optimistic concurrency, change detection, and the watch operation on a resource or set of resources. Clients must treat these values as opaque and passed unmodified back to the server. They may only be valid for a particular resource or set of resources.
 
 Populated by the system. Read-only. Value must be treated as opaque by clients and . More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#concurrency-control-and-consistency */
@@ -7165,7 +7665,8 @@ Applied only if Name is not specified. More info: https://git.k8s.io/community/c
   /** An initializer is a controller which enforces some system invariant at object creation time. This field is a list of initializers that have not yet acted on this object. If nil or empty, this object has been completely initialized. Otherwise, the object is considered uninitialized and is hidden (in list/watch and get calls) from clients that haven't explicitly asked to observe uninitialized objects.
 
 When an object is created, the system will populate this list with the current set of initializers. Only privileged users may set or modify this list. Once it is empty, it may not be modified further by any user. */
-  readonly "initializers"?: io$k8s$apimachinery$pkg$apis$meta$v1$Initializers_v2;
+  readonly "initializers"?:
+    io$k8s$apimachinery$pkg$apis$meta$v1$Initializers_v2;
   /** Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels */
   readonly "labels"?: object;
   /** Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names */
@@ -7175,7 +7676,8 @@ When an object is created, the system will populate this list with the current s
 Must be a DNS_LABEL. Cannot be updated. More info: http://kubernetes.io/docs/user-guide/namespaces */
   readonly "namespace"?: string;
   /** List of objects depended by this object. If ALL objects in the list have been deleted, this object will be garbage collected. If this object is managed by a controller, then an entry in this list will point to this controller, with the controller field set to true. There cannot be more than one managing controller. */
-  readonly "ownerReferences"?: readonly io$k8s$apimachinery$pkg$apis$meta$v1$OwnerReference_v2[];
+  readonly "ownerReferences"?:
+    readonly io$k8s$apimachinery$pkg$apis$meta$v1$OwnerReference_v2[];
   /** An opaque value that represents the internal version of this object that can be used by clients to determine when objects have changed. May be used for optimistic concurrency, change detection, and the watch operation on a resource or set of resources. Clients must treat these values as opaque and passed unmodified back to the server. They may only be valid for a particular resource or set of resources.
 
 Populated by the system. Read-only. Value must be treated as opaque by clients and . More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#concurrency-control-and-consistency */
@@ -7213,12 +7715,10 @@ export type io$k8s$apimachinery$pkg$apis$meta$v1$OwnerReference_v2 = {
 };
 
 /** Patch is provided to give a concrete name and type to the Kubernetes PATCH request body. */
-export type io$k8s$apimachinery$pkg$apis$meta$v1$Patch = {
-};
+export type io$k8s$apimachinery$pkg$apis$meta$v1$Patch = {};
 
 /** Patch is provided to give a concrete name and type to the Kubernetes PATCH request body. */
-export type io$k8s$apimachinery$pkg$apis$meta$v1$Patch_v2 = {
-};
+export type io$k8s$apimachinery$pkg$apis$meta$v1$Patch_v2 = {};
 
 /** Preconditions must be fulfilled before an operation (update, delete, etc.) is carried out. */
 export type io$k8s$apimachinery$pkg$apis$meta$v1$Preconditions = {
@@ -7243,31 +7743,34 @@ export type io$k8s$apimachinery$pkg$apis$meta$v1$ServerAddressByClientCIDR = {
 };
 
 /** ServerAddressByClientCIDR helps the client to determine the server address that they should use, depending on the clientCIDR that they match. */
-export type io$k8s$apimachinery$pkg$apis$meta$v1$ServerAddressByClientCIDR_v2 = {
-  /** The CIDR with which clients can match their IP to figure out the server address that they should use. */
-  readonly "clientCIDR": string;
-  /** Address of this server, suitable for a client that matches the above CIDR. This can be a hostname, hostname:port, IP or IP:port. */
-  readonly "serverAddress": string;
-};
+export type io$k8s$apimachinery$pkg$apis$meta$v1$ServerAddressByClientCIDR_v2 =
+  {
+    /** The CIDR with which clients can match their IP to figure out the server address that they should use. */
+    readonly "clientCIDR": string;
+    /** Address of this server, suitable for a client that matches the above CIDR. This can be a hostname, hostname:port, IP or IP:port. */
+    readonly "serverAddress": string;
+  };
 
 /** Status is a return value for calls that don't return other objects. */
-export type io$k8s$apimachinery$pkg$apis$meta$v1$Status = {
-  /** Suggested HTTP return code for this status, 0 if not set. */
-  readonly "code"?: number;
-  /** Extended data associated with the reason.  Each reason may define its own extended details. This field is optional and the data returned is not guaranteed to conform to any schema except that defined by the reason type. */
-  readonly "details"?: io$k8s$apimachinery$pkg$apis$meta$v1$StatusDetails;
-  /** A human-readable description of the status of this operation. */
-  readonly "message"?: string;
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-  /** A machine-readable description of why this operation is in the "Failure" status. If this value is empty there is no information available. A Reason clarifies an HTTP status code but does not override it. */
-  readonly "reason"?: string;
-  /** Status of the operation. One of: "Success" or "Failure". More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
-  readonly "status"?: string;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "Status";
-});
+export type io$k8s$apimachinery$pkg$apis$meta$v1$Status =
+  & {
+    /** Suggested HTTP return code for this status, 0 if not set. */
+    readonly "code"?: number;
+    /** Extended data associated with the reason.  Each reason may define its own extended details. This field is optional and the data returned is not guaranteed to conform to any schema except that defined by the reason type. */
+    readonly "details"?: io$k8s$apimachinery$pkg$apis$meta$v1$StatusDetails;
+    /** A human-readable description of the status of this operation. */
+    readonly "message"?: string;
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+    /** A machine-readable description of why this operation is in the "Failure" status. If this value is empty there is no information available. A Reason clarifies an HTTP status code but does not override it. */
+    readonly "reason"?: string;
+    /** Status of the operation. One of: "Success" or "Failure". More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
+    readonly "status"?: string;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "Status";
+  });
 
 /** StatusCause provides more information about an api.Status failure, including cases when multiple errors are encountered. */
 export type io$k8s$apimachinery$pkg$apis$meta$v1$StatusCause = {
@@ -7300,7 +7803,8 @@ Examples:
 /** StatusDetails is a set of additional properties that MAY be set by the server to provide additional information about a response. The Reason field of a Status object defines what attributes will be set. Clients must ignore fields that do not match the defined type of each attribute, and should assume that any attribute may be empty, invalid, or under defined. */
 export type io$k8s$apimachinery$pkg$apis$meta$v1$StatusDetails = {
   /** The Causes array includes more details associated with the StatusReason failure. Not all StatusReasons may provide detailed causes. */
-  readonly "causes"?: readonly io$k8s$apimachinery$pkg$apis$meta$v1$StatusCause[];
+  readonly "causes"?:
+    readonly io$k8s$apimachinery$pkg$apis$meta$v1$StatusCause[];
   /** The group attribute of the resource associated with the status StatusReason. */
   readonly "group"?: string;
   /** The name attribute of the resource associated with the status StatusReason (when there is a single name which can be described). */
@@ -7314,7 +7818,8 @@ export type io$k8s$apimachinery$pkg$apis$meta$v1$StatusDetails = {
 /** StatusDetails is a set of additional properties that MAY be set by the server to provide additional information about a response. The Reason field of a Status object defines what attributes will be set. Clients must ignore fields that do not match the defined type of each attribute, and should assume that any attribute may be empty, invalid, or under defined. */
 export type io$k8s$apimachinery$pkg$apis$meta$v1$StatusDetails_v2 = {
   /** The Causes array includes more details associated with the StatusReason failure. Not all StatusReasons may provide detailed causes. */
-  readonly "causes"?: readonly io$k8s$apimachinery$pkg$apis$meta$v1$StatusCause_v2[];
+  readonly "causes"?:
+    readonly io$k8s$apimachinery$pkg$apis$meta$v1$StatusCause_v2[];
   /** The group attribute of the resource associated with the status StatusReason. */
   readonly "group"?: string;
   /** The name attribute of the resource associated with the status StatusReason (when there is a single name which can be described). */
@@ -7326,184 +7831,189 @@ export type io$k8s$apimachinery$pkg$apis$meta$v1$StatusDetails_v2 = {
 };
 
 /** Status is a return value for calls that don't return other objects. */
-export type io$k8s$apimachinery$pkg$apis$meta$v1$Status_v2 = {
-  /** Suggested HTTP return code for this status, 0 if not set. */
-  readonly "code"?: number;
-  /** Extended data associated with the reason.  Each reason may define its own extended details. This field is optional and the data returned is not guaranteed to conform to any schema except that defined by the reason type. */
-  readonly "details"?: io$k8s$apimachinery$pkg$apis$meta$v1$StatusDetails_v2;
-  /** A human-readable description of the status of this operation. */
-  readonly "message"?: string;
-  /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta_v2;
-  /** A machine-readable description of why this operation is in the "Failure" status. If this value is empty there is no information available. A Reason clarifies an HTTP status code but does not override it. */
-  readonly "reason"?: string;
-  /** Status of the operation. One of: "Success" or "Failure". More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
-  readonly "status"?: string;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "Status";
-});
+export type io$k8s$apimachinery$pkg$apis$meta$v1$Status_v2 =
+  & {
+    /** Suggested HTTP return code for this status, 0 if not set. */
+    readonly "code"?: number;
+    /** Extended data associated with the reason.  Each reason may define its own extended details. This field is optional and the data returned is not guaranteed to conform to any schema except that defined by the reason type. */
+    readonly "details"?: io$k8s$apimachinery$pkg$apis$meta$v1$StatusDetails_v2;
+    /** A human-readable description of the status of this operation. */
+    readonly "message"?: string;
+    /** Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds */
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta_v2;
+    /** A machine-readable description of why this operation is in the "Failure" status. If this value is empty there is no information available. A Reason clarifies an HTTP status code but does not override it. */
+    readonly "reason"?: string;
+    /** Status of the operation. One of: "Success" or "Failure". More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status */
+    readonly "status"?: string;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "Status";
+  });
 
 /** Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers. */
-export type io$k8s$apimachinery$pkg$apis$meta$v1$Time = {
-};
+export type io$k8s$apimachinery$pkg$apis$meta$v1$Time = {};
 
 /** Event represents a single event to a watched resource. */
-export type io$k8s$apimachinery$pkg$apis$meta$v1$WatchEvent = {
-  /** Object is:
+export type io$k8s$apimachinery$pkg$apis$meta$v1$WatchEvent =
+  & {
+    /** Object is:
  * If Type is Added or Modified: the new state of the object.
  * If Type is Deleted: the state of the object immediately before deletion.
  * If Type is Error: *Status is recommended; other types may make sense
    depending on context. */
-  readonly "object": io$k8s$apimachinery$pkg$runtime$RawExtension;
-  readonly "type": string;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "admission.k8s.io/v1beta1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "admissionregistration.k8s.io/v1beta1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "apiextensions.k8s.io/v1beta1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "apiregistration.k8s.io/v1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "apiregistration.k8s.io/v1beta1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "apps/v1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "apps/v1beta1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "apps/v1beta2";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "auditregistration.k8s.io/v1alpha1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "authentication.k8s.io/v1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "authentication.k8s.io/v1beta1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "authorization.k8s.io/v1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "authorization.k8s.io/v1beta1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "autoscaling/v1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "autoscaling/v2beta1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "autoscaling/v2beta2";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "batch/v1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "batch/v1beta1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "batch/v2alpha1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "certificates.k8s.io/v1beta1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "coordination.k8s.io/v1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "coordination.k8s.io/v1beta1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "events.k8s.io/v1beta1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "extensions/v1beta1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "imagepolicy.k8s.io/v1alpha1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "networking.k8s.io/v1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "networking.k8s.io/v1beta1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "node.k8s.io/v1alpha1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "node.k8s.io/v1beta1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "policy/v1beta1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "rbac.authorization.k8s.io/v1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "rbac.authorization.k8s.io/v1alpha1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "rbac.authorization.k8s.io/v1beta1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "scheduling.k8s.io/v1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "scheduling.k8s.io/v1alpha1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "scheduling.k8s.io/v1beta1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "settings.k8s.io/v1alpha1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "storage.k8s.io/v1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "storage.k8s.io/v1alpha1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "storage.k8s.io/v1beta1";
-  readonly kind: "WatchEvent";
-});
+    readonly "object": io$k8s$apimachinery$pkg$runtime$RawExtension;
+    readonly "type": string;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "admission.k8s.io/v1beta1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "admissionregistration.k8s.io/v1beta1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "apiextensions.k8s.io/v1beta1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "apiregistration.k8s.io/v1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "apiregistration.k8s.io/v1beta1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "apps/v1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "apps/v1beta1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "apps/v1beta2";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "auditregistration.k8s.io/v1alpha1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "authentication.k8s.io/v1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "authentication.k8s.io/v1beta1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "authorization.k8s.io/v1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "authorization.k8s.io/v1beta1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "autoscaling/v1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "autoscaling/v2beta1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "autoscaling/v2beta2";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "batch/v1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "batch/v1beta1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "batch/v2alpha1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "certificates.k8s.io/v1beta1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "coordination.k8s.io/v1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "coordination.k8s.io/v1beta1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "events.k8s.io/v1beta1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "extensions/v1beta1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "imagepolicy.k8s.io/v1alpha1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "networking.k8s.io/v1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "networking.k8s.io/v1beta1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "node.k8s.io/v1alpha1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "node.k8s.io/v1beta1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "policy/v1beta1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "rbac.authorization.k8s.io/v1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "rbac.authorization.k8s.io/v1alpha1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "rbac.authorization.k8s.io/v1beta1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "scheduling.k8s.io/v1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "scheduling.k8s.io/v1alpha1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "scheduling.k8s.io/v1beta1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "settings.k8s.io/v1alpha1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "storage.k8s.io/v1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "storage.k8s.io/v1alpha1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "storage.k8s.io/v1beta1";
+    readonly kind: "WatchEvent";
+  });
 
 /** Event represents a single event to a watched resource. */
-export type io$k8s$apimachinery$pkg$apis$meta$v1$WatchEvent_v2 = {
-  /** Object is:
+export type io$k8s$apimachinery$pkg$apis$meta$v1$WatchEvent_v2 =
+  & {
+    /** Object is:
  * If Type is Added or Modified: the new state of the object.
  * If Type is Deleted: the state of the object immediately before deletion.
  * If Type is Error: *Status is recommended; other types may make sense
    depending on context. */
-  readonly "object": io$k8s$apimachinery$pkg$runtime$RawExtension_v2;
-  readonly "type": string;
-} & ({
-  readonly apiVersion: "v1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "compose.docker.com/v1alpha3";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "compose.docker.com/v1beta1";
-  readonly kind: "WatchEvent";
-} | {
-  readonly apiVersion: "compose.docker.com/v1beta2";
-  readonly kind: "WatchEvent";
-});
+    readonly "object": io$k8s$apimachinery$pkg$runtime$RawExtension_v2;
+    readonly "type": string;
+  }
+  & ({
+    readonly apiVersion: "v1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "compose.docker.com/v1alpha3";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "compose.docker.com/v1beta1";
+    readonly kind: "WatchEvent";
+  } | {
+    readonly apiVersion: "compose.docker.com/v1beta2";
+    readonly kind: "WatchEvent";
+  });
 
 /** RawExtension is used to hold extensions in external versions.
 
@@ -7572,8 +8082,7 @@ export type io$k8s$apimachinery$pkg$runtime$RawExtension_v2 = {
 };
 
 /** IntOrString is a type that can hold an int32 or a string.  When used in JSON or YAML marshalling and unmarshalling, it produces or consumes the inner type.  This allows you to have, for example, a JSON field that can accept a name or number. */
-export type io$k8s$apimachinery$pkg$util$intstr$IntOrString = {
-};
+export type io$k8s$apimachinery$pkg$util$intstr$IntOrString = {};
 
 /** Info contains versioning information. how we'll want to distribute that information. */
 export type io$k8s$apimachinery$pkg$version$Info = {
@@ -7589,735 +8098,498 @@ export type io$k8s$apimachinery$pkg$version$Info = {
 };
 
 /** APIService represents a server for a particular GroupVersion. Name must be "version.group". */
-export type io$k8s$kube_aggregator$pkg$apis$apiregistration$v1$APIService = {
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Spec contains information for locating and communicating with a server */
-  readonly "spec"?: io$k8s$kube_aggregator$pkg$apis$apiregistration$v1$APIServiceSpec;
-  /** Status contains derived information about an API server */
-  readonly "status"?: io$k8s$kube_aggregator$pkg$apis$apiregistration$v1$APIServiceStatus;
-} & ({
-  readonly apiVersion: "apiregistration.k8s.io/v1";
-  readonly kind: "APIService";
-});
+export type io$k8s$kube_aggregator$pkg$apis$apiregistration$v1$APIService =
+  & {
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Spec contains information for locating and communicating with a server */
+    readonly "spec"?:
+      io$k8s$kube_aggregator$pkg$apis$apiregistration$v1$APIServiceSpec;
+    /** Status contains derived information about an API server */
+    readonly "status"?:
+      io$k8s$kube_aggregator$pkg$apis$apiregistration$v1$APIServiceStatus;
+  }
+  & ({
+    readonly apiVersion: "apiregistration.k8s.io/v1";
+    readonly kind: "APIService";
+  });
 
 /** APIServiceCondition describes the state of an APIService at a particular point */
-export type io$k8s$kube_aggregator$pkg$apis$apiregistration$v1$APIServiceCondition = {
-  /** Last time the condition transitioned from one status to another. */
-  readonly "lastTransitionTime"?: io$k8s$apimachinery$pkg$apis$meta$v1$Time;
-  /** Human-readable message indicating details about last transition. */
-  readonly "message"?: string;
-  /** Unique, one-word, CamelCase reason for the condition's last transition. */
-  readonly "reason"?: string;
-  /** Status is the status of the condition. Can be True, False, Unknown. */
-  readonly "status": string;
-  /** Type is the type of the condition. */
-  readonly "type": string;
-};
+export type io$k8s$kube_aggregator$pkg$apis$apiregistration$v1$APIServiceCondition =
+  {
+    /** Last time the condition transitioned from one status to another. */
+    readonly "lastTransitionTime"?: io$k8s$apimachinery$pkg$apis$meta$v1$Time;
+    /** Human-readable message indicating details about last transition. */
+    readonly "message"?: string;
+    /** Unique, one-word, CamelCase reason for the condition's last transition. */
+    readonly "reason"?: string;
+    /** Status is the status of the condition. Can be True, False, Unknown. */
+    readonly "status": string;
+    /** Type is the type of the condition. */
+    readonly "type": string;
+  };
 
 /** APIServiceList is a list of APIService objects. */
-export type io$k8s$kube_aggregator$pkg$apis$apiregistration$v1$APIServiceList = {
-  readonly "items": readonly io$k8s$kube_aggregator$pkg$apis$apiregistration$v1$APIService[];
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "apiregistration.k8s.io/v1";
-  readonly kind: "APIServiceList";
-});
+export type io$k8s$kube_aggregator$pkg$apis$apiregistration$v1$APIServiceList =
+  & {
+    readonly "items":
+      readonly io$k8s$kube_aggregator$pkg$apis$apiregistration$v1$APIService[];
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "apiregistration.k8s.io/v1";
+    readonly kind: "APIServiceList";
+  });
 
 /** APIServiceSpec contains information for locating and communicating with a server. Only https is supported, though you are able to disable certificate verification. */
-export type io$k8s$kube_aggregator$pkg$apis$apiregistration$v1$APIServiceSpec = {
-  /** CABundle is a PEM encoded CA bundle which will be used to validate an API server's serving certificate. If unspecified, system trust roots on the apiserver are used. */
-  readonly "caBundle"?: string;
-  /** Group is the API group name this server hosts */
-  readonly "group"?: string;
-  /** GroupPriorityMininum is the priority this group should have at least. Higher priority means that the group is preferred by clients over lower priority ones. Note that other versions of this group might specify even higher GroupPriorityMininum values such that the whole group gets a higher priority. The primary sort is based on GroupPriorityMinimum, ordered highest number to lowest (20 before 10). The secondary sort is based on the alphabetical comparison of the name of the object.  (v1.bar before v1.foo) We'd recommend something like: *.k8s.io (except extensions) at 18000 and PaaSes (OpenShift, Deis) are recommended to be in the 2000s */
-  readonly "groupPriorityMinimum": number;
-  /** InsecureSkipTLSVerify disables TLS certificate verification when communicating with this server. This is strongly discouraged.  You should use the CABundle instead. */
-  readonly "insecureSkipTLSVerify"?: boolean;
-  /** Service is a reference to the service for this API server.  It must communicate on port 443 If the Service is nil, that means the handling for the API groupversion is handled locally on this server. The call will simply delegate to the normal handler chain to be fulfilled. */
-  readonly "service": io$k8s$kube_aggregator$pkg$apis$apiregistration$v1$ServiceReference;
-  /** Version is the API version this server hosts.  For example, "v1" */
-  readonly "version"?: string;
-  /** VersionPriority controls the ordering of this API version inside of its group.  Must be greater than zero. The primary sort is based on VersionPriority, ordered highest to lowest (20 before 10). Since it's inside of a group, the number can be small, probably in the 10s. In case of equal version priorities, the version string will be used to compute the order inside a group. If the version string is "kube-like", it will sort above non "kube-like" version strings, which are ordered lexicographically. "Kube-like" versions start with a "v", then are followed by a number (the major version), then optionally the string "alpha" or "beta" and another number (the minor version). These are sorted first by GA > beta > alpha (where GA is a version with no suffix such as beta or alpha), and then by comparing major version, then minor version. An example sorted list of versions: v10, v2, v1, v11beta2, v10beta3, v3beta1, v12alpha1, v11alpha2, foo1, foo10. */
-  readonly "versionPriority": number;
-};
+export type io$k8s$kube_aggregator$pkg$apis$apiregistration$v1$APIServiceSpec =
+  {
+    /** CABundle is a PEM encoded CA bundle which will be used to validate an API server's serving certificate. If unspecified, system trust roots on the apiserver are used. */
+    readonly "caBundle"?: string;
+    /** Group is the API group name this server hosts */
+    readonly "group"?: string;
+    /** GroupPriorityMininum is the priority this group should have at least. Higher priority means that the group is preferred by clients over lower priority ones. Note that other versions of this group might specify even higher GroupPriorityMininum values such that the whole group gets a higher priority. The primary sort is based on GroupPriorityMinimum, ordered highest number to lowest (20 before 10). The secondary sort is based on the alphabetical comparison of the name of the object.  (v1.bar before v1.foo) We'd recommend something like: *.k8s.io (except extensions) at 18000 and PaaSes (OpenShift, Deis) are recommended to be in the 2000s */
+    readonly "groupPriorityMinimum": number;
+    /** InsecureSkipTLSVerify disables TLS certificate verification when communicating with this server. This is strongly discouraged.  You should use the CABundle instead. */
+    readonly "insecureSkipTLSVerify"?: boolean;
+    /** Service is a reference to the service for this API server.  It must communicate on port 443 If the Service is nil, that means the handling for the API groupversion is handled locally on this server. The call will simply delegate to the normal handler chain to be fulfilled. */
+    readonly "service":
+      io$k8s$kube_aggregator$pkg$apis$apiregistration$v1$ServiceReference;
+    /** Version is the API version this server hosts.  For example, "v1" */
+    readonly "version"?: string;
+    /** VersionPriority controls the ordering of this API version inside of its group.  Must be greater than zero. The primary sort is based on VersionPriority, ordered highest to lowest (20 before 10). Since it's inside of a group, the number can be small, probably in the 10s. In case of equal version priorities, the version string will be used to compute the order inside a group. If the version string is "kube-like", it will sort above non "kube-like" version strings, which are ordered lexicographically. "Kube-like" versions start with a "v", then are followed by a number (the major version), then optionally the string "alpha" or "beta" and another number (the minor version). These are sorted first by GA > beta > alpha (where GA is a version with no suffix such as beta or alpha), and then by comparing major version, then minor version. An example sorted list of versions: v10, v2, v1, v11beta2, v10beta3, v3beta1, v12alpha1, v11alpha2, foo1, foo10. */
+    readonly "versionPriority": number;
+  };
 
 /** APIServiceStatus contains derived information about an API server */
-export type io$k8s$kube_aggregator$pkg$apis$apiregistration$v1$APIServiceStatus = {
-  /** Current service state of apiService. */
-  readonly "conditions"?: readonly io$k8s$kube_aggregator$pkg$apis$apiregistration$v1$APIServiceCondition[];
-};
+export type io$k8s$kube_aggregator$pkg$apis$apiregistration$v1$APIServiceStatus =
+  {
+    /** Current service state of apiService. */
+    readonly "conditions"?:
+      readonly io$k8s$kube_aggregator$pkg$apis$apiregistration$v1$APIServiceCondition[];
+  };
 
 /** ServiceReference holds a reference to Service.legacy.k8s.io */
-export type io$k8s$kube_aggregator$pkg$apis$apiregistration$v1$ServiceReference = {
-  /** Name is the name of the service */
-  readonly "name"?: string;
-  /** Namespace is the namespace of the service */
-  readonly "namespace"?: string;
-  /** If specified, the port on the service that hosting webhook. Default to 443 for backward compatibility. `port` should be a valid port number (1-65535, inclusive). */
-  readonly "port"?: number;
-};
+export type io$k8s$kube_aggregator$pkg$apis$apiregistration$v1$ServiceReference =
+  {
+    /** Name is the name of the service */
+    readonly "name"?: string;
+    /** Namespace is the namespace of the service */
+    readonly "namespace"?: string;
+    /** If specified, the port on the service that hosting webhook. Default to 443 for backward compatibility. `port` should be a valid port number (1-65535, inclusive). */
+    readonly "port"?: number;
+  };
 
 /** APIService represents a server for a particular GroupVersion. Name must be "version.group". */
-export type io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$APIService = {
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
-  /** Spec contains information for locating and communicating with a server */
-  readonly "spec"?: io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$APIServiceSpec;
-  /** Status contains derived information about an API server */
-  readonly "status"?: io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$APIServiceStatus;
-} & ({
-  readonly apiVersion: "apiregistration.k8s.io/v1beta1";
-  readonly kind: "APIService";
-});
+export type io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$APIService =
+  & {
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta;
+    /** Spec contains information for locating and communicating with a server */
+    readonly "spec"?:
+      io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$APIServiceSpec;
+    /** Status contains derived information about an API server */
+    readonly "status"?:
+      io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$APIServiceStatus;
+  }
+  & ({
+    readonly apiVersion: "apiregistration.k8s.io/v1beta1";
+    readonly kind: "APIService";
+  });
 
 /** APIServiceCondition describes the state of an APIService at a particular point */
-export type io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$APIServiceCondition = {
-  /** Last time the condition transitioned from one status to another. */
-  readonly "lastTransitionTime"?: io$k8s$apimachinery$pkg$apis$meta$v1$Time;
-  /** Human-readable message indicating details about last transition. */
-  readonly "message"?: string;
-  /** Unique, one-word, CamelCase reason for the condition's last transition. */
-  readonly "reason"?: string;
-  /** Status is the status of the condition. Can be True, False, Unknown. */
-  readonly "status": string;
-  /** Type is the type of the condition. */
-  readonly "type": string;
-};
+export type io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$APIServiceCondition =
+  {
+    /** Last time the condition transitioned from one status to another. */
+    readonly "lastTransitionTime"?: io$k8s$apimachinery$pkg$apis$meta$v1$Time;
+    /** Human-readable message indicating details about last transition. */
+    readonly "message"?: string;
+    /** Unique, one-word, CamelCase reason for the condition's last transition. */
+    readonly "reason"?: string;
+    /** Status is the status of the condition. Can be True, False, Unknown. */
+    readonly "status": string;
+    /** Type is the type of the condition. */
+    readonly "type": string;
+  };
 
 /** APIServiceList is a list of APIService objects. */
-export type io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$APIServiceList = {
-  readonly "items": readonly io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$APIService[];
-  readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
-} & ({
-  readonly apiVersion: "apiregistration.k8s.io/v1beta1";
-  readonly kind: "APIServiceList";
-});
+export type io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$APIServiceList =
+  & {
+    readonly "items":
+      readonly io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$APIService[];
+    readonly "metadata"?: io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta;
+  }
+  & ({
+    readonly apiVersion: "apiregistration.k8s.io/v1beta1";
+    readonly kind: "APIServiceList";
+  });
 
 /** APIServiceSpec contains information for locating and communicating with a server. Only https is supported, though you are able to disable certificate verification. */
-export type io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$APIServiceSpec = {
-  /** CABundle is a PEM encoded CA bundle which will be used to validate an API server's serving certificate. If unspecified, system trust roots on the apiserver are used. */
-  readonly "caBundle"?: string;
-  /** Group is the API group name this server hosts */
-  readonly "group"?: string;
-  /** GroupPriorityMininum is the priority this group should have at least. Higher priority means that the group is preferred by clients over lower priority ones. Note that other versions of this group might specify even higher GroupPriorityMininum values such that the whole group gets a higher priority. The primary sort is based on GroupPriorityMinimum, ordered highest number to lowest (20 before 10). The secondary sort is based on the alphabetical comparison of the name of the object.  (v1.bar before v1.foo) We'd recommend something like: *.k8s.io (except extensions) at 18000 and PaaSes (OpenShift, Deis) are recommended to be in the 2000s */
-  readonly "groupPriorityMinimum": number;
-  /** InsecureSkipTLSVerify disables TLS certificate verification when communicating with this server. This is strongly discouraged.  You should use the CABundle instead. */
-  readonly "insecureSkipTLSVerify"?: boolean;
-  /** Service is a reference to the service for this API server.  It must communicate on port 443 If the Service is nil, that means the handling for the API groupversion is handled locally on this server. The call will simply delegate to the normal handler chain to be fulfilled. */
-  readonly "service": io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$ServiceReference;
-  /** Version is the API version this server hosts.  For example, "v1" */
-  readonly "version"?: string;
-  /** VersionPriority controls the ordering of this API version inside of its group.  Must be greater than zero. The primary sort is based on VersionPriority, ordered highest to lowest (20 before 10). Since it's inside of a group, the number can be small, probably in the 10s. In case of equal version priorities, the version string will be used to compute the order inside a group. If the version string is "kube-like", it will sort above non "kube-like" version strings, which are ordered lexicographically. "Kube-like" versions start with a "v", then are followed by a number (the major version), then optionally the string "alpha" or "beta" and another number (the minor version). These are sorted first by GA > beta > alpha (where GA is a version with no suffix such as beta or alpha), and then by comparing major version, then minor version. An example sorted list of versions: v10, v2, v1, v11beta2, v10beta3, v3beta1, v12alpha1, v11alpha2, foo1, foo10. */
-  readonly "versionPriority": number;
-};
+export type io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$APIServiceSpec =
+  {
+    /** CABundle is a PEM encoded CA bundle which will be used to validate an API server's serving certificate. If unspecified, system trust roots on the apiserver are used. */
+    readonly "caBundle"?: string;
+    /** Group is the API group name this server hosts */
+    readonly "group"?: string;
+    /** GroupPriorityMininum is the priority this group should have at least. Higher priority means that the group is preferred by clients over lower priority ones. Note that other versions of this group might specify even higher GroupPriorityMininum values such that the whole group gets a higher priority. The primary sort is based on GroupPriorityMinimum, ordered highest number to lowest (20 before 10). The secondary sort is based on the alphabetical comparison of the name of the object.  (v1.bar before v1.foo) We'd recommend something like: *.k8s.io (except extensions) at 18000 and PaaSes (OpenShift, Deis) are recommended to be in the 2000s */
+    readonly "groupPriorityMinimum": number;
+    /** InsecureSkipTLSVerify disables TLS certificate verification when communicating with this server. This is strongly discouraged.  You should use the CABundle instead. */
+    readonly "insecureSkipTLSVerify"?: boolean;
+    /** Service is a reference to the service for this API server.  It must communicate on port 443 If the Service is nil, that means the handling for the API groupversion is handled locally on this server. The call will simply delegate to the normal handler chain to be fulfilled. */
+    readonly "service":
+      io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$ServiceReference;
+    /** Version is the API version this server hosts.  For example, "v1" */
+    readonly "version"?: string;
+    /** VersionPriority controls the ordering of this API version inside of its group.  Must be greater than zero. The primary sort is based on VersionPriority, ordered highest to lowest (20 before 10). Since it's inside of a group, the number can be small, probably in the 10s. In case of equal version priorities, the version string will be used to compute the order inside a group. If the version string is "kube-like", it will sort above non "kube-like" version strings, which are ordered lexicographically. "Kube-like" versions start with a "v", then are followed by a number (the major version), then optionally the string "alpha" or "beta" and another number (the minor version). These are sorted first by GA > beta > alpha (where GA is a version with no suffix such as beta or alpha), and then by comparing major version, then minor version. An example sorted list of versions: v10, v2, v1, v11beta2, v10beta3, v3beta1, v12alpha1, v11alpha2, foo1, foo10. */
+    readonly "versionPriority": number;
+  };
 
 /** APIServiceStatus contains derived information about an API server */
-export type io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$APIServiceStatus = {
-  /** Current service state of apiService. */
-  readonly "conditions"?: readonly io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$APIServiceCondition[];
-};
+export type io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$APIServiceStatus =
+  {
+    /** Current service state of apiService. */
+    readonly "conditions"?:
+      readonly io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$APIServiceCondition[];
+  };
 
 /** ServiceReference holds a reference to Service.legacy.k8s.io */
-export type io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$ServiceReference = {
-  /** Name is the name of the service */
-  readonly "name"?: string;
-  /** Namespace is the namespace of the service */
-  readonly "namespace"?: string;
-  /** If specified, the port on the service that hosting webhook. Default to 443 for backward compatibility. `port` should be a valid port number (1-65535, inclusive). */
-  readonly "port"?: number;
-};
+export type io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$ServiceReference =
+  {
+    /** Name is the name of the service */
+    readonly "name"?: string;
+    /** Namespace is the namespace of the service */
+    readonly "namespace"?: string;
+    /** If specified, the port on the service that hosting webhook. Default to 443 for backward compatibility. `port` should be a valid port number (1-65535, inclusive). */
+    readonly "port"?: number;
+  };
 
-export type KubernetesConfig =
-  | io$k8s$api$admissionregistration$v1beta1$MutatingWebhook
-  | io$k8s$api$admissionregistration$v1beta1$MutatingWebhookConfiguration
-  | io$k8s$api$admissionregistration$v1beta1$MutatingWebhookConfigurationList
-  | io$k8s$api$admissionregistration$v1beta1$RuleWithOperations
-  | io$k8s$api$admissionregistration$v1beta1$ServiceReference
-  | io$k8s$api$admissionregistration$v1beta1$ValidatingWebhook
-  | io$k8s$api$admissionregistration$v1beta1$ValidatingWebhookConfiguration
-  | io$k8s$api$admissionregistration$v1beta1$ValidatingWebhookConfigurationList
-  | io$k8s$api$admissionregistration$v1beta1$WebhookClientConfig
+export type MutatingWebhookConfiguration =
+  io$k8s$api$admissionregistration$v1beta1$MutatingWebhookConfiguration;
+export type MutatingWebhookConfigurationList =
+  io$k8s$api$admissionregistration$v1beta1$MutatingWebhookConfigurationList;
+export type ValidatingWebhookConfiguration =
+  io$k8s$api$admissionregistration$v1beta1$ValidatingWebhookConfiguration;
+export type ValidatingWebhookConfigurationList =
+  io$k8s$api$admissionregistration$v1beta1$ValidatingWebhookConfigurationList;
+export type ControllerRevision =
   | io$k8s$api$apps$v1$ControllerRevision
-  | io$k8s$api$apps$v1$ControllerRevisionList
-  | io$k8s$api$apps$v1$DaemonSet
-  | io$k8s$api$apps$v1$DaemonSetCondition
-  | io$k8s$api$apps$v1$DaemonSetList
-  | io$k8s$api$apps$v1$DaemonSetSpec
-  | io$k8s$api$apps$v1$DaemonSetStatus
-  | io$k8s$api$apps$v1$DaemonSetUpdateStrategy
-  | io$k8s$api$apps$v1$Deployment
-  | io$k8s$api$apps$v1$DeploymentCondition
-  | io$k8s$api$apps$v1$DeploymentList
-  | io$k8s$api$apps$v1$DeploymentSpec
-  | io$k8s$api$apps$v1$DeploymentStatus
-  | io$k8s$api$apps$v1$DeploymentStrategy
-  | io$k8s$api$apps$v1$ReplicaSet
-  | io$k8s$api$apps$v1$ReplicaSetCondition
-  | io$k8s$api$apps$v1$ReplicaSetList
-  | io$k8s$api$apps$v1$ReplicaSetSpec
-  | io$k8s$api$apps$v1$ReplicaSetStatus
-  | io$k8s$api$apps$v1$RollingUpdateDaemonSet
-  | io$k8s$api$apps$v1$RollingUpdateDeployment
-  | io$k8s$api$apps$v1$RollingUpdateStatefulSetStrategy
-  | io$k8s$api$apps$v1$StatefulSet
-  | io$k8s$api$apps$v1$StatefulSetCondition
-  | io$k8s$api$apps$v1$StatefulSetList
-  | io$k8s$api$apps$v1$StatefulSetSpec
-  | io$k8s$api$apps$v1$StatefulSetStatus
-  | io$k8s$api$apps$v1$StatefulSetUpdateStrategy
   | io$k8s$api$apps$v1beta1$ControllerRevision
+  | io$k8s$api$apps$v1beta2$ControllerRevision;
+export type ControllerRevisionList =
+  | io$k8s$api$apps$v1$ControllerRevisionList
   | io$k8s$api$apps$v1beta1$ControllerRevisionList
-  | io$k8s$api$apps$v1beta1$Deployment
-  | io$k8s$api$apps$v1beta1$DeploymentCondition
-  | io$k8s$api$apps$v1beta1$DeploymentList
-  | io$k8s$api$apps$v1beta1$DeploymentRollback
-  | io$k8s$api$apps$v1beta1$DeploymentSpec
-  | io$k8s$api$apps$v1beta1$DeploymentStatus
-  | io$k8s$api$apps$v1beta1$DeploymentStrategy
-  | io$k8s$api$apps$v1beta1$RollbackConfig
-  | io$k8s$api$apps$v1beta1$RollingUpdateDeployment
-  | io$k8s$api$apps$v1beta1$RollingUpdateStatefulSetStrategy
-  | io$k8s$api$apps$v1beta1$Scale
-  | io$k8s$api$apps$v1beta1$ScaleSpec
-  | io$k8s$api$apps$v1beta1$ScaleStatus
-  | io$k8s$api$apps$v1beta1$StatefulSet
-  | io$k8s$api$apps$v1beta1$StatefulSetCondition
-  | io$k8s$api$apps$v1beta1$StatefulSetList
-  | io$k8s$api$apps$v1beta1$StatefulSetSpec
-  | io$k8s$api$apps$v1beta1$StatefulSetStatus
-  | io$k8s$api$apps$v1beta1$StatefulSetUpdateStrategy
-  | io$k8s$api$apps$v1beta2$ControllerRevision
-  | io$k8s$api$apps$v1beta2$ControllerRevisionList
+  | io$k8s$api$apps$v1beta2$ControllerRevisionList;
+export type DaemonSet =
+  | io$k8s$api$apps$v1$DaemonSet
   | io$k8s$api$apps$v1beta2$DaemonSet
-  | io$k8s$api$apps$v1beta2$DaemonSetCondition
+  | io$k8s$api$extensions$v1beta1$DaemonSet;
+export type DaemonSetList =
+  | io$k8s$api$apps$v1$DaemonSetList
   | io$k8s$api$apps$v1beta2$DaemonSetList
-  | io$k8s$api$apps$v1beta2$DaemonSetSpec
-  | io$k8s$api$apps$v1beta2$DaemonSetStatus
-  | io$k8s$api$apps$v1beta2$DaemonSetUpdateStrategy
+  | io$k8s$api$extensions$v1beta1$DaemonSetList;
+export type Deployment =
+  | io$k8s$api$apps$v1$Deployment
+  | io$k8s$api$apps$v1beta1$Deployment
   | io$k8s$api$apps$v1beta2$Deployment
-  | io$k8s$api$apps$v1beta2$DeploymentCondition
+  | io$k8s$api$extensions$v1beta1$Deployment;
+export type DeploymentList =
+  | io$k8s$api$apps$v1$DeploymentList
+  | io$k8s$api$apps$v1beta1$DeploymentList
   | io$k8s$api$apps$v1beta2$DeploymentList
-  | io$k8s$api$apps$v1beta2$DeploymentSpec
-  | io$k8s$api$apps$v1beta2$DeploymentStatus
-  | io$k8s$api$apps$v1beta2$DeploymentStrategy
+  | io$k8s$api$extensions$v1beta1$DeploymentList;
+export type ReplicaSet =
+  | io$k8s$api$apps$v1$ReplicaSet
   | io$k8s$api$apps$v1beta2$ReplicaSet
-  | io$k8s$api$apps$v1beta2$ReplicaSetCondition
+  | io$k8s$api$extensions$v1beta1$ReplicaSet;
+export type ReplicaSetList =
+  | io$k8s$api$apps$v1$ReplicaSetList
   | io$k8s$api$apps$v1beta2$ReplicaSetList
-  | io$k8s$api$apps$v1beta2$ReplicaSetSpec
-  | io$k8s$api$apps$v1beta2$ReplicaSetStatus
-  | io$k8s$api$apps$v1beta2$RollingUpdateDaemonSet
-  | io$k8s$api$apps$v1beta2$RollingUpdateDeployment
-  | io$k8s$api$apps$v1beta2$RollingUpdateStatefulSetStrategy
+  | io$k8s$api$extensions$v1beta1$ReplicaSetList;
+export type StatefulSet =
+  | io$k8s$api$apps$v1$StatefulSet
+  | io$k8s$api$apps$v1beta1$StatefulSet
+  | io$k8s$api$apps$v1beta2$StatefulSet;
+export type StatefulSetList =
+  | io$k8s$api$apps$v1$StatefulSetList
+  | io$k8s$api$apps$v1beta1$StatefulSetList
+  | io$k8s$api$apps$v1beta2$StatefulSetList;
+export type DeploymentRollback =
+  | io$k8s$api$apps$v1beta1$DeploymentRollback
+  | io$k8s$api$extensions$v1beta1$DeploymentRollback;
+export type Scale =
+  | io$k8s$api$apps$v1beta1$Scale
   | io$k8s$api$apps$v1beta2$Scale
-  | io$k8s$api$apps$v1beta2$ScaleSpec
-  | io$k8s$api$apps$v1beta2$ScaleStatus
-  | io$k8s$api$apps$v1beta2$StatefulSet
-  | io$k8s$api$apps$v1beta2$StatefulSetCondition
-  | io$k8s$api$apps$v1beta2$StatefulSetList
-  | io$k8s$api$apps$v1beta2$StatefulSetSpec
-  | io$k8s$api$apps$v1beta2$StatefulSetStatus
-  | io$k8s$api$apps$v1beta2$StatefulSetUpdateStrategy
-  | io$k8s$api$authentication$v1$TokenReview
-  | io$k8s$api$authentication$v1$TokenReviewSpec
-  | io$k8s$api$authentication$v1$TokenReviewStatus
-  | io$k8s$api$authentication$v1$UserInfo
-  | io$k8s$api$authentication$v1beta1$TokenReview
-  | io$k8s$api$authentication$v1beta1$TokenReviewSpec
-  | io$k8s$api$authentication$v1beta1$TokenReviewStatus
-  | io$k8s$api$authentication$v1beta1$UserInfo
-  | io$k8s$api$authorization$v1$LocalSubjectAccessReview
-  | io$k8s$api$authorization$v1$NonResourceAttributes
-  | io$k8s$api$authorization$v1$NonResourceRule
-  | io$k8s$api$authorization$v1$ResourceAttributes
-  | io$k8s$api$authorization$v1$ResourceRule
-  | io$k8s$api$authorization$v1$SelfSubjectAccessReview
-  | io$k8s$api$authorization$v1$SelfSubjectAccessReviewSpec
-  | io$k8s$api$authorization$v1$SelfSubjectRulesReview
-  | io$k8s$api$authorization$v1$SelfSubjectRulesReviewSpec
-  | io$k8s$api$authorization$v1$SubjectAccessReview
-  | io$k8s$api$authorization$v1$SubjectAccessReviewSpec
-  | io$k8s$api$authorization$v1$SubjectAccessReviewStatus
-  | io$k8s$api$authorization$v1$SubjectRulesReviewStatus
-  | io$k8s$api$authorization$v1beta1$LocalSubjectAccessReview
-  | io$k8s$api$authorization$v1beta1$NonResourceAttributes
-  | io$k8s$api$authorization$v1beta1$NonResourceRule
-  | io$k8s$api$authorization$v1beta1$ResourceAttributes
-  | io$k8s$api$authorization$v1beta1$ResourceRule
-  | io$k8s$api$authorization$v1beta1$SelfSubjectAccessReview
-  | io$k8s$api$authorization$v1beta1$SelfSubjectAccessReviewSpec
-  | io$k8s$api$authorization$v1beta1$SelfSubjectRulesReview
-  | io$k8s$api$authorization$v1beta1$SelfSubjectRulesReviewSpec
-  | io$k8s$api$authorization$v1beta1$SubjectAccessReview
-  | io$k8s$api$authorization$v1beta1$SubjectAccessReviewSpec
-  | io$k8s$api$authorization$v1beta1$SubjectAccessReviewStatus
-  | io$k8s$api$authorization$v1beta1$SubjectRulesReviewStatus
-  | io$k8s$api$autoscaling$v1$CrossVersionObjectReference
-  | io$k8s$api$autoscaling$v1$HorizontalPodAutoscaler
-  | io$k8s$api$autoscaling$v1$HorizontalPodAutoscalerList
-  | io$k8s$api$autoscaling$v1$HorizontalPodAutoscalerSpec
-  | io$k8s$api$autoscaling$v1$HorizontalPodAutoscalerStatus
   | io$k8s$api$autoscaling$v1$Scale
-  | io$k8s$api$autoscaling$v1$ScaleSpec
-  | io$k8s$api$autoscaling$v1$ScaleStatus
-  | io$k8s$api$autoscaling$v2beta1$CrossVersionObjectReference
-  | io$k8s$api$autoscaling$v2beta1$ExternalMetricSource
-  | io$k8s$api$autoscaling$v2beta1$ExternalMetricStatus
+  | io$k8s$api$extensions$v1beta1$Scale;
+export type TokenReview =
+  | io$k8s$api$authentication$v1$TokenReview
+  | io$k8s$api$authentication$v1beta1$TokenReview;
+export type LocalSubjectAccessReview =
+  | io$k8s$api$authorization$v1$LocalSubjectAccessReview
+  | io$k8s$api$authorization$v1beta1$LocalSubjectAccessReview;
+export type SelfSubjectAccessReview =
+  | io$k8s$api$authorization$v1$SelfSubjectAccessReview
+  | io$k8s$api$authorization$v1beta1$SelfSubjectAccessReview;
+export type SelfSubjectRulesReview =
+  | io$k8s$api$authorization$v1$SelfSubjectRulesReview
+  | io$k8s$api$authorization$v1beta1$SelfSubjectRulesReview;
+export type SubjectAccessReview =
+  | io$k8s$api$authorization$v1$SubjectAccessReview
+  | io$k8s$api$authorization$v1beta1$SubjectAccessReview;
+export type HorizontalPodAutoscaler =
+  | io$k8s$api$autoscaling$v1$HorizontalPodAutoscaler
   | io$k8s$api$autoscaling$v2beta1$HorizontalPodAutoscaler
-  | io$k8s$api$autoscaling$v2beta1$HorizontalPodAutoscalerCondition
+  | io$k8s$api$autoscaling$v2beta2$HorizontalPodAutoscaler;
+export type HorizontalPodAutoscalerList =
+  | io$k8s$api$autoscaling$v1$HorizontalPodAutoscalerList
   | io$k8s$api$autoscaling$v2beta1$HorizontalPodAutoscalerList
-  | io$k8s$api$autoscaling$v2beta1$HorizontalPodAutoscalerSpec
-  | io$k8s$api$autoscaling$v2beta1$HorizontalPodAutoscalerStatus
-  | io$k8s$api$autoscaling$v2beta1$MetricSpec
-  | io$k8s$api$autoscaling$v2beta1$MetricStatus
-  | io$k8s$api$autoscaling$v2beta1$ObjectMetricSource
-  | io$k8s$api$autoscaling$v2beta1$ObjectMetricStatus
-  | io$k8s$api$autoscaling$v2beta1$PodsMetricSource
-  | io$k8s$api$autoscaling$v2beta1$PodsMetricStatus
-  | io$k8s$api$autoscaling$v2beta1$ResourceMetricSource
-  | io$k8s$api$autoscaling$v2beta1$ResourceMetricStatus
-  | io$k8s$api$autoscaling$v2beta2$CrossVersionObjectReference
-  | io$k8s$api$autoscaling$v2beta2$ExternalMetricSource
-  | io$k8s$api$autoscaling$v2beta2$ExternalMetricStatus
-  | io$k8s$api$autoscaling$v2beta2$HorizontalPodAutoscaler
-  | io$k8s$api$autoscaling$v2beta2$HorizontalPodAutoscalerCondition
-  | io$k8s$api$autoscaling$v2beta2$HorizontalPodAutoscalerList
-  | io$k8s$api$autoscaling$v2beta2$HorizontalPodAutoscalerSpec
-  | io$k8s$api$autoscaling$v2beta2$HorizontalPodAutoscalerStatus
-  | io$k8s$api$autoscaling$v2beta2$MetricIdentifier
-  | io$k8s$api$autoscaling$v2beta2$MetricSpec
-  | io$k8s$api$autoscaling$v2beta2$MetricStatus
-  | io$k8s$api$autoscaling$v2beta2$MetricTarget
-  | io$k8s$api$autoscaling$v2beta2$MetricValueStatus
-  | io$k8s$api$autoscaling$v2beta2$ObjectMetricSource
-  | io$k8s$api$autoscaling$v2beta2$ObjectMetricStatus
-  | io$k8s$api$autoscaling$v2beta2$PodsMetricSource
-  | io$k8s$api$autoscaling$v2beta2$PodsMetricStatus
-  | io$k8s$api$autoscaling$v2beta2$ResourceMetricSource
-  | io$k8s$api$autoscaling$v2beta2$ResourceMetricStatus
-  | io$k8s$api$batch$v1$Job
-  | io$k8s$api$batch$v1$JobCondition
-  | io$k8s$api$batch$v1$JobList
-  | io$k8s$api$batch$v1$JobSpec
-  | io$k8s$api$batch$v1$JobStatus
-  | io$k8s$api$batch$v1beta1$CronJob
-  | io$k8s$api$batch$v1beta1$CronJobList
-  | io$k8s$api$batch$v1beta1$CronJobSpec
-  | io$k8s$api$batch$v1beta1$CronJobStatus
-  | io$k8s$api$batch$v1beta1$JobTemplateSpec
-  | io$k8s$api$certificates$v1beta1$CertificateSigningRequest
-  | io$k8s$api$certificates$v1beta1$CertificateSigningRequestCondition
-  | io$k8s$api$certificates$v1beta1$CertificateSigningRequestList
-  | io$k8s$api$certificates$v1beta1$CertificateSigningRequestSpec
-  | io$k8s$api$certificates$v1beta1$CertificateSigningRequestStatus
+  | io$k8s$api$autoscaling$v2beta2$HorizontalPodAutoscalerList;
+export type Job = io$k8s$api$batch$v1$Job;
+export type JobList = io$k8s$api$batch$v1$JobList;
+export type CronJob = io$k8s$api$batch$v1beta1$CronJob;
+export type CronJobList = io$k8s$api$batch$v1beta1$CronJobList;
+export type CertificateSigningRequest =
+  io$k8s$api$certificates$v1beta1$CertificateSigningRequest;
+export type CertificateSigningRequestList =
+  io$k8s$api$certificates$v1beta1$CertificateSigningRequestList;
+export type Lease =
   | io$k8s$api$coordination$v1$Lease
+  | io$k8s$api$coordination$v1beta1$Lease;
+export type LeaseList =
   | io$k8s$api$coordination$v1$LeaseList
-  | io$k8s$api$coordination$v1$LeaseSpec
-  | io$k8s$api$coordination$v1beta1$Lease
-  | io$k8s$api$coordination$v1beta1$LeaseList
-  | io$k8s$api$coordination$v1beta1$LeaseSpec
-  | io$k8s$api$core$v1$AWSElasticBlockStoreVolumeSource
-  | io$k8s$api$core$v1$Affinity
-  | io$k8s$api$core$v1$AttachedVolume
-  | io$k8s$api$core$v1$AzureDiskVolumeSource
-  | io$k8s$api$core$v1$AzureFilePersistentVolumeSource
-  | io$k8s$api$core$v1$AzureFileVolumeSource
-  | io$k8s$api$core$v1$Binding
-  | io$k8s$api$core$v1$CSIPersistentVolumeSource
-  | io$k8s$api$core$v1$CSIVolumeSource
-  | io$k8s$api$core$v1$Capabilities
-  | io$k8s$api$core$v1$CephFSPersistentVolumeSource
-  | io$k8s$api$core$v1$CephFSVolumeSource
-  | io$k8s$api$core$v1$CinderPersistentVolumeSource
-  | io$k8s$api$core$v1$CinderVolumeSource
-  | io$k8s$api$core$v1$ClientIPConfig
-  | io$k8s$api$core$v1$ComponentCondition
-  | io$k8s$api$core$v1$ComponentStatus
-  | io$k8s$api$core$v1$ComponentStatusList
-  | io$k8s$api$core$v1$ConfigMap
-  | io$k8s$api$core$v1$ConfigMapEnvSource
-  | io$k8s$api$core$v1$ConfigMapKeySelector
-  | io$k8s$api$core$v1$ConfigMapList
-  | io$k8s$api$core$v1$ConfigMapNodeConfigSource
-  | io$k8s$api$core$v1$ConfigMapProjection
-  | io$k8s$api$core$v1$ConfigMapVolumeSource
-  | io$k8s$api$core$v1$Container
-  | io$k8s$api$core$v1$ContainerImage
-  | io$k8s$api$core$v1$ContainerPort
-  | io$k8s$api$core$v1$ContainerState
-  | io$k8s$api$core$v1$ContainerStateRunning
-  | io$k8s$api$core$v1$ContainerStateTerminated
-  | io$k8s$api$core$v1$ContainerStateWaiting
-  | io$k8s$api$core$v1$ContainerStatus
-  | io$k8s$api$core$v1$DaemonEndpoint
-  | io$k8s$api$core$v1$DownwardAPIProjection
-  | io$k8s$api$core$v1$DownwardAPIVolumeFile
-  | io$k8s$api$core$v1$DownwardAPIVolumeSource
-  | io$k8s$api$core$v1$EmptyDirVolumeSource
-  | io$k8s$api$core$v1$EndpointAddress
-  | io$k8s$api$core$v1$EndpointPort
-  | io$k8s$api$core$v1$EndpointSubset
-  | io$k8s$api$core$v1$Endpoints
-  | io$k8s$api$core$v1$EndpointsList
-  | io$k8s$api$core$v1$EnvFromSource
-  | io$k8s$api$core$v1$EnvVar
-  | io$k8s$api$core$v1$EnvVarSource
-  | io$k8s$api$core$v1$Event
+  | io$k8s$api$coordination$v1beta1$LeaseList;
+export type Binding = io$k8s$api$core$v1$Binding;
+export type ComponentStatus = io$k8s$api$core$v1$ComponentStatus;
+export type ComponentStatusList = io$k8s$api$core$v1$ComponentStatusList;
+export type ConfigMap = io$k8s$api$core$v1$ConfigMap;
+export type ConfigMapList = io$k8s$api$core$v1$ConfigMapList;
+export type Endpoints = io$k8s$api$core$v1$Endpoints;
+export type EndpointsList = io$k8s$api$core$v1$EndpointsList;
+export type Event = io$k8s$api$core$v1$Event | io$k8s$api$events$v1beta1$Event;
+export type EventList =
   | io$k8s$api$core$v1$EventList
-  | io$k8s$api$core$v1$EventSeries
-  | io$k8s$api$core$v1$EventSource
-  | io$k8s$api$core$v1$ExecAction
-  | io$k8s$api$core$v1$FCVolumeSource
-  | io$k8s$api$core$v1$FlexPersistentVolumeSource
-  | io$k8s$api$core$v1$FlexVolumeSource
-  | io$k8s$api$core$v1$FlockerVolumeSource
-  | io$k8s$api$core$v1$GCEPersistentDiskVolumeSource
-  | io$k8s$api$core$v1$GitRepoVolumeSource
-  | io$k8s$api$core$v1$GlusterfsPersistentVolumeSource
-  | io$k8s$api$core$v1$GlusterfsVolumeSource
-  | io$k8s$api$core$v1$HTTPGetAction
-  | io$k8s$api$core$v1$HTTPHeader
-  | io$k8s$api$core$v1$Handler
-  | io$k8s$api$core$v1$HostAlias
-  | io$k8s$api$core$v1$HostPathVolumeSource
-  | io$k8s$api$core$v1$ISCSIPersistentVolumeSource
-  | io$k8s$api$core$v1$ISCSIVolumeSource
-  | io$k8s$api$core$v1$KeyToPath
-  | io$k8s$api$core$v1$Lifecycle
-  | io$k8s$api$core$v1$LimitRange
-  | io$k8s$api$core$v1$LimitRangeItem
-  | io$k8s$api$core$v1$LimitRangeList
-  | io$k8s$api$core$v1$LimitRangeSpec
-  | io$k8s$api$core$v1$LoadBalancerIngress
-  | io$k8s$api$core$v1$LoadBalancerStatus
-  | io$k8s$api$core$v1$LocalObjectReference
-  | io$k8s$api$core$v1$LocalVolumeSource
-  | io$k8s$api$core$v1$NFSVolumeSource
-  | io$k8s$api$core$v1$Namespace
-  | io$k8s$api$core$v1$NamespaceList
-  | io$k8s$api$core$v1$NamespaceSpec
-  | io$k8s$api$core$v1$NamespaceStatus
-  | io$k8s$api$core$v1$Node
-  | io$k8s$api$core$v1$NodeAddress
-  | io$k8s$api$core$v1$NodeAffinity
-  | io$k8s$api$core$v1$NodeCondition
-  | io$k8s$api$core$v1$NodeConfigSource
-  | io$k8s$api$core$v1$NodeConfigStatus
-  | io$k8s$api$core$v1$NodeDaemonEndpoints
-  | io$k8s$api$core$v1$NodeList
-  | io$k8s$api$core$v1$NodeSelector
-  | io$k8s$api$core$v1$NodeSelectorRequirement
-  | io$k8s$api$core$v1$NodeSelectorTerm
-  | io$k8s$api$core$v1$NodeSpec
-  | io$k8s$api$core$v1$NodeStatus
-  | io$k8s$api$core$v1$NodeSystemInfo
-  | io$k8s$api$core$v1$ObjectFieldSelector
-  | io$k8s$api$core$v1$ObjectReference
-  | io$k8s$api$core$v1$PersistentVolume
-  | io$k8s$api$core$v1$PersistentVolumeClaim
-  | io$k8s$api$core$v1$PersistentVolumeClaimCondition
-  | io$k8s$api$core$v1$PersistentVolumeClaimList
-  | io$k8s$api$core$v1$PersistentVolumeClaimSpec
-  | io$k8s$api$core$v1$PersistentVolumeClaimStatus
-  | io$k8s$api$core$v1$PersistentVolumeClaimVolumeSource
-  | io$k8s$api$core$v1$PersistentVolumeList
-  | io$k8s$api$core$v1$PersistentVolumeSpec
-  | io$k8s$api$core$v1$PersistentVolumeStatus
-  | io$k8s$api$core$v1$PhotonPersistentDiskVolumeSource
-  | io$k8s$api$core$v1$Pod
-  | io$k8s$api$core$v1$PodAffinity
-  | io$k8s$api$core$v1$PodAffinityTerm
-  | io$k8s$api$core$v1$PodAntiAffinity
-  | io$k8s$api$core$v1$PodCondition
-  | io$k8s$api$core$v1$PodDNSConfig
-  | io$k8s$api$core$v1$PodDNSConfigOption
-  | io$k8s$api$core$v1$PodList
-  | io$k8s$api$core$v1$PodReadinessGate
-  | io$k8s$api$core$v1$PodSecurityContext
-  | io$k8s$api$core$v1$PodSpec
-  | io$k8s$api$core$v1$PodStatus
-  | io$k8s$api$core$v1$PodTemplate
-  | io$k8s$api$core$v1$PodTemplateList
-  | io$k8s$api$core$v1$PodTemplateSpec
-  | io$k8s$api$core$v1$PortworxVolumeSource
-  | io$k8s$api$core$v1$PreferredSchedulingTerm
-  | io$k8s$api$core$v1$Probe
-  | io$k8s$api$core$v1$ProjectedVolumeSource
-  | io$k8s$api$core$v1$QuobyteVolumeSource
-  | io$k8s$api$core$v1$RBDPersistentVolumeSource
-  | io$k8s$api$core$v1$RBDVolumeSource
-  | io$k8s$api$core$v1$ReplicationController
-  | io$k8s$api$core$v1$ReplicationControllerCondition
-  | io$k8s$api$core$v1$ReplicationControllerList
-  | io$k8s$api$core$v1$ReplicationControllerSpec
-  | io$k8s$api$core$v1$ReplicationControllerStatus
-  | io$k8s$api$core$v1$ResourceFieldSelector
-  | io$k8s$api$core$v1$ResourceQuota
-  | io$k8s$api$core$v1$ResourceQuotaList
-  | io$k8s$api$core$v1$ResourceQuotaSpec
-  | io$k8s$api$core$v1$ResourceQuotaStatus
-  | io$k8s$api$core$v1$ResourceRequirements
-  | io$k8s$api$core$v1$SELinuxOptions
-  | io$k8s$api$core$v1$ScaleIOPersistentVolumeSource
-  | io$k8s$api$core$v1$ScaleIOVolumeSource
-  | io$k8s$api$core$v1$ScopeSelector
-  | io$k8s$api$core$v1$ScopedResourceSelectorRequirement
-  | io$k8s$api$core$v1$Secret
-  | io$k8s$api$core$v1$SecretEnvSource
-  | io$k8s$api$core$v1$SecretKeySelector
-  | io$k8s$api$core$v1$SecretList
-  | io$k8s$api$core$v1$SecretProjection
-  | io$k8s$api$core$v1$SecretReference
-  | io$k8s$api$core$v1$SecretVolumeSource
-  | io$k8s$api$core$v1$SecurityContext
-  | io$k8s$api$core$v1$Service
-  | io$k8s$api$core$v1$ServiceAccount
-  | io$k8s$api$core$v1$ServiceAccountList
-  | io$k8s$api$core$v1$ServiceAccountTokenProjection
-  | io$k8s$api$core$v1$ServiceList
-  | io$k8s$api$core$v1$ServicePort
-  | io$k8s$api$core$v1$ServiceSpec
-  | io$k8s$api$core$v1$ServiceStatus
-  | io$k8s$api$core$v1$SessionAffinityConfig
-  | io$k8s$api$core$v1$StorageOSPersistentVolumeSource
-  | io$k8s$api$core$v1$StorageOSVolumeSource
-  | io$k8s$api$core$v1$Sysctl
-  | io$k8s$api$core$v1$TCPSocketAction
-  | io$k8s$api$core$v1$Taint
-  | io$k8s$api$core$v1$Toleration
-  | io$k8s$api$core$v1$TopologySelectorLabelRequirement
-  | io$k8s$api$core$v1$TopologySelectorTerm
-  | io$k8s$api$core$v1$TypedLocalObjectReference
-  | io$k8s$api$core$v1$Volume
-  | io$k8s$api$core$v1$VolumeDevice
-  | io$k8s$api$core$v1$VolumeMount
-  | io$k8s$api$core$v1$VolumeNodeAffinity
-  | io$k8s$api$core$v1$VolumeProjection
-  | io$k8s$api$core$v1$VsphereVirtualDiskVolumeSource
-  | io$k8s$api$core$v1$WeightedPodAffinityTerm
-  | io$k8s$api$core$v1$WindowsSecurityContextOptions
-  | io$k8s$api$events$v1beta1$Event
-  | io$k8s$api$events$v1beta1$EventList
-  | io$k8s$api$events$v1beta1$EventSeries
-  | io$k8s$api$extensions$v1beta1$AllowedCSIDriver
-  | io$k8s$api$extensions$v1beta1$AllowedFlexVolume
-  | io$k8s$api$extensions$v1beta1$AllowedHostPath
-  | io$k8s$api$extensions$v1beta1$DaemonSet
-  | io$k8s$api$extensions$v1beta1$DaemonSetCondition
-  | io$k8s$api$extensions$v1beta1$DaemonSetList
-  | io$k8s$api$extensions$v1beta1$DaemonSetSpec
-  | io$k8s$api$extensions$v1beta1$DaemonSetStatus
-  | io$k8s$api$extensions$v1beta1$DaemonSetUpdateStrategy
-  | io$k8s$api$extensions$v1beta1$Deployment
-  | io$k8s$api$extensions$v1beta1$DeploymentCondition
-  | io$k8s$api$extensions$v1beta1$DeploymentList
-  | io$k8s$api$extensions$v1beta1$DeploymentRollback
-  | io$k8s$api$extensions$v1beta1$DeploymentSpec
-  | io$k8s$api$extensions$v1beta1$DeploymentStatus
-  | io$k8s$api$extensions$v1beta1$DeploymentStrategy
-  | io$k8s$api$extensions$v1beta1$FSGroupStrategyOptions
-  | io$k8s$api$extensions$v1beta1$HTTPIngressPath
-  | io$k8s$api$extensions$v1beta1$HTTPIngressRuleValue
-  | io$k8s$api$extensions$v1beta1$HostPortRange
-  | io$k8s$api$extensions$v1beta1$IDRange
-  | io$k8s$api$extensions$v1beta1$IPBlock
+  | io$k8s$api$events$v1beta1$EventList;
+export type LimitRange = io$k8s$api$core$v1$LimitRange;
+export type LimitRangeList = io$k8s$api$core$v1$LimitRangeList;
+export type Namespace = io$k8s$api$core$v1$Namespace;
+export type NamespaceList = io$k8s$api$core$v1$NamespaceList;
+export type Node = io$k8s$api$core$v1$Node;
+export type NodeList = io$k8s$api$core$v1$NodeList;
+export type PersistentVolume = io$k8s$api$core$v1$PersistentVolume;
+export type PersistentVolumeClaim = io$k8s$api$core$v1$PersistentVolumeClaim;
+export type PersistentVolumeClaimList =
+  io$k8s$api$core$v1$PersistentVolumeClaimList;
+export type PersistentVolumeList = io$k8s$api$core$v1$PersistentVolumeList;
+export type Pod = io$k8s$api$core$v1$Pod;
+export type PodList = io$k8s$api$core$v1$PodList;
+export type PodTemplate = io$k8s$api$core$v1$PodTemplate;
+export type PodTemplateList = io$k8s$api$core$v1$PodTemplateList;
+export type ReplicationController = io$k8s$api$core$v1$ReplicationController;
+export type ReplicationControllerList =
+  io$k8s$api$core$v1$ReplicationControllerList;
+export type ResourceQuota = io$k8s$api$core$v1$ResourceQuota;
+export type ResourceQuotaList = io$k8s$api$core$v1$ResourceQuotaList;
+export type Secret = io$k8s$api$core$v1$Secret;
+export type SecretList = io$k8s$api$core$v1$SecretList;
+export type Service = io$k8s$api$core$v1$Service;
+export type ServiceAccount = io$k8s$api$core$v1$ServiceAccount;
+export type ServiceAccountList = io$k8s$api$core$v1$ServiceAccountList;
+export type ServiceList = io$k8s$api$core$v1$ServiceList;
+export type Ingress =
   | io$k8s$api$extensions$v1beta1$Ingress
-  | io$k8s$api$extensions$v1beta1$IngressBackend
+  | io$k8s$api$networking$v1beta1$Ingress;
+export type IngressList =
   | io$k8s$api$extensions$v1beta1$IngressList
-  | io$k8s$api$extensions$v1beta1$IngressRule
-  | io$k8s$api$extensions$v1beta1$IngressSpec
-  | io$k8s$api$extensions$v1beta1$IngressStatus
-  | io$k8s$api$extensions$v1beta1$IngressTLS
+  | io$k8s$api$networking$v1beta1$IngressList;
+export type NetworkPolicy =
   | io$k8s$api$extensions$v1beta1$NetworkPolicy
-  | io$k8s$api$extensions$v1beta1$NetworkPolicyEgressRule
-  | io$k8s$api$extensions$v1beta1$NetworkPolicyIngressRule
+  | io$k8s$api$networking$v1$NetworkPolicy;
+export type NetworkPolicyList =
   | io$k8s$api$extensions$v1beta1$NetworkPolicyList
-  | io$k8s$api$extensions$v1beta1$NetworkPolicyPeer
-  | io$k8s$api$extensions$v1beta1$NetworkPolicyPort
-  | io$k8s$api$extensions$v1beta1$NetworkPolicySpec
+  | io$k8s$api$networking$v1$NetworkPolicyList;
+export type PodSecurityPolicy =
   | io$k8s$api$extensions$v1beta1$PodSecurityPolicy
+  | io$k8s$api$policy$v1beta1$PodSecurityPolicy;
+export type PodSecurityPolicyList =
   | io$k8s$api$extensions$v1beta1$PodSecurityPolicyList
-  | io$k8s$api$extensions$v1beta1$PodSecurityPolicySpec
-  | io$k8s$api$extensions$v1beta1$ReplicaSet
-  | io$k8s$api$extensions$v1beta1$ReplicaSetCondition
-  | io$k8s$api$extensions$v1beta1$ReplicaSetList
-  | io$k8s$api$extensions$v1beta1$ReplicaSetSpec
-  | io$k8s$api$extensions$v1beta1$ReplicaSetStatus
-  | io$k8s$api$extensions$v1beta1$RollbackConfig
-  | io$k8s$api$extensions$v1beta1$RollingUpdateDaemonSet
-  | io$k8s$api$extensions$v1beta1$RollingUpdateDeployment
-  | io$k8s$api$extensions$v1beta1$RunAsGroupStrategyOptions
-  | io$k8s$api$extensions$v1beta1$RunAsUserStrategyOptions
-  | io$k8s$api$extensions$v1beta1$RuntimeClassStrategyOptions
-  | io$k8s$api$extensions$v1beta1$SELinuxStrategyOptions
-  | io$k8s$api$extensions$v1beta1$Scale
-  | io$k8s$api$extensions$v1beta1$ScaleSpec
-  | io$k8s$api$extensions$v1beta1$ScaleStatus
-  | io$k8s$api$extensions$v1beta1$SupplementalGroupsStrategyOptions
-  | io$k8s$api$networking$v1$IPBlock
-  | io$k8s$api$networking$v1$NetworkPolicy
-  | io$k8s$api$networking$v1$NetworkPolicyEgressRule
-  | io$k8s$api$networking$v1$NetworkPolicyIngressRule
-  | io$k8s$api$networking$v1$NetworkPolicyList
-  | io$k8s$api$networking$v1$NetworkPolicyPeer
-  | io$k8s$api$networking$v1$NetworkPolicyPort
-  | io$k8s$api$networking$v1$NetworkPolicySpec
-  | io$k8s$api$networking$v1beta1$HTTPIngressPath
-  | io$k8s$api$networking$v1beta1$HTTPIngressRuleValue
-  | io$k8s$api$networking$v1beta1$Ingress
-  | io$k8s$api$networking$v1beta1$IngressBackend
-  | io$k8s$api$networking$v1beta1$IngressList
-  | io$k8s$api$networking$v1beta1$IngressRule
-  | io$k8s$api$networking$v1beta1$IngressSpec
-  | io$k8s$api$networking$v1beta1$IngressStatus
-  | io$k8s$api$networking$v1beta1$IngressTLS
-  | io$k8s$api$node$v1beta1$RuntimeClass
-  | io$k8s$api$node$v1beta1$RuntimeClassList
-  | io$k8s$api$policy$v1beta1$AllowedCSIDriver
-  | io$k8s$api$policy$v1beta1$AllowedFlexVolume
-  | io$k8s$api$policy$v1beta1$AllowedHostPath
-  | io$k8s$api$policy$v1beta1$Eviction
-  | io$k8s$api$policy$v1beta1$FSGroupStrategyOptions
-  | io$k8s$api$policy$v1beta1$HostPortRange
-  | io$k8s$api$policy$v1beta1$IDRange
-  | io$k8s$api$policy$v1beta1$PodDisruptionBudget
-  | io$k8s$api$policy$v1beta1$PodDisruptionBudgetList
-  | io$k8s$api$policy$v1beta1$PodDisruptionBudgetSpec
-  | io$k8s$api$policy$v1beta1$PodDisruptionBudgetStatus
-  | io$k8s$api$policy$v1beta1$PodSecurityPolicy
-  | io$k8s$api$policy$v1beta1$PodSecurityPolicyList
-  | io$k8s$api$policy$v1beta1$PodSecurityPolicySpec
-  | io$k8s$api$policy$v1beta1$RunAsGroupStrategyOptions
-  | io$k8s$api$policy$v1beta1$RunAsUserStrategyOptions
-  | io$k8s$api$policy$v1beta1$RuntimeClassStrategyOptions
-  | io$k8s$api$policy$v1beta1$SELinuxStrategyOptions
-  | io$k8s$api$policy$v1beta1$SupplementalGroupsStrategyOptions
-  | io$k8s$api$rbac$v1$AggregationRule
+  | io$k8s$api$policy$v1beta1$PodSecurityPolicyList;
+export type RuntimeClass = io$k8s$api$node$v1beta1$RuntimeClass;
+export type RuntimeClassList = io$k8s$api$node$v1beta1$RuntimeClassList;
+export type Eviction = io$k8s$api$policy$v1beta1$Eviction;
+export type PodDisruptionBudget = io$k8s$api$policy$v1beta1$PodDisruptionBudget;
+export type PodDisruptionBudgetList =
+  io$k8s$api$policy$v1beta1$PodDisruptionBudgetList;
+export type ClusterRole =
   | io$k8s$api$rbac$v1$ClusterRole
+  | io$k8s$api$rbac$v1beta1$ClusterRole;
+export type ClusterRoleBinding =
   | io$k8s$api$rbac$v1$ClusterRoleBinding
+  | io$k8s$api$rbac$v1beta1$ClusterRoleBinding;
+export type ClusterRoleBindingList =
   | io$k8s$api$rbac$v1$ClusterRoleBindingList
+  | io$k8s$api$rbac$v1beta1$ClusterRoleBindingList;
+export type ClusterRoleList =
   | io$k8s$api$rbac$v1$ClusterRoleList
-  | io$k8s$api$rbac$v1$PolicyRule
-  | io$k8s$api$rbac$v1$Role
+  | io$k8s$api$rbac$v1beta1$ClusterRoleList;
+export type Role = io$k8s$api$rbac$v1$Role | io$k8s$api$rbac$v1beta1$Role;
+export type RoleBinding =
   | io$k8s$api$rbac$v1$RoleBinding
+  | io$k8s$api$rbac$v1beta1$RoleBinding;
+export type RoleBindingList =
   | io$k8s$api$rbac$v1$RoleBindingList
+  | io$k8s$api$rbac$v1beta1$RoleBindingList;
+export type RoleList =
   | io$k8s$api$rbac$v1$RoleList
-  | io$k8s$api$rbac$v1$RoleRef
-  | io$k8s$api$rbac$v1$Subject
-  | io$k8s$api$rbac$v1beta1$AggregationRule
-  | io$k8s$api$rbac$v1beta1$ClusterRole
-  | io$k8s$api$rbac$v1beta1$ClusterRoleBinding
-  | io$k8s$api$rbac$v1beta1$ClusterRoleBindingList
-  | io$k8s$api$rbac$v1beta1$ClusterRoleList
-  | io$k8s$api$rbac$v1beta1$PolicyRule
-  | io$k8s$api$rbac$v1beta1$Role
-  | io$k8s$api$rbac$v1beta1$RoleBinding
-  | io$k8s$api$rbac$v1beta1$RoleBindingList
-  | io$k8s$api$rbac$v1beta1$RoleList
-  | io$k8s$api$rbac$v1beta1$RoleRef
-  | io$k8s$api$rbac$v1beta1$Subject
+  | io$k8s$api$rbac$v1beta1$RoleList;
+export type PriorityClass =
   | io$k8s$api$scheduling$v1$PriorityClass
+  | io$k8s$api$scheduling$v1beta1$PriorityClass;
+export type PriorityClassList =
   | io$k8s$api$scheduling$v1$PriorityClassList
-  | io$k8s$api$scheduling$v1beta1$PriorityClass
-  | io$k8s$api$scheduling$v1beta1$PriorityClassList
+  | io$k8s$api$scheduling$v1beta1$PriorityClassList;
+export type StorageClass =
   | io$k8s$api$storage$v1$StorageClass
+  | io$k8s$api$storage$v1beta1$StorageClass;
+export type StorageClassList =
   | io$k8s$api$storage$v1$StorageClassList
+  | io$k8s$api$storage$v1beta1$StorageClassList;
+export type VolumeAttachment =
   | io$k8s$api$storage$v1$VolumeAttachment
+  | io$k8s$api$storage$v1beta1$VolumeAttachment;
+export type VolumeAttachmentList =
   | io$k8s$api$storage$v1$VolumeAttachmentList
-  | io$k8s$api$storage$v1$VolumeAttachmentSource
-  | io$k8s$api$storage$v1$VolumeAttachmentSpec
-  | io$k8s$api$storage$v1$VolumeAttachmentStatus
-  | io$k8s$api$storage$v1$VolumeError
-  | io$k8s$api$storage$v1beta1$CSIDriver
-  | io$k8s$api$storage$v1beta1$CSIDriverList
-  | io$k8s$api$storage$v1beta1$CSIDriverSpec
-  | io$k8s$api$storage$v1beta1$CSINode
-  | io$k8s$api$storage$v1beta1$CSINodeDriver
-  | io$k8s$api$storage$v1beta1$CSINodeList
-  | io$k8s$api$storage$v1beta1$CSINodeSpec
-  | io$k8s$api$storage$v1beta1$StorageClass
-  | io$k8s$api$storage$v1beta1$StorageClassList
-  | io$k8s$api$storage$v1beta1$VolumeAttachment
-  | io$k8s$api$storage$v1beta1$VolumeAttachmentList
-  | io$k8s$api$storage$v1beta1$VolumeAttachmentSource
-  | io$k8s$api$storage$v1beta1$VolumeAttachmentSpec
-  | io$k8s$api$storage$v1beta1$VolumeAttachmentStatus
-  | io$k8s$api$storage$v1beta1$VolumeError
-  | io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceColumnDefinition
-  | io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceConversion
-  | io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinition
-  | io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionCondition
-  | io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionList
-  | io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionNames
-  | io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionSpec
-  | io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionStatus
-  | io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionVersion
-  | io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceSubresourceScale
-  | io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceSubresourceStatus
-  | io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceSubresources
-  | io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceValidation
-  | io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$ExternalDocumentation
-  | io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSON
-  | io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSONSchemaProps
-  | io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSONSchemaPropsOrArray
-  | io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSONSchemaPropsOrBool
-  | io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$JSONSchemaPropsOrStringArray
-  | io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$ServiceReference
-  | io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$WebhookClientConfig
-  | io$k8s$apimachinery$pkg$api$resource$Quantity
+  | io$k8s$api$storage$v1beta1$VolumeAttachmentList;
+export type CSIDriver = io$k8s$api$storage$v1beta1$CSIDriver;
+export type CSIDriverList = io$k8s$api$storage$v1beta1$CSIDriverList;
+export type CSINode = io$k8s$api$storage$v1beta1$CSINode;
+export type CSINodeList = io$k8s$api$storage$v1beta1$CSINodeList;
+export type CustomResourceDefinition =
+  io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinition;
+export type CustomResourceDefinitionList =
+  io$k8s$apiextensions_apiserver$pkg$apis$apiextensions$v1beta1$CustomResourceDefinitionList;
+export type APIGroup =
   | io$k8s$apimachinery$pkg$apis$meta$v1$APIGroup
-  | io$k8s$apimachinery$pkg$apis$meta$v1$APIGroupList
-  | io$k8s$apimachinery$pkg$apis$meta$v1$APIGroup_v2
-  | io$k8s$apimachinery$pkg$apis$meta$v1$APIResource
+  | io$k8s$apimachinery$pkg$apis$meta$v1$APIGroup_v2;
+export type APIGroupList = io$k8s$apimachinery$pkg$apis$meta$v1$APIGroupList;
+export type APIResourceList =
   | io$k8s$apimachinery$pkg$apis$meta$v1$APIResourceList
-  | io$k8s$apimachinery$pkg$apis$meta$v1$APIResourceList_v2
-  | io$k8s$apimachinery$pkg$apis$meta$v1$APIResource_v2
-  | io$k8s$apimachinery$pkg$apis$meta$v1$APIVersions
+  | io$k8s$apimachinery$pkg$apis$meta$v1$APIResourceList_v2;
+export type APIVersions = io$k8s$apimachinery$pkg$apis$meta$v1$APIVersions;
+export type DeleteOptions =
   | io$k8s$apimachinery$pkg$apis$meta$v1$DeleteOptions
-  | io$k8s$apimachinery$pkg$apis$meta$v1$DeleteOptions_v2
-  | io$k8s$apimachinery$pkg$apis$meta$v1$Fields
-  | io$k8s$apimachinery$pkg$apis$meta$v1$GroupVersionForDiscovery
-  | io$k8s$apimachinery$pkg$apis$meta$v1$GroupVersionForDiscovery_v2
-  | io$k8s$apimachinery$pkg$apis$meta$v1$Initializer
-  | io$k8s$apimachinery$pkg$apis$meta$v1$Initializer_v2
-  | io$k8s$apimachinery$pkg$apis$meta$v1$Initializers
-  | io$k8s$apimachinery$pkg$apis$meta$v1$Initializers_v2
-  | io$k8s$apimachinery$pkg$apis$meta$v1$LabelSelector
-  | io$k8s$apimachinery$pkg$apis$meta$v1$LabelSelectorRequirement
-  | io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta
-  | io$k8s$apimachinery$pkg$apis$meta$v1$ListMeta_v2
-  | io$k8s$apimachinery$pkg$apis$meta$v1$ManagedFieldsEntry
-  | io$k8s$apimachinery$pkg$apis$meta$v1$MicroTime
-  | io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta
-  | io$k8s$apimachinery$pkg$apis$meta$v1$ObjectMeta_v2
-  | io$k8s$apimachinery$pkg$apis$meta$v1$OwnerReference
-  | io$k8s$apimachinery$pkg$apis$meta$v1$OwnerReference_v2
-  | io$k8s$apimachinery$pkg$apis$meta$v1$Patch
-  | io$k8s$apimachinery$pkg$apis$meta$v1$Patch_v2
-  | io$k8s$apimachinery$pkg$apis$meta$v1$Preconditions
-  | io$k8s$apimachinery$pkg$apis$meta$v1$Preconditions_v2
-  | io$k8s$apimachinery$pkg$apis$meta$v1$ServerAddressByClientCIDR
-  | io$k8s$apimachinery$pkg$apis$meta$v1$ServerAddressByClientCIDR_v2
+  | io$k8s$apimachinery$pkg$apis$meta$v1$DeleteOptions_v2;
+export type Status =
   | io$k8s$apimachinery$pkg$apis$meta$v1$Status
-  | io$k8s$apimachinery$pkg$apis$meta$v1$StatusCause
-  | io$k8s$apimachinery$pkg$apis$meta$v1$StatusCause_v2
-  | io$k8s$apimachinery$pkg$apis$meta$v1$StatusDetails
-  | io$k8s$apimachinery$pkg$apis$meta$v1$StatusDetails_v2
-  | io$k8s$apimachinery$pkg$apis$meta$v1$Status_v2
-  | io$k8s$apimachinery$pkg$apis$meta$v1$Time
+  | io$k8s$apimachinery$pkg$apis$meta$v1$Status_v2;
+export type WatchEvent =
   | io$k8s$apimachinery$pkg$apis$meta$v1$WatchEvent
-  | io$k8s$apimachinery$pkg$apis$meta$v1$WatchEvent_v2
-  | io$k8s$apimachinery$pkg$runtime$RawExtension
-  | io$k8s$apimachinery$pkg$runtime$RawExtension_v2
-  | io$k8s$apimachinery$pkg$util$intstr$IntOrString
-  | io$k8s$apimachinery$pkg$version$Info
+  | io$k8s$apimachinery$pkg$apis$meta$v1$WatchEvent_v2;
+export type APIService =
   | io$k8s$kube_aggregator$pkg$apis$apiregistration$v1$APIService
-  | io$k8s$kube_aggregator$pkg$apis$apiregistration$v1$APIServiceCondition
+  | io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$APIService;
+export type APIServiceList =
   | io$k8s$kube_aggregator$pkg$apis$apiregistration$v1$APIServiceList
-  | io$k8s$kube_aggregator$pkg$apis$apiregistration$v1$APIServiceSpec
-  | io$k8s$kube_aggregator$pkg$apis$apiregistration$v1$APIServiceStatus
-  | io$k8s$kube_aggregator$pkg$apis$apiregistration$v1$ServiceReference
-  | io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$APIService
-  | io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$APIServiceCondition
-  | io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$APIServiceList
-  | io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$APIServiceSpec
-  | io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$APIServiceStatus
-  | io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$ServiceReference
+  | io$k8s$kube_aggregator$pkg$apis$apiregistration$v1beta1$APIServiceList;
+export type KubernetesResources =
+  | MutatingWebhookConfiguration
+  | MutatingWebhookConfigurationList
+  | ValidatingWebhookConfiguration
+  | ValidatingWebhookConfigurationList
+  | ControllerRevision
+  | ControllerRevisionList
+  | DaemonSet
+  | DaemonSetList
+  | Deployment
+  | DeploymentList
+  | ReplicaSet
+  | ReplicaSetList
+  | StatefulSet
+  | StatefulSetList
+  | DeploymentRollback
+  | Scale
+  | TokenReview
+  | LocalSubjectAccessReview
+  | SelfSubjectAccessReview
+  | SelfSubjectRulesReview
+  | SubjectAccessReview
+  | HorizontalPodAutoscaler
+  | HorizontalPodAutoscalerList
+  | Job
+  | JobList
+  | CronJob
+  | CronJobList
+  | CertificateSigningRequest
+  | CertificateSigningRequestList
+  | Lease
+  | LeaseList
+  | Binding
+  | ComponentStatus
+  | ComponentStatusList
+  | ConfigMap
+  | ConfigMapList
+  | Endpoints
+  | EndpointsList
+  | Event
+  | EventList
+  | LimitRange
+  | LimitRangeList
+  | Namespace
+  | NamespaceList
+  | Node
+  | NodeList
+  | PersistentVolume
+  | PersistentVolumeClaim
+  | PersistentVolumeClaimList
+  | PersistentVolumeList
+  | Pod
+  | PodList
+  | PodTemplate
+  | PodTemplateList
+  | ReplicationController
+  | ReplicationControllerList
+  | ResourceQuota
+  | ResourceQuotaList
+  | Secret
+  | SecretList
+  | Service
+  | ServiceAccount
+  | ServiceAccountList
+  | ServiceList
+  | Ingress
+  | IngressList
+  | NetworkPolicy
+  | NetworkPolicyList
+  | PodSecurityPolicy
+  | PodSecurityPolicyList
+  | RuntimeClass
+  | RuntimeClassList
+  | Eviction
+  | PodDisruptionBudget
+  | PodDisruptionBudgetList
+  | ClusterRole
+  | ClusterRoleBinding
+  | ClusterRoleBindingList
+  | ClusterRoleList
+  | Role
+  | RoleBinding
+  | RoleBindingList
+  | RoleList
+  | PriorityClass
+  | PriorityClassList
+  | StorageClass
+  | StorageClassList
+  | VolumeAttachment
+  | VolumeAttachmentList
+  | CSIDriver
+  | CSIDriverList
+  | CSINode
+  | CSINodeList
+  | CustomResourceDefinition
+  | CustomResourceDefinitionList
+  | APIGroup
+  | APIGroupList
+  | APIResourceList
+  | APIVersions
+  | DeleteOptions
+  | Status
+  | WatchEvent
+  | APIService
+  | APIServiceList;

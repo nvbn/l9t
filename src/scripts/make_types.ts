@@ -1,5 +1,8 @@
 import { readJsonSync } from "https://deno.land/std/fs/mod.ts";
 
+const allowedNamespace = Deno.args[0];
+const resourcesType = Deno.args[1];
+
 type ApiTypeDefinition = {
   description?: string;
   required?: string[];
@@ -130,7 +133,7 @@ const _toTypes = function* (name: string) {
       yield `  readonly kind: "${kind}";`;
 
       if (i !== definition["x-kubernetes-group-version-kind"].length - 1) {
-        yield '} | {';
+        yield "} | {";
       }
     }
     yield "});";
@@ -141,23 +144,44 @@ const _toTypes = function* (name: string) {
 
 const toTypes = (name: string) => Array.from(_toTypes(name)).join("\n");
 
-const _makeKubernetesConfig = function* (names: string[]) {
-  yield "export type KubernetesConfig =";
-  for (const typeName of names) {
-    if (typeName && typeName.startsWith("io.k8s")) {
-      yield `  | ${getFQDN(typeName)}`;
+const _makeResources = function* () {
+  let kindToTypes: { [k: string]: Set<string> } = {};
+  for (const [name, definition] of Object.entries(spec.definitions)) {
+    if (
+      !name.startsWith(allowedNamespace) ||
+      !definition["x-kubernetes-group-version-kind"]
+    ) {
+      continue;
+    }
+
+    const fqdn = getFQDN(name);
+    for (const { kind } of definition["x-kubernetes-group-version-kind"]) {
+      if (!kindToTypes[kind]) {
+        kindToTypes[kind] = new Set();
+      }
+
+      kindToTypes[kind].add(fqdn);
     }
   }
+
+  for (const [kind, [...types]] of Object.entries(kindToTypes)) {
+    yield `export type ${kind} = ${types.join(" | ")};`;
+  }
+
+  yield `export type ${resourcesType} =`;
+  for (const kind of Object.keys(kindToTypes)) {
+    yield `  | ${kind}`;
+  }
+  yield ";";
 };
 
-const makeKubernetesConfig = (names: string[]) =>
-  Array.from(_makeKubernetesConfig(names)).join("\n");
+const makeResources = (): string => Array.from(_makeResources()).join("\n");
 
 for (const typeName of Object.keys(spec.definitions)) {
-  if (typeName && typeName.startsWith("io.k8s")) {
+  if (typeName && typeName.startsWith(allowedNamespace)) {
     console.log(toTypes(typeName));
     console.log("");
   }
 }
 
-console.log(makeKubernetesConfig(Object.keys(spec.definitions)));
+console.log(makeResources());
