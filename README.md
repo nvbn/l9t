@@ -134,9 +134,9 @@ Look at `examples` folder for more examples.
 
 ❓ Types for Kubernetes APIs.
 
-❓ Hot reloading.
+✅ Hot reloading.
 
-❌ Helm charts-like reusable configuration packages.
+❓ Helm charts-like reusable configuration packages.
 
 ## Development
 
