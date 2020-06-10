@@ -2,9 +2,7 @@
 
 ![screenshot](https://raw.githubusercontent.com/nvbn/l9t/master/screenshot.png)
 
-Reusable typesafe kubernetes configurations with fast development cycle and no yaml.
-
-*One symbol ahead from K8S*
+Reusable typesafe kubernetes configurations with [fast development cycle and hot reloading](https://www.youtube.com/watch?v=KCEikoijoWc), and zero yaml.
 
 ## Why?
 
