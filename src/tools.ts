@@ -33,11 +33,14 @@ export const watchDebounced = async function* (path: string, delay = 100) {
   let timeout: number | undefined;
 
   let resolveShouldYield: () => void;
+  let propagateError: (e: Error) => void;
   let shouldYield: Promise<void>;
 
-  const resetShouldYield = () => {
-    shouldYield = new Promise((resolve) => resolveShouldYield = resolve);
-  };
+  const resetShouldYield = () =>
+    shouldYield = new Promise((resolve, reject) => {
+      resolveShouldYield = resolve;
+      propagateError = reject;
+    });
 
   const watch = async () => {
     for await (
@@ -49,7 +52,7 @@ export const watchDebounced = async function* (path: string, delay = 100) {
   };
 
   resetShouldYield();
-  watch().catch((e) => console.error("watch inside debounce died", e));
+  watch().catch((e) => propagateError(e));
 
   while (true) {
     yield await shouldYield!!;
