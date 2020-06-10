@@ -1,7 +1,7 @@
-import { parse, Args } from "https://deno.land/std/flags/mod.ts";
+import * as path from "https://deno.land/std/path/mod.ts";
 export * from "./types/k8s.ts";
 import { KubernetesResources } from "./types/k8s.ts";
-import compiler from "./compiler.ts";
+import { compile, kubectlApply } from "./tools.ts";
 
 export default <T extends object = KubernetesResources>(
   cfgs: T[],
@@ -25,7 +25,9 @@ export default <T extends object = KubernetesResources>(
       );
       return;
     case "watch":
-      watchCommand(url, kubectlArgs);
+      watchCommand(url, kubectlArgs).catch((e) =>
+        console.error("unable to watch configuration changes", e)
+      );
       return;
     default:
       helpCommand();
@@ -34,42 +36,39 @@ export default <T extends object = KubernetesResources>(
 };
 
 const compileCommand = <T extends object>(cfgs: T[]) =>
-  console.log(compiler(cfgs));
+  console.log(compile(cfgs));
 
 const applyCommand = async <T extends object>(cfgs: T[], args: string[]) => {
-  const compiled = compiler(cfgs);
+  const compiled = compile(cfgs);
 
-  const proc = Deno.run({
-    cmd: [
-      "kubectl",
-      "apply",
-      ...args,
-      "-f",
-      "-",
-    ],
-    stdin: "piped",
-  });
-
-  const encoder = new TextEncoder();
-  const encoded = encoder.encode(compiled);
-
-  await proc.stdin!!.write(encoded);
-  await proc.stdin!!.close();
-  await proc.status();
+  await kubectlApply(compiled, args);
 };
 
-const watchCommand = (url: string, args: string[]) => {
-  const proc = Deno.run({
-    cmd: [
-      "sh",
-      "-c",
-      `fswatch -o . | xargs -n1 -I{} deno run -A ${url} apply ${
-        preapreArgs(args)
-      }`,
-    ],
-  });
+const watchCommand = async (url: string, args: string[]) => {
+  const fullPath = path.fromFileUrl(url);
+  const root = path.dirname(fullPath);
 
-  proc.status(); // that'll block
+  const decoder = new TextDecoder();
+
+  for await (
+    const _ of Deno.watchFs(root, { recursive: true })
+  ) {
+    const compileProc = Deno.run({
+      cmd: [
+        Deno.execPath(),
+        "run",
+        "-A",
+        url,
+        "compile",
+      ],
+      stdout: "piped",
+      stderr: "inherit",
+    });
+
+    const rawCompiled = await compileProc.output();
+    const compiled = decoder.decode(rawCompiled);
+    await kubectlApply(compiled, args);
+  }
 };
 
 const helpCommand = () =>
@@ -89,8 +88,3 @@ EXAMPLE:
   deno run -A webapp_config.ts update  # applys the configuration
   deno run -A webapp_config.ts watch  # applys the configuration on every change
 `);
-
-const preapreArgs = (args: string[]): string =>
-  args.map((arg) => arg.replace('"', '\\"')).map((escapedArg) =>
-    `"${escapedArg}"`
-  ).join(" ");

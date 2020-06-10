@@ -16,12 +16,11 @@ Because working with kubernetes configs and helm is painful:
 
 ## How?
 
-TypeScript + Deno + kubectl + optional fswatch.
+TypeScript + Deno + kubectl.
 
 ## Usage
 
 To use l9t you need to install [deno](https://deno.land/manual/getting_started/installation).
-To enable hot reloading/watch mode you need to install [fswatch](https://github.com/emcrisostomo/fswatch).
 
 Then you can create a configuration:
 
@@ -110,7 +109,7 @@ And check that it works with:
 curl localhost:80
 ```
 
-For interactive development you can use watch mode (requires fswatch):
+For interactive development you can use watch mode:
 
 ```bash
 deno run hello_world.ts -A watch
