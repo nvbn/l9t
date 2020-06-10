@@ -14,56 +14,71 @@ export default <T extends object = KubernetesResources>(
     return;
   }
 
-  const flags = parse(Deno.args);
-
-  if (shouldShowHelp(flags)) {
-    showHelp();
-    return;
+  const [command, ...kubectlArgs] = Deno.args;
+  switch (command) {
+    case "compile":
+      compileCommand(cfgs);
+      return;
+    case "apply":
+      applyCommand(url, kubectlArgs);
+      return;
+    case "watch":
+      watchCommand(url, kubectlArgs);
+      return;
+    default:
+      helpCommand();
+      return;
   }
-
-  if (shouldWatch(flags)) {
-    compileMain(cfgs);
-    watch(url);
-    return;
-  }
-
-  compileMain(cfgs);
 };
 
-const compileMain = <T extends object>(cfgs: T[]) =>
+const compileCommand = <T extends object>(cfgs: T[]) =>
   console.log(compiler(cfgs));
 
-const shouldWatch = (flags: Args) =>
-  flags._.indexOf("watch") !== -1 || flags.watch || flags.w;
-
-const watch = (url: string) => {
+const applyCommand = (url: string, args: string[]) => {
   const proc = Deno.run({
     cmd: [
       "sh",
       "-c",
-      `fswatch -o . | xargs -n1 -I{} deno run --allow-env --allow-read ${url}`,
+      `deno run -A ${url} compile | kubectl apply -f - ${preapreArgs(args)}`,
     ],
   });
 
   proc.status(); // that'll block
 };
 
-const shouldShowHelp = (flags: Args) =>
-  flags._.indexOf("help") !== -1 || flags.help || flags.h;
+const watchCommand = (url: string, args: string[]) => {
+  const proc = Deno.run({
+    cmd: [
+      "sh",
+      "-c",
+      `fswatch -o . | xargs -n1 -I{} deno run -A ${url} apply ${
+        preapreArgs(args)
+      }`,
+    ],
+  });
 
-const showHelp = () =>
+  proc.status(); // that'll block
+};
+
+const helpCommand = () =>
   console.warn(`L9T
 Reusable typesafe kubernetes configurations with fast development cycle and no yaml
 
 USAGE:
-  deno run SCRIPT [command]
+  deno run -A L9T_CONFIGURATION [command]
 
 COMMANDS:
-  compile  Prints compiled config (default)
-  watch    Prints compiled config on every change, requires --allow-run
-  help     Prints help message
+  apply [kubectl args]  applyes compiled configuration
+  watch [kubectl args]   applys compiled configuration on every change, requires fswatch
+  compile                Prints compiled configuration
+  help                   Prints help message
 
 EXAMPLE:
-  deno run webapp_config.ts | kubectl apply -f -
-  deno run --allow-run webapp_config.ts watch | kubectl apply -f -
+  deno run -A webapp_config.ts update  # applys the configuration
+  deno run -A webapp_config.ts watch  # applys the configuration on every change
 `);
+
+const preapreArgs = (args: string[]): string =>
+  args.map((arg) => arg.replace('"', '\\"')).map((escapedArg) =>
+    `"${escapedArg}"`
+  ).join(" ");

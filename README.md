@@ -101,7 +101,7 @@ l9t([deployment(params), service(params)], import.meta);
 Apply the configuration with:
 
 ```bash
-deno run --allow-env hello_world.ts | kubectl apply -f -
+deno run -A hello_world.ts apply
 ```
 
 And check that it works with:
@@ -110,17 +110,23 @@ And check that it works with:
 curl localhost:80
 ```
 
-For interactive development you can use watch mode:
+For interactive development you can use watch mode (requires fswatch):
 
 ```bash
-deno run hello_world.ts --allow-env --allow-run watch | kubectl apply -f -
+deno run hello_world.ts -A watch
 ```
 
 As the configuration has `Deno.env.get("BUILD") === "prod" ? 10 : 2`, it's possible
 to make a prod configurationwith more replicas with:
 
 ```bash
-BUILD=prod deno run --allow-env index.ts
+BUILD=prod deno run -A hello_world.ts apply
+```
+
+If you just want to compile TypeScript configuration to YAML run:
+
+```bash
+deno run -A hello_world.ts compile
 ```
 
 Look at `examples` folder for more examples.
