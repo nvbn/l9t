@@ -20,7 +20,9 @@ export default <T extends object = KubernetesResources>(
       compileCommand(cfgs);
       return;
     case "apply":
-      applyCommand(url, kubectlArgs);
+      applyCommand(cfgs, kubectlArgs).catch((e) =>
+        console.error("unable to apply configuration", e)
+      );
       return;
     case "watch":
       watchCommand(url, kubectlArgs);
@@ -34,16 +36,26 @@ export default <T extends object = KubernetesResources>(
 const compileCommand = <T extends object>(cfgs: T[]) =>
   console.log(compiler(cfgs));
 
-const applyCommand = (url: string, args: string[]) => {
+const applyCommand = async <T extends object>(cfgs: T[], args: string[]) => {
+  const compiled = compiler(cfgs);
+
   const proc = Deno.run({
     cmd: [
-      "sh",
-      "-c",
-      `deno run -A ${url} compile | kubectl apply -f - ${preapreArgs(args)}`,
+      "kubectl",
+      "apply",
+      ...args,
+      "-f",
+      "-",
     ],
+    stdin: "piped",
   });
 
-  proc.status(); // that'll block
+  const encoder = new TextEncoder();
+  const encoded = encoder.encode(compiled);
+
+  await proc.stdin!!.write(encoded);
+  await proc.stdin!!.close();
+  await proc.status();
 };
 
 const watchCommand = (url: string, args: string[]) => {
