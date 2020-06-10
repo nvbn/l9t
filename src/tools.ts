@@ -27,3 +27,32 @@ export const kubectlApply = async (compiled: string, args: string[]) => {
   await proc.stdin.close();
   await proc.status();
 };
+
+// that will never finish
+export const watchDebounced = async function* (path: string, delay = 100) {
+  let timeout: number | undefined;
+
+  let resolveShouldYield: () => void;
+  let shouldYield: Promise<void>;
+
+  const resetShouldYield = () => {
+    shouldYield = new Promise((resolve) => resolveShouldYield = resolve);
+  };
+
+  const watch = async () => {
+    for await (
+      const _ of Deno.watchFs(path, { recursive: true })
+    ) {
+      clearTimeout(timeout);
+      timeout = setTimeout(resolveShouldYield, delay);
+    }
+  };
+
+  resetShouldYield();
+  watch().catch((e) => console.error("watch inside debounce died", e));
+
+  while (true) {
+    yield await shouldYield!!;
+    resetShouldYield();
+  }
+};

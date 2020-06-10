@@ -1,7 +1,7 @@
 import * as path from "https://deno.land/std/path/mod.ts";
 export * from "./types/k8s.ts";
 import { KubernetesResources } from "./types/k8s.ts";
-import { compile, kubectlApply } from "./tools.ts";
+import { compile, kubectlApply, watchDebounced } from "./tools.ts";
 
 export default <T extends object = KubernetesResources>(
   cfgs: T[],
@@ -51,7 +51,7 @@ const watchCommand = async (url: string, args: string[]) => {
   const decoder = new TextDecoder();
 
   for await (
-    const _ of Deno.watchFs(root, { recursive: true })
+    const _ of watchDebounced(root)
   ) {
     const compileProc = Deno.run({
       cmd: [
