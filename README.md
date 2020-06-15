@@ -126,7 +126,9 @@ If you just want to compile TypeScript configuration to YAML run:
 deno run -A hello_world.ts compile
 ```
 
-Look at `examples` folder for more examples.
+Examples:
+* [hello world](https://github.com/nvbn/l9t/tree/master/examples/hello_world)
+* [reusable nginx](https://github.com/nvbn/l9t/tree/master/examples/reusable/nginx)
 
 ## Goals
 
