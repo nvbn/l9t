@@ -1,4 +1,4 @@
-# L9T
+# L9T ![ci](https://github.com/nvbn/l9t/workflows/ci/badge.svg)
 
 ![screenshot](https://deno.land/x/l9t/screenshot.png)
 
