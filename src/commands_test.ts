@@ -1,7 +1,7 @@
 import {
   assertEquals,
   assertArrayContains,
-  assertStrContains,
+  assertStringContains,
 } from "https://deno.land/std/testing/asserts.ts";
 import mockSystem from "./system/mock.ts";
 import {
@@ -77,5 +77,5 @@ Deno.test("helpCommand prints help in stderr", () => {
 
   helpCommand(system);
 
-  assertStrContains(stderr!!, "L9T");
+  assertStringContains(stderr!!, "L9T");
 });

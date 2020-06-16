@@ -173,4 +173,12 @@ import { MyExtensionResources } from "./ext.ts";
 l9t<KubernetesResources | MyExtensionResources>([...], import.meta);
 ```
 
+### Testing
+
+To run test execute:
+
+```bash
+deno test
+```
+
 ## License MIT
