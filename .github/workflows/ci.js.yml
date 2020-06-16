@@ -16,4 +16,4 @@ jobs:
       - name: Install dependencies
         run: curl -fsSL https://deno.land/x/install/install.sh | sh
       - name: Run tests
-        run: ~/.deno/bin/deno test
+        run: ~/.deno/bin/deno test --reload
