@@ -11,5 +11,9 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      - run: curl -fsSL https://deno.land/x/install/install.sh | sh
-      - run: ~/.deno/bin/deno test
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: curl -fsSL https://deno.land/x/install/install.sh | sh
+      - name: Run tests
+        run: ~/.deno/bin/deno test
