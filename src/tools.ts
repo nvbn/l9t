@@ -1,40 +1,37 @@
 import { stringify } from "https://deno.land/std/encoding/yaml.ts";
-export * from "./types/k8s.ts";
+import { System } from "./system/types.ts";
 
+/** Compiles configurations to yaml. */
 export const compile = <T extends object>(cfgs: T[]): string =>
   cfgs.map((cfg) => stringify(cfg as object)).join("\n\n---\n");
 
-export const kubectlApply = async (compiled: string, args: string[]) => {
-  const proc = Deno.run({
-    cmd: [
-      "kubectl",
-      "apply",
-      ...args,
-      "-f",
-      "-",
-    ],
-    stdin: "piped",
-  });
+/** Applies compiled configuration with kubectl */
+export const kubectlApply = (
+  system: System,
+  compiled: string,
+  args: string[],
+) =>
+  system.run([
+    "kubectl",
+    "apply",
+    ...args,
+    "-f",
+    "-",
+  ]).writeToStdin(compiled);
 
-  if (!proc.stdin) {
-    throw new Error("unable to get kubectl stdin");
-  }
-
-  const encoder = new TextEncoder();
-  const encoded = encoder.encode(compiled);
-
-  await proc.stdin.write(encoded);
-  await proc.stdin.close();
-  await proc.status();
-};
-
-// that will never finish
-export const watchDebounced = async function* (path: string, delay = 100) {
+/** Recursively watches for changes in `path` */
+export const watchDebounced = async function* (
+  system: System,
+  done: Promise<boolean>,
+  path: string,
+  delay = 100,
+) {
   let timeout: number | undefined;
 
   let resolveShouldYield: () => void;
   let propagateError: (e: Error) => void;
   let shouldYield: Promise<void>;
+  let shouldStopWatching = false;
 
   const resetShouldYield = () =>
     shouldYield = new Promise((resolve, reject) => {
@@ -44,9 +41,13 @@ export const watchDebounced = async function* (path: string, delay = 100) {
 
   const watch = async () => {
     for await (
-      const _ of Deno.watchFs(path, { recursive: true })
+      const _ of system.watchFs(path, { recursive: true })
     ) {
       clearTimeout(timeout);
+      if (shouldStopWatching) {
+        return;
+      }
+
       timeout = setTimeout(resolveShouldYield, delay);
     }
   };
@@ -55,7 +56,13 @@ export const watchDebounced = async function* (path: string, delay = 100) {
   watch().catch((e) => propagateError(e));
 
   while (true) {
-    yield await shouldYield!!;
+    // true when done, undefined when not
+    if (await Promise.race([shouldYield!!, done])) {
+      shouldStopWatching = true;
+      return;
+    }
+
+    yield;
     resetShouldYield();
   }
 };
