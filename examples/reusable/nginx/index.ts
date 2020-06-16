@@ -1,4 +1,4 @@
-import { KubernetesResources } from "https://raw.githubusercontent.com/nvbn/l9t/master/l9t.ts";
+import { KubernetesResources } from "https://deno.land/x/l9t/l9t.ts";
 import configmap from "./configmap.ts";
 import deployment from "./deployment.ts";
 import service from "./service.ts";

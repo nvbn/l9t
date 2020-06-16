@@ -1,6 +1,6 @@
 # L9T
 
-![screenshot](https://raw.githubusercontent.com/nvbn/l9t/master/screenshot.png)
+![screenshot](https://deno.land/x/l9t/screenshot.png)
 
 Reusable typesafe kubernetes configurations with [fast development cycle and hot reloading](https://www.youtube.com/watch?v=KCEikoijoWc), and zero yaml.
 
@@ -26,7 +26,7 @@ Then you can create a configuration:
 import l9t, {
   Deployment,
   Service,
-} from "https://raw.githubusercontent.com/nvbn/l9t/master/l9t.ts";
+} from "https://deno.land/x/l9t/l9t.ts";
 
 // types for variables aren't required but useful for ides
 const deployment = (
@@ -165,7 +165,7 @@ deno run --unstable --allow-read src/scripts/make_types.ts EXTENSION_NS MyExtens
 And use it like:
 
 ```typescript
-import l9t, { KubernetesResources } from "https://raw.githubusercontent.com/nvbn/l9t/master/l9t.ts";
+import l9t, { KubernetesResources } from "https://deno.land/x/l9t/l9t.ts";
 import { MyExtensionResources } from "./ext.ts";
 
 ...

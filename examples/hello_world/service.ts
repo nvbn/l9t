@@ -1,4 +1,4 @@
-import { Service } from "https://raw.githubusercontent.com/nvbn/l9t/master/l9t.ts";
+import { Service } from "https://deno.land/x/l9t/l9t.ts";
 
 export default ({}): Service => ({
   apiVersion: "v1",

@@ -1,5 +1,5 @@
-import l9t from "https://raw.githubusercontent.com/nvbn/l9t/master/l9t.ts";
-import nginx from "https://raw.githubusercontent.com/nvbn/l9t/master/examples/reusable/nginx/index.ts";
+import l9t from "https://deno.land/x/l9t/l9t.ts";
+import nginx from "https://deno.land/x/l9t/examples/reusable/nginx/index.ts";
 
 l9t([...nginx({
   name: "example-nginx-usage",

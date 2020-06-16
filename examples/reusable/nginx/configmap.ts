@@ -1,4 +1,4 @@
-import { ConfigMap } from "https://raw.githubusercontent.com/nvbn/l9t/master/l9t.ts";
+import { ConfigMap } from "https://deno.land/x/l9t/l9t.ts";
 
 type Props = {
   name: string;

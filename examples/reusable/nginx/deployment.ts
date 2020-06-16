@@ -1,4 +1,4 @@
-import { Deployment } from "https://raw.githubusercontent.com/nvbn/l9t/master/l9t.ts";
+import { Deployment } from "https://deno.land/x/l9t/l9t.ts";
 
 export type Props = {
   name: string;
