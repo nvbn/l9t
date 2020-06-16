@@ -12,4 +12,4 @@ jobs:
 
     steps:
       - run: curl -fsSL https://deno.land/x/install/install.sh | sh
-      - run: deno test
+      - run: ~/.deno/bin/deno test
